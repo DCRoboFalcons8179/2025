@@ -42,7 +42,7 @@ public class Constants {
     }
 
     public class Vision {
-        public class FrontCamera {
+        public class FrontCameraValues {
             public final static String cameraName = "PLACEHOLDER"; //TODO: Add the camera names
             public final static double cameraHeightMeters = Units.inchesToMeters(12); //TODO: Add the correct height
             public final static double cameraAngleRadians = Units.degreesToRadians(20); //TODO: Add the correct angle

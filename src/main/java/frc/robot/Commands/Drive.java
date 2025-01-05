@@ -2,24 +2,29 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands;
+package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.DriveSub;
+import frc.robot.subsystems.DriveSub;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Drive extends Command {
   DriveSub driveSub;
-  DoubleSupplier leftY;
-  DoubleSupplier rightX;
+  DoubleSupplier forwardSpeed;
+  DoubleSupplier turnSpeed;
 
-  /** Creates a new Drive. */
-  public Drive(DriveSub driveSub, DoubleSupplier leftY, DoubleSupplier rightX) {
+  /**
+   * Drives the robot with a forward and turn speed
+   * @param driveSub
+   * @param forwardSpeed
+   * @param turnSpeed
+   */
+  public Drive(DriveSub driveSub, DoubleSupplier forwardSpeed, DoubleSupplier turnSpeed) {
     this.driveSub = driveSub;
-    this.leftY = leftY;
-    this.rightX = rightX;
+    this.forwardSpeed = forwardSpeed;
+    this.turnSpeed = turnSpeed;
     addRequirements(driveSub);
   }
 
@@ -30,7 +35,7 @@ public class Drive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveSub.drive(leftY.getAsDouble(), rightX.getAsDouble());    
+    driveSub.drive(forwardSpeed.getAsDouble(), turnSpeed.getAsDouble());    
   }
 
   // Called once the command ends or is interrupted.
