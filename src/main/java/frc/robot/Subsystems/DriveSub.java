@@ -33,6 +33,12 @@ public class DriveSub extends SubsystemBase {
   }
 
 
+  /**
+   * Moves the motors with a given forwardPower & turningPower
+   * @param forwardPower
+   * @param turnPower
+   * @return void
+   */
   public void drive(double forwardPower, double turnPower) {
     // Ok, this is basically saying follow the motor with the ID of leftDrive and don't go the opposite direction
     leftFollower.setControl(new Follower(Constants.DriveValues.leftDriveID, false));
@@ -55,6 +61,14 @@ public class DriveSub extends SubsystemBase {
       SmartDashboard.putNumber("Left Drive Velocity", leftDrive.getVelocity().getValueAsDouble());
       SmartDashboard.putNumber("Right Drive Velocity", rightDrive.getVelocity().getValueAsDouble());
     }
-    // This method will be called once per scheduler run
+  }
+
+  /**
+   * Drive that takes no turning argument, overrides the above drive
+   * @param forwardPower
+   * @return void
+   */
+  public void drive(double forwardPower) {
+    drive(forwardPower, 0);
   }
 }
