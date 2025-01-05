@@ -29,5 +29,7 @@ public class Constants {
         public static double kD = 0;
         /** <p>kV is the same as kP*/
         public static double kV = 0;
+
+        public static int maxRPS = 10000;
     }
 }

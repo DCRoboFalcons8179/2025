@@ -5,6 +5,7 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,7 +38,15 @@ public class DriveSub extends SubsystemBase {
     leftFollower.setControl(new Follower(Constants.DriveValues.leftDriveID, false));
     rightFollower.setControl(new Follower(Constants.DriveValues.rightFollowerID, false));
 
-    // leftDrive.setControl(Veloci)
+    // Left & Right Speeds
+    double leftSpeed = forwardPower + turnPower;
+    double rightSpeed = forwardPower - turnPower;
+
+    // Request for controlling motors
+    var request = new VelocityVoltage(0).withSlot(0);
+
+    leftDrive.setControl(request.withVelocity(leftSpeed * Constants.DriveValues.maxRPS));
+    rightDrive.setControl(request.withVelocity(rightSpeed * Constants.DriveValues.maxRPS));
   }
 
   @Override
