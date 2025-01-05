@@ -15,12 +15,12 @@ import frc.robot.TalonFXConfigurator;
 
 public class DriveSub extends SubsystemBase {
   // Left Motors
-  TalonFX leftDrive;
-  TalonFX leftFollower;
+  private TalonFX leftDrive;
+  private TalonFX leftFollower;
 
   // Right Motors
-  TalonFX rightDrive;
-  TalonFX rightFollower;
+  private TalonFX rightDrive;
+  private TalonFX rightFollower;
   
 
   /** DriveSub Constructor */

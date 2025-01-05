@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /** Add your docs here. */
 public class Constants {
     /**Are we debugging the bot?*/
@@ -37,5 +39,17 @@ public class Constants {
         public final static double kV = 0;
 
         public final static int maxRPS = 10000;
+    }
+
+    public class Vision {
+        public class FrontCamera {
+            public final static String cameraName = "PLACEHOLDER"; //TODO: Add the camera names
+            public final static double cameraHeightMeters = Units.inchesToMeters(12); //TODO: Add the correct height
+            public final static double cameraAngleRadians = Units.degreesToRadians(20); //TODO: Add the correct angle
+        }
+
+        public class AprilTags {
+            public final static double tag1HeightMeters = Units.inchesToMeters(50); //TODO: Add the correct height
+        }
     }
 }
