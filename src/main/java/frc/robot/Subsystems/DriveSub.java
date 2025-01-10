@@ -30,6 +30,7 @@ public class DriveSub extends SubsystemBase {
       
     rightDrive = TalonFXConfigurator.getConfiguredTalonFX(Constants.DriveValues.rightDriveID, Constants.DriveValues.rightDriveInvert);
     rightFollower = TalonFXConfigurator.getConfiguredTalonFX(Constants.DriveValues.rightFollowerID, Constants.DriveValues.rightFollowerInvert);
+    
   }
 
 
