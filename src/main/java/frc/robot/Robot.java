@@ -21,6 +21,7 @@ public class Robot extends LoggedRobot {
 
   private final RobotContainer m_robotContainer;
 
+  @SuppressWarnings("resource")
   public Robot() {
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
