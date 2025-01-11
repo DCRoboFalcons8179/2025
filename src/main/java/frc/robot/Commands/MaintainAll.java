@@ -2,12 +2,12 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands;
+package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.DriveSub;
-import frc.robot.Subsystems.VisionSub;
+import frc.robot.subsystems.DriveSub;
+import frc.robot.subsystems.VisionSub;
 
 public class MaintainAll extends Command {
   VisionSub visionSub;
