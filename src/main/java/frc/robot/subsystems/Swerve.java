@@ -1,0 +1,123 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.subsystems;
+
+import com.studica.frc.AHRS;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+// Swerve drive system
+public class Swerve extends SubsystemBase {
+  /** Creates a new Swerve. */
+  public Swerve() {
+    // Motors
+    private static CANTalon LEFT_FRONT_DRIVE_SPEED_MOTOR;
+    private static CANTalon LEFT_BACK_DRIVE_SPEED_MOTOR;
+    private static CANTalon RIGHT_FRONT_DRIVE_SPEED_MOTOR;
+    private static CANTalon RIGHT_BACK_DRIVE_SPEED_MOTOR;
+
+    private static CANTalon LEFT_FRONT_DRIVE_DIRECTION_MOTOR;
+    private static CANTalon LEFT_BACK_DRIVE_DIRECTION_MOTOR;
+    private static CANTalon RIGHT_FRONT_DRIVE_DIRECTION_MOTOR;
+    private static CANTalon RIGHT_BACK_DRIVE_DIRECTION_MOTOR;
+
+    // Encoders
+    public static Encoder LEFT_FRONT_DRIVE_DISTANCE_ENCODER;
+    public static Encoder LEFT_BACK_DRIVE_DISTANCE_ENCODER;
+    public static Encoder RIGHT_FRONT_DRIVE_DISTANCE_ENCODER;
+    public static Encoder RIGHT_BACK_DRIVE_DISTANCE_ENCODER;
+    public static MedianPIDSource DRIVE_DISTANCE_ENCODERS;
+
+    public static Encoder LEFT_FRONT_DRIVE_DIRECTION_ENCODER;
+    public static Encoder LEFT_BACK_DRIVE_DIRECTION_ENCODER;
+    public static Encoder RIGHT_FRONT_DRIVE_DIRECTION_ENCODER;
+    public static Encoder RIGHT_BACK_DRIVE_DIRECTION_ENCODER;
+
+    // Direction encoder wrapper that scales to degrees
+    public static PIDSourceExtended LEFT_FRONT_DRIVE_DIRECTION_SCALED;
+    public static PIDSourceExtended LEFT_BACK_DRIVE_DIRECTION_SCALED;
+    public static PIDSourceExtended RIGHT_FRONT_DRIVE_DIRECTION_SCALED;
+    public static PIDSourceExtended RIGHT_BACK_DRIVE_DIRECTION_SCALED;
+
+    SwerveDriveWheel LEFT_FRONT_DRIVE_WHEEL;
+    SwerveDriveWheel LEFT_BACK_DRIVE_WHEEL;
+    SwerveDriveWheel RIGHT_FRONT_DRIVE_WHEEL;
+    SwerveDriveWheel RIGHT_BACK_DRIVE_WHEEL;
+
+    public SwerveDriveCoordinator SWERVE_DRIVE_COORDINATOR;
+
+    PIDOutputGroup DRIVE_ALL_MOTORS;
+
+    PIDController DRIVE_DISTANCE_CONTROLLER;
+  }
+
+  // Gyro
+  public static AHRS DRIVE_GYRO;
+
+  public Drive()
+  {
+    // Motors
+    LEFT_FRONT_DRIVE_SPEED_MOTOR = new CANTalon(RobotMap.LEFT_FRONT_DRIVE_SPEED_MOTOR_PIN);
+    LEFT_BACK_DRIVE_SPEED_MOTOR = new CANTalon(RobotMap.LEFT_BACK_DRIVE_SPEED_MOTOR_PIN);
+    RIGHT_FRONT_DRIVE_SPEED_MOTOR = new CANTalon(RobotMap.RIGHT_FRONT_DRIVE_SPEED_MOTOR_PIN);
+    RIGHT_BACK_DRIVE_SPEED_MOTOR = new CANTalon(RobotMap.RIGHT_BACK_DRIVE_SPEED_MOTOR_PIN);
+
+    LEFT_FRONT_DRIVE_DIRECTION_MOTOR = new CANTalon(RobotMap.LEFT_FRONT_DRIVE_DIRECTION_MOTOR_PIN);
+    LEFT_BACK_DRIVE_DIRECTION_MOTOR = new CANTalon(RobotMap.LEFT_BACK_DRIVE_DIRECTION_MOTOR_PIN);
+    RIGHT_FRONT_DRIVE_DIRECTION_MOTOR = new CANTalon(RobotMap.RIGHT_FRONT_DRIVE_DIRECTION_MOTOR_PIN);
+    RIGHT_BACK_DRIVE_DIRECTION_MOTOR = new CANTalon(RobotMap.RIGHT_BACK_DRIVE_DIRECTION_MOTOR_PIN);
+
+    // Encoders
+    LEFT_FRONT_DRIVE_DISTANCE_ENCODER = new Encoder(RobotMap.LEFT_FRONT_DRIVE_DISTANCE_ENCODER_PIN_A, RobotMap.LEFT_FRONT_DRIVE_DISTANCE_ENCODER_PIN_B);
+    LEFT_BACK_DRIVE_DISTANCE_ENCODER = new Encoder(RobotMap.LEFT_BACK_DRIVE_DISTANCE_ENCODER_PIN_A, RobotMap.LEFT_BACK_DRIVE_DISTANCE_ENCODER_PIN_B);
+    RIGHT_FRONT_DRIVE_DISTANCE_ENCODER = new Encoder(RobotMap.RIGHT_FRONT_DRIVE_DISTANCE_ENCODER_PIN_A, RobotMap.RIGHT_FRONT_DRIVE_DISTANCE_ENCODER_PIN_B);
+    RIGHT_BACK_DRIVE_DISTANCE_ENCODER = new Encoder(RobotMap.RIGHT_BACK_DRIVE_DISTANCE_ENCODER_PIN_A, RobotMap.RIGHT_BACK_DRIVE_DISTANCE_ENCODER_PIN_B);
+    DRIVE_ENCODERS = new MedianPIDSource(LEFT_FRONT_DRIVE_DISTANCE_ENCODER, LEFT_BACK_DRIVE_DISTANCE_ENCODER, RIGHT_FRONT_DRIVE_DISTANCE_ENCODER, RIGHT_BACK_DRIVE_DISTANCE_ENCODER);
+
+    LEFT_FRONT_DRIVE_DIRECTION_ENCODER = new Encoder(RobotMap.LEFT_FRONT_DRIVE_DIRECTION_ENCODER_PIN_A, RobotMap.LEFT_FRONT_DRIVE_DIRECTION_ENCODER_PIN_B);
+    LEFT_BACK_DRIVE_DIRECTION_ENCODER = new Encoder(RobotMap.LEFT_BACK_DRIVE_DIRECTION_ENCODER_PIN_A, RobotMap.LEFT_BACK_DRIVE_DIRECTION_ENCODER_PIN_B);
+    RIGHT_FRONT_DRIVE_DIRECTION_ENCODER = new Encoder(RobotMap.RIGHT_FRONT_DRIVE_DIRECTION_ENCODER_PIN_A, RobotMap.RIGHT_FRONT_DRIVE_DIRECTION_ENCODER_PIN_B);
+    RIGHT_BACK_DRIVE_DIRECTION_ENCODER = new Encoder(RobotMap.RIGHT_BACK_DRIVE_DIRECTION_ENCODER_PIN_A, RobotMap.RIGHT_BACK_DRIVE_DIRECTION_ENCODER_PIN_B);
+
+    // Direction encoder wrapper that scales to degrees
+    LEFT_FRONT_DRIVE_DIRECTION_SCALED = new PIDSourceExtended(LEFT_FRONT_DRIVE_DIRECTION_ENCODER);
+    LEFT_BACK_DRIVE_DIRECTION_SCALED = new PIDSourceExtended(LEFT_BACK_DRIVE_DIRECTION_ENCODER);
+    RIGHT_FRONT_DRIVE_DIRECTION_SCALED = new PIDSourceExtended(RIGHT_FRONT_DRIVE_DIRECTION_ENCODER);
+    RIGHT_BACK_DRIVE_DIRECTION_SCALED = new PIDSourceExtended(RIGHT_BACK_DRIVE_DIRECTION_ENCODER);
+
+    // Gyro
+    DRIVE_GYRO = new AHRS(RobotMap.MXP_PORT);
+
+    // SwerveDriveWheels
+    double wheelP = 0.02;
+    double wheelI = 0.001;
+    double wheelD = 0.0;
+    LEFT_FRONT_DRIVE_WHEEL = new SwerveDriveWheel(wheelP, wheelI, wheelD, LEFT_FRONT_DRIVE_DIRECTION_SCALED, LEFT_FRONT_DRIVE_DIRECTION_MOTOR, LEFT_FRONT_DRIVE_SPEED_MOTOR);
+    LEFT_BACK_DRIVE_WHEEL = new SwerveDriveWheel(wheelP, wheelI, wheelD, LEFT_BACK_DRIVE_DIRECTION_SCALED, LEFT_BACK_DRIVE_DIRECTION_MOTOR, LEFT_BACK_DRIVE_SPEED_MOTOR);
+    RIGHT_FRONT_DRIVE_WHEEL = new SwerveDriveWheel(wheelP, wheelI, wheelD, RIGHT_FRONT_DRIVE_DIRECTION_SCALED, RIGHT_FRONT_DRIVE_DIRECTION_MOTOR, RIGHT_FRONT_DRIVE_SPEED_MOTOR);
+    RIGHT_BACK_DRIVE_WHEEL = new SwerveDriveWheel(wheelP, wheelI, wheelD, RIGHT_BACK_DRIVE_DIRECTION_SCALED, RIGHT_BACK_DRIVE_DIRECTION_MOTOR, RIGHT_BACK_DRIVE_SPEED_MOTOR);
+
+    // SwerveDriveCoordinator
+    SWERVE_DRIVE_COORDINATOR = new SwerveDriveCoordinator(LEFT_FRONT_DRIVE_WHEEL, LEFT_BACK_DRIVE_WHEEL, RIGHT_FRONT_DRIVE_WHEEL, RIGHT_BACK_DRIVE_WHEEL);
+
+    // PID Output Groups
+    DRIVE_ALL_MOTORS = new PIDOutputGroup(LEFT_FRONT_DRIVE_WHEEL.speedMotor, LEFT_BACK_DRIVE_WHEEL.speedMotor, RIGHT_FRONT_DRIVE_WHEEL.speedMotor, RIGHT_BACK_DRIVE_WHEEL.speedMotor);
+
+    // PID Controllers
+    DRIVE_DISTANCE_CONTROLLER = new PIDController(0.015, 0.001, 0.0, DRIVE_ENCODERS, DRIVE_ALL_MOTORS);
+  }
+
+  public void initDefaultCommand()
+  {
+
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+}
