@@ -16,6 +16,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -28,15 +29,25 @@ public class Robot extends LoggedRobot {
   public Robot() {
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
-    if (isReal()) {
-        Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
-        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-        new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
-    } else {
+    switch (Constants.currentMode) {
+      case REAL:
+        // Running on a real robot, log to a USB stick ("/U/logs")
+        Logger.addDataReceiver(new WPILOGWriter());
+        Logger.addDataReceiver(new NT4Publisher());
+        break;
+
+      case SIM:
+        // Running a physics simulator, log to NT
+        Logger.addDataReceiver(new NT4Publisher());
+        break;
+
+      case REPLAY:
+        // Replaying a log, set up replay source
         setUseTiming(false); // Run as fast as possible
-        String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
-        Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
-        Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+        String logPath = LogFileUtil.findReplayLog();
+        Logger.setReplaySource(new WPILOGReader(logPath));
+        Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+        break;
     }
 
     Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
@@ -57,13 +68,18 @@ public class Robot extends LoggedRobot {
             robotContainer.getPose2d().getX(),
             robotContainer.getPose2d().getY(),
             0,
-            new Rotation3d(
-              robotContainer.getRotation3d().getX(), // Roll
-              robotContainer.getRotation3d().getY(), // Pitch
-              robotContainer.getRotation3d().getZ()  // Yaw
-            )
+            // new Rotation3d(
+            //   robotContainer.getRotation3d().getX(), // Roll
+            //   robotContainer.getRotation3d().getY(), // Pitch
+            //   robotContainer.getRotation3d().getZ()  // Yaw
+            // )
+            new Rotation3d(0, 0, robotContainer.getRotation3d().getZ())
         )
     );
+
+    SmartDashboard.putNumber("Roll", robotContainer.getRotation3d().getX());
+    SmartDashboard.putNumber("Pitch", robotContainer.getRotation3d().getY());
+    SmartDashboard.putNumber("Yaw", robotContainer.getRotation3d().getZ());
   }
 
   @Override

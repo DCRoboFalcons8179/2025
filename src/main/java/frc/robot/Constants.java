@@ -5,9 +5,28 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 
 /** Add your docs here. */
 public class Constants {
+    /** Defines the possible runtime modes for the robot code. */
+  public static enum Mode {
+    /** Running on a real robot. */
+    REAL,
+
+    /** Running a physics simulator. */
+    SIM,
+
+    /** Replaying from a log file. */
+    REPLAY
+  }
+
+    /** The simulation mode to use when not running on real hardware. */
+    public static final Mode simMode = Mode.SIM;
+
+    /** The current runtime mode, determined by whether running on real hardware or in simulation. */
+    public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+
     /**Are we debugging the bot?*/
     public static boolean debug;
     
