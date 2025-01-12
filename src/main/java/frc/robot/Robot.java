@@ -54,8 +54,8 @@ public class Robot extends LoggedRobot {
     Logger.recordOutput(
         "FinalComponentPoses",
         new Pose3d(
-            robotContainer.getPose2D().getX(),
-            robotContainer.getPose2D().getY(),
+            robotContainer.getPose2d().getX(),
+            robotContainer.getPose2d().getY(),
             0,
             new Rotation3d(
               robotContainer.getRotation3d().getX(), // Roll

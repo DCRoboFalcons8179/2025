@@ -50,10 +50,18 @@ public class RobotContainer {
         configureBindings();
     }
 
-    public Pose2d getPose2D() {
+    /**
+     * Returns the position of the robot
+     * @return Pose2d
+     */
+    public Pose2d getPose2d() {
         return drivetrain.getState().Pose;
     }
 
+    /**
+     * Returns the position of the robot
+     * @return Rotation3d
+     */
     public Rotation3d getRotation3d() {
         return drivetrain.getRotation3d();
     }
