@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 /** Add your docs here. */
 public class Constants {
-    /** Defines the possible runtime modes for the robot code. */
+  /** Defines the possible runtime modes for the robot code. */
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
@@ -21,54 +21,55 @@ public class Constants {
     REPLAY
   }
 
-    /** The simulation mode to use when not running on real hardware. */
-    public static final Mode simMode = Mode.SIM;
+  /** The simulation mode to use when not running on real hardware. */
+  public static final Mode simMode = Mode.SIM;
 
-    /** The current runtime mode, determined by whether running on real hardware or in simulation. */
-    public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+  /** The current runtime mode, determined by whether running on real hardware or in simulation. */
+  public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
 
-    /**Are we debugging the bot?*/
-    public static boolean debug;
-    
-    /**The port numbers for our controllers*/
-    public class Controllers {
-        public final static int xboxController = 0;
+  /** Are we debugging the bot? */
+  public static boolean debug;
+
+  /** The port numbers for our controllers */
+  public class Controllers {
+    public static final int xboxController = 0;
+  }
+
+  /** Values for configuring Motors */
+  public class DriveValues {
+    public static final int leftDriveID = 2;
+    public static final boolean leftDriveInvert = false;
+
+    public static final int leftFollowerID = 3;
+    public static final boolean leftFollowerInvert = false;
+
+    public static final int rightDriveID = 4;
+    public static final boolean rightDriveInvert = false;
+
+    public static final int rightFollowerID = 5;
+    public static final boolean rightFollowerInvert = false;
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    /** kV is the same as kP */
+    public static final double kV = 0;
+
+    public static final int maxRPS = 10000;
+  }
+
+  public class Vision {
+    public class FrontCameraValues {
+      public static final String cameraName = "PLACEHOLDER"; // TODO: Add the camera names
+      public static final double cameraHeightMeters =
+          Units.inchesToMeters(12); // TODO: Add the correct height
+      public static final double cameraAngleRadians =
+          Units.degreesToRadians(20); // TODO: Add the correct angle
     }
 
-    /**Values for configuring Motors*/
-    public class DriveValues {
-        public final static int leftDriveID = 2;
-        public final static boolean leftDriveInvert = false;
-        
-
-        public final static int leftFollowerID = 3;
-        public final static boolean leftFollowerInvert = false;
-
-        public final static int rightDriveID = 4;
-        public final static boolean rightDriveInvert = false;
-
-        public final static int rightFollowerID = 5;
-        public final static boolean rightFollowerInvert = false;
-
-
-        public final static double kP = 0;
-        public final static double kI = 0;
-        public final static double kD = 0;
-        /** <p>kV is the same as kP*/
-        public final static double kV = 0;
-
-        public final static int maxRPS = 10000;
+    public class AprilTags {
+      public static final double tag1HeightMeters =
+          Units.inchesToMeters(50); // TODO: Add the correct height
     }
-
-    public class Vision {
-        public class FrontCameraValues {
-            public final static String cameraName = "PLACEHOLDER"; //TODO: Add the camera names
-            public final static double cameraHeightMeters = Units.inchesToMeters(12); //TODO: Add the correct height
-            public final static double cameraAngleRadians = Units.degreesToRadians(20); //TODO: Add the correct angle
-        }
-
-        public class AprilTags {
-            public final static double tag1HeightMeters = Units.inchesToMeters(50); //TODO: Add the correct height
-        }
-    }
+  }
 }
