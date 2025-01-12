@@ -6,12 +6,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.DriveSub;
+// import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.VisionSub;
 
 public class MaintainAll extends Command {
   VisionSub visionSub;
-  DriveSub driveSub;
+  // DriveSub driveSub;
 
   // PID for the forwardSpeed PID loop
   final double SPEED_P_GAIN = 0.75;
@@ -30,10 +30,10 @@ public class MaintainAll extends Command {
   private double rotSpeed;
 
   /** Creates a new MaintainAll. */
-  public MaintainAll(VisionSub visionSub, DriveSub driveSub) {
+  public MaintainAll(VisionSub visionSub) {
     this.visionSub = visionSub;
-    this.driveSub = driveSub;
-    addRequirements(visionSub, driveSub);
+    // this.driveSub = driveSub;
+    addRequirements(visionSub);
   }
 
   // Called when the command is initially scheduled.
@@ -47,15 +47,16 @@ public class MaintainAll extends Command {
     double range = visionSub.getDistance(visionSub.getFrontCameraUnreadResults());
 
     /**
-    The PID controller didn't like calculating when the value was zero since I return zero when no tag is found
-    so these ternary operators will just set the speed to zero when there isn't an april tag detected
-    */
+     * The PID controller didn't like calculating when the value was zero since I return zero when
+     * no tag is found so these ternary operators will just set the speed to zero when there isn't
+     * an april tag detected
+     */
     rotSpeed = yaw != 0 ? -turnController.calculate(yaw, 0) / 10 : 0;
-    
+
     forwardSpeed = range != 0 ? controller.calculate(range, 1.5) : 0;
-    
+
     // Drives the robot at the desired forward and rotational speed
-    driveSub.drive(forwardSpeed, rotSpeed);
+    // driveSub.drive(forwardSpeed, rotSpeed);
   }
 
   // Called once the command ends or is interrupted.
