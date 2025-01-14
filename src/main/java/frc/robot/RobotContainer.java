@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
 import frc.robot.commands.Elevator;
 import frc.robot.subsystems.DriveSub;
+import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.VisionSub;
 
 public class RobotContainer {
@@ -32,10 +33,11 @@ public class RobotContainer {
   // subsystems;
   DriveSub driveSub;
   VisionSub visionSub;
+  ElevatorSub elevatorSub;
 
   public RobotContainer() {
     driveSub = new DriveSub();
-
+    elevatorSub = new ElevatorSub();
     configureDefaults();
     configureBindings();
   }
@@ -43,11 +45,11 @@ public class RobotContainer {
   private void configureBindings() {
 
     //y button (elevator up)
-    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -5.00)));
-    yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00)));
+    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -5.00, elevatorSub)));
+    yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
     //x button (elevator down)
-    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 5.00)));
-    xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00)));
+    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 5.00, elevatorSub)));
+    xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
   }
 
   public void updateCameras() {

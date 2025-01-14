@@ -10,18 +10,24 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Constants;
+import frc.robot.subsystems.ElevatorSub;
 
 public class Elevator {
     //this holds the speed for the elevator motor
     private DoubleSupplier elevatorSpeed;
-
-    //this is the motor we are using for the motor
-    SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
+    private ElevatorSub elevatorSub;
+   
     
+    //dont delete this
+    public Elevator(DoubleSupplier elevatorSpeed, ElevatorSub elevatorSub) {
+        this.elevatorSpeed = elevatorSpeed;
+        this.elevatorSub = elevatorSub;
+    }
+
 
     public void execute(){
         //set the voltage of the chosen motor based on the input from robotcontainer
-        elevatorMotor.setVoltage(elevatorSpeed.getAsDouble());
+        elevatorSub.moveMotor(elevatorSpeed.getAsDouble());
     }
 
 }
