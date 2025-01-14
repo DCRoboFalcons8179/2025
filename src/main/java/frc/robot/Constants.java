@@ -31,6 +31,8 @@ public class Constants {
         public final static int rightFollowerID = 5;
         public final static boolean rightFollowerInvert = false;
 
+        public final static int coralMotorId = 6;
+
 
         public final static double kP = 0;
         public final static double kI = 0;

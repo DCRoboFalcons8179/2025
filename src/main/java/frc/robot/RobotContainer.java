@@ -9,28 +9,47 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.Drive;
+import frc.robot.Constants.Controllers;
+import frc.robot.commands.CoralGrab;
 import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.VisionSub;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.SubCoral;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class RobotContainer {
   private final Joystick xboxController = new Joystick(0);
+  private final SubCoral subCoral = new SubCoral();
 
   /* Drive Controls */
   private final int leftX = XboxController.Axis.kLeftX.value;
   private final int rightY = XboxController.Axis.kRightY.value;
 
+  // Controller Bindings
+private final Joystick m_driverController = 
+  new Joystick(Controllers.xboxController);
+  private final JoystickButton aButton = new JoystickButton(m_driverController, XboxController.Button.kA.value);
+  private final JoystickButton bButton = new JoystickButton(m_driverController, XboxController.Button.kB.value);
   // subsystems;
   DriveSub driveSub;
   VisionSub visionSub;
 
   public RobotContainer() {
     driveSub = new DriveSub();
-
     configureDefaults();
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    //coral grab keybinds
+      
+    aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
+    aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
+    bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
+    bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
+  }
 
   public void updateCameras() {
     visionSub.setFrontResults();
