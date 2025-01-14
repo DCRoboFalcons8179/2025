@@ -9,17 +9,28 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.Drive;
+import frc.robot.Commands.FireAlgae;
+import frc.robot.Subsystems.AlgaeSub;
 import frc.robot.Subsystems.DriveSub;
 import frc.robot.Subsystems.VisionSub;
 
 public class RobotContainer {
+  // Subsystems and commands
+    private final AlgaeSub algaeSub = new AlgaeSub();
+  // If needed   private final FireAlgae fireAlgae = new FireAlgae(() -> 0.5, algaeSub);
+
+  // Controller bindings
   private final Joystick xboxController = new Joystick(0);
 
   /* Drive Controls */
   private final int leftX = XboxController.Axis.kLeftX.value;
   private final int rightY = XboxController.Axis.kRightY.value;
-
+  private final JoystickButton leftBumper = new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton rightBumper = new JoystickButton(xboxController, XboxController.Button.kRightBumper.value);
+  
+  Trigger algaeTrigger = new Trigger(() -> (leftBumper.getAsBoolean() || rightBumper.getAsBoolean()));
   // Subsystems;
   DriveSub driveSub;
   VisionSub visionSub;
@@ -31,7 +42,11 @@ public class RobotContainer {
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    // Left Bumper Algea
+    algaeTrigger.whileTrue(new FireAlgae(() -> 0.5, algaeSub));
+    algaeTrigger.whileFalse(new FireAlgae( ()-> 0, algaeSub));
+  }
 
   public void updateCameras() {
     visionSub.setFrontResults();

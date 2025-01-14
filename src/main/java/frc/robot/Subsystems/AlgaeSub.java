@@ -4,19 +4,27 @@
 
 package frc.robot.Subsystems;
 
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.math.Filter;
+import frc.robot.Constants;
 
 public class AlgaeSub extends SubsystemBase {
-  /** Creates a new AlgaeSub. */
-
-  VictorSPX Algy = new VictorSPX(0);
+  //Put in Motor Id later
+  VictorSPX Algae = new VictorSPX(0);
   
   public AlgaeSub() {}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void driveAlgea(double AlgaePower){
+    
+    Algae.set(VictorSPXControlMode.PercentOutput, Filter.cutoffFilter(AlgaePower));
+  
   }
 }
