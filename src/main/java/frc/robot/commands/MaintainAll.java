@@ -8,10 +8,11 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.VisionSub;
+import frc.robot.subsystems.drive.Drive;
 
 public class MaintainAll extends Command {
   VisionSub visionSub;
-  // DriveSub driveSub;
+  Drive drive;
 
   // PID for the forwardSpeed PID loop
   final double SPEED_P_GAIN = 0.75;
@@ -30,10 +31,11 @@ public class MaintainAll extends Command {
   private double rotSpeed;
 
   /** Creates a new MaintainAll. */
-  public MaintainAll(VisionSub visionSub) {
+  public MaintainAll(VisionSub visionSub, Drive drive) {
     this.visionSub = visionSub;
-    // this.driveSub = driveSub;
-    addRequirements(visionSub);
+    this.drive = drive;
+
+    addRequirements(visionSub, drive);
   }
 
   // Called when the command is initially scheduled.
@@ -57,6 +59,8 @@ public class MaintainAll extends Command {
 
     // Drives the robot at the desired forward and rotational speed
     // driveSub.drive(forwardSpeed, rotSpeed);
+    DriveCommands.joystickDrive(drive, () -> forwardSpeed, () -> 0, () -> rotSpeed);
+
   }
 
   // Called once the command ends or is interrupted.
