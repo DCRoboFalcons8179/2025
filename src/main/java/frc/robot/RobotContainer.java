@@ -36,6 +36,13 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Commands.Drive;
+import frc.robot.Commands.FireAlgae;
+import frc.robot.Subsystems.AlgaeSub;
+import frc.robot.Subsystems.DriveSub;
+import frc.robot.Subsystems.VisionSub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -53,6 +60,23 @@ public class RobotContainer {
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
+  // Subsystems and commands
+    private final AlgaeSub algaeSub = new AlgaeSub();
+  // If needed   private final FireAlgae fireAlgae = new FireAlgae(() -> 0.5, algaeSub);
+
+  // Controller bindings
+  private final Joystick xboxController = new Joystick(0);
+
+  /* Drive Controls */
+  private final int leftX = XboxController.Axis.kLeftX.value;
+  private final int rightY = XboxController.Axis.kRightY.value;
+  private final JoystickButton leftBumper = new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton rightBumper = new JoystickButton(xboxController, XboxController.Button.kRightBumper.value);
+  
+  Trigger algaeTrigger = new Trigger(() -> (leftBumper.getAsBoolean() || rightBumper.getAsBoolean()));
+  // Subsystems;
+  DriveSub driveSub;
+  VisionSub visionSub;
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -106,6 +130,11 @@ public class RobotContainer {
 
   public void periodic() {
     drive.getVelocity();
+  private void configureBindings() {
+    // Left Bumper Algea
+    algaeTrigger.whileTrue(new FireAlgae(() -> 0.5, algaeSub));
+    algaeTrigger.whileFalse(new FireAlgae( ()-> 0, algaeSub));
+  }
 
     SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
     SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
