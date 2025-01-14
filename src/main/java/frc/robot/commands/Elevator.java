@@ -12,16 +12,12 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Constants;
 
 public class Elevator {
+    //this holds the speed for the elevator motor
     private DoubleSupplier elevatorSpeed;
 
-
+    //this is the motor we are using for the motor
     SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
     
-    public Elevator(DoubleSupplier elevatorSpeed){
-        //just let this chill
-        //idk what it does, but it seems important
-        this.elevatorSpeed = elevatorSpeed;
-    }
 
     public void execute(){
         //set the voltage of the chosen motor based on the input from robotcontainer
@@ -33,9 +29,5 @@ public class Elevator {
 /* 
 what im gonna need
 
-elevator motor (neo)
-morot speed
 stop elevator when limit switch pressed
-controll motor goin gup/down
-maybe track current elecvatuoj\n
 */
