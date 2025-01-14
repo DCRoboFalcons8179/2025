@@ -8,7 +8,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Drive;
+import frc.robot.commands.Elevator;
 import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.VisionSub;
 
@@ -18,6 +21,13 @@ public class RobotContainer {
   /* Drive Controls */
   private final int leftX = XboxController.Axis.kLeftX.value;
   private final int rightY = XboxController.Axis.kRightY.value;
+
+  //elevator buttons
+  //up
+  private final JoystickButton xButton = new JoystickButton(xboxController, XboxController.Button.kX.value);
+  //down
+  private final JoystickButton yButton = new JoystickButton(xboxController, XboxController.Button.kY.value);
+
 
   // subsystems;
   DriveSub driveSub;
@@ -30,7 +40,15 @@ public class RobotContainer {
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+
+    //y button (elevator up)
+    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -5.00)));
+    yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00)));
+    //x button (elevator down)
+    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 5.00)));
+    xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00)));
+  }
 
   public void updateCameras() {
     visionSub.setFrontResults();

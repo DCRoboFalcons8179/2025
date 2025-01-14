@@ -52,4 +52,9 @@ public class Constants {
             public final static double tag1HeightMeters = Units.inchesToMeters(50); //TODO: Add the correct height
         }
     }
+
+    public class Elevator{
+        public final static int motorID = 1;
+        
+    }
 }
