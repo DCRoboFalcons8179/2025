@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Encoder;
 
 /** Add your docs here. */
 public class Constants {
@@ -39,6 +40,14 @@ public class Constants {
         public final static double kV = 0;
 
         public final static int maxRPS = 10000;
+    }
+
+    public class Hook {
+        public final static double kP = 0;
+        public final static double kI = 0;
+        public final static double kD = 0;
+        public final static double kF = 0;
+        public final static int feedbackSensor = 0;
     }
 
     public class Vision {
