@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -22,7 +23,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.GoToTag;
+import frc.robot.commands.MaintainAll;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.VisionSub;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -40,6 +44,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  private final VisionSub visionSub;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -84,11 +89,16 @@ public class RobotContainer {
         break;
     }
 
+    visionSub = new VisionSub();
+
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Configure the button bindings
     configureButtonBindings();
+
+    // Configure PathPlanner Commands
+    configurePathPlannerCommands();
   }
 
   /**
@@ -129,6 +139,11 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
+  }
+
+  private void configurePathPlannerCommands() {
+    NamedCommands.registerCommand("GoToTag", new GoToTag());
+    NamedCommands.registerCommand("MaintainAll", new MaintainAll(visionSub, drive));
   }
 
   /**
