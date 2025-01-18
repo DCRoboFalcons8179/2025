@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
@@ -17,18 +19,15 @@ public class HookSub extends SubsystemBase {
   /** Insert Id later */
   VictorSPX hook = new VictorSPX(0);
   Encoder hookEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k2X);
-  public HookSub() {
+  public void driveHook(double algaePower) {
     VictorSPXConfiguration hookConfiguration = new VictorSPXConfiguration();
-    hookEncoder.setMaxPeriod(1);
-
+    //Hook PID
     hookConfiguration.slot0.kP = Constants.Hook.kP;
     hookConfiguration.slot0.kI = Constants.Hook.kI;
     hookConfiguration.slot0.kD = Constants.Hook.kD;
+    hookConfiguration.slot0.kF = Constants.Hook.kF;
 
-    hook.config_kP(0, Constants.Hook.kP);
-    hook.config_kI(0, Constants.Hook.kI);
-    hook.config_kD(0, Constants.Hook.kD);
-    hook.config_kF(0, Constants.Hook.kF);
+    hook.configAllSettings(hookConfiguration);
     hook.configSelectedFeedbackSensor(RemoteFeedbackDevice.None,
       Constants.Hook.feedbackSensor, 10);
   }
