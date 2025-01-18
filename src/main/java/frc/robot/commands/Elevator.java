@@ -14,20 +14,19 @@ import frc.robot.subsystems.ElevatorSub;
 
 public class Elevator {
     //this holds the speed for the elevator motor
-    private DoubleSupplier elevatorSpeed;
+    private double elevatorSpeed;
     private ElevatorSub elevatorSub;
    
     
     //dont delete this
-    public Elevator(DoubleSupplier elevatorSpeed, ElevatorSub elevatorSub) {
+    public Elevator(double elevatorSpeed, ElevatorSub elevatorSub) {
         this.elevatorSpeed = elevatorSpeed;
         this.elevatorSub = elevatorSub;
     }
 
 
     public void execute(){
-        //set the voltage of the chosen motor based on the input from robotcontainer
-        elevatorSub.moveMotor(elevatorSpeed.getAsDouble());
+        elevatorSub.moveMotor();
     }
 
 }
