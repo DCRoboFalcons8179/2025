@@ -14,12 +14,12 @@ import frc.robot.subsystems.ElevatorSub;
 
 public class Elevator {
     //this holds the speed for the elevator motor
-    private double elevatorSpeed;
+    private DoubleSupplier elevatorSpeed;
     private ElevatorSub elevatorSub;
    
     
     //dont delete this
-    public Elevator(double elevatorSpeed, ElevatorSub elevatorSub) {
+    public Elevator(DoubleSupplier elevatorSpeed, ElevatorSub elevatorSub) {
         this.elevatorSpeed = elevatorSpeed;
         this.elevatorSub = elevatorSub;
     }
