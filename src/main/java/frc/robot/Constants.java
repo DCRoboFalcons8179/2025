@@ -55,6 +55,6 @@ public class Constants {
 
     public class Elevator{
         public final static int motorID = 1;
-        
+        public final static int followerMotorID = 2;
     }
 }
