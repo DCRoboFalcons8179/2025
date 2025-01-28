@@ -6,9 +6,8 @@ package frc.robot.Subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -17,19 +16,20 @@ import frc.robot.Constants;
 
 public class HookSub extends SubsystemBase {
   /** Insert Id later */
-  VictorSPX hook = new VictorSPX(0);
+  TalonFX hook = new TalonFX(0);
   Encoder hookEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k2X);
   public void driveHook(double algaePower) {
-    VictorSPXConfiguration hookConfiguration = new VictorSPXConfiguration();
+    TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
     //Hook PID
-    hookConfiguration.slot0.kP = Constants.Hook.kP;
-    hookConfiguration.slot0.kI = Constants.Hook.kI;
-    hookConfiguration.slot0.kD = Constants.Hook.kD;
-    hookConfiguration.slot0.kF = Constants.Hook.kF;
+    hookConfiguration.Slot0.kP = Constants.Hook.kP;
+    hookConfiguration.Slot0.kI = Constants.Hook.kI;
+    hookConfiguration.Slot0.kD = Constants.Hook.kD;
 
-    hook.configAllSettings(hookConfiguration);
-    hook.configSelectedFeedbackSensor(RemoteFeedbackDevice.None,
-      Constants.Hook.feedbackSensor, 10);
+    hook.getConfigurator().apply( new TalonFXConfiguration());
+
+    hook.getConfigurator().apply(hookConfiguration.Slot0);
+
+    //ADD SOMETHING FOR ENCODERS HERE. I do not know how to make it work with TalonFX. (:
   }
 
   @Override
