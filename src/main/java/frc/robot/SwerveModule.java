@@ -89,4 +89,12 @@ public class SwerveModule {
             Rotation2d.fromRotations(mAngleMotor.getPosition().getValueAsDouble())
         );
     }
+
+    public TalonFX getDriveMotorPointer() {
+        return mDriveMotor;
+    }
+
+    public TalonFX getAngleMotorPointer() {
+        return mAngleMotor;
+    }
 }
