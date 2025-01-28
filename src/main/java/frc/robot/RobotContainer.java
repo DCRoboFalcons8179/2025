@@ -3,10 +3,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -30,29 +30,20 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
-
+    private final Swerve swerve = new Swerve();
+    private final VisionSub visionSub = new VisionSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
+        swerve.setDefaultCommand(
             new TeleopSwerve(
-                s_Swerve, 
+                swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
         );
-
-        // s_Swerve.setDefaultCommand( new TeleopSwerve(
-        //     s_Swerve,
-        //     ()->0.2,
-        //     ()->0,
-        //     ()->0.1,
-        //     ()->false
-        // )
-        // );
 
         // Configure the button bindings
         configureButtonBindings();
@@ -66,7 +57,17 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroHeading()));
+    }
+
+    public void periodic() {
+        SmartDashboard.putBoolean("Has Tag", visionSub.hasTarget());
+        SmartDashboard.putNumber("Target ID", visionSub.getBestTargetID());
+        SmartDashboard.putNumber("Distance", visionSub.getDistance());
+
+        SmartDashboard.putNumber("Translation Z", visionSub.getTransform3dTo3dTarget().getZ()); 
+        SmartDashboard.putNumber("Translation Y", visionSub.getTransform3dTo3dTarget().getY()); 
+        SmartDashboard.putNumber("Translation X", visionSub.getTransform3dTo3dTarget().getX()); 
     }
 
     /**
@@ -76,6 +77,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return null;
+        return new MaintainDistance(visionSub, swerve);
     }
 }

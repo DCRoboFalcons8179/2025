@@ -142,4 +142,22 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+    
+  public class Vision {
+    public static final double errorThreshHoldMeters = 0.005;
+
+    public class FrontCameraValues {
+      public static final String cameraName = "Logitech_Webcam_C925e";
+      public static final double cameraHeightMeters =
+          Units.inchesToMeters(4);
+      public static final double cameraAngleRadians =
+          Units.degreesToRadians(25);
+    }
+
+    public class AprilTags {
+      public static final double tag4HeightMeters =
+          Units.inchesToMeters(57);
+    }
+  }
 }
