@@ -32,13 +32,15 @@ public class Music extends SubsystemBase {
 
   public void nextTrack() {
     stop();
-    orchestra.loadMusic(tracks[trackIndex++]);
+    trackIndex = trackIndex == tracks.length-1 ? 0 : trackIndex + 1; 
+    orchestra.loadMusic(tracks[trackIndex]);
     play();
   }
 
   public void backTrack() {
     stop();
-    orchestra.loadMusic(tracks[trackIndex--]);
+    trackIndex = trackIndex == 0 ? tracks.length-1 : trackIndex - 1;
+    orchestra.loadMusic(tracks[trackIndex]);
     play();
   }
 
