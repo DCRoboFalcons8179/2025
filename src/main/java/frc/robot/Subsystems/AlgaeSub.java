@@ -24,13 +24,8 @@ public class AlgaeSub extends SubsystemBase {
 
   public void driveAlgea(double AlgaePower){
     //Algea PID
-    algeaConfiguration.Slot0.kP = Constants.hook.kP;
-    algeaConfiguration.Slot0.kI = Constants.hook.kI;
-    algeaConfiguration.Slot0.kD = Constants.hook.kD;
-    algeaConfiguration.Slot.kF = Constants.hook.kF;
-
-    Algea.getConfiguration().apply(new VictorSPXConfiguration());
-    //WPI is mad at me finish later (:
+    Algae.set(VictorSPXControlMode.PercentOutput, AlgaePower);
+    
 
   }
 }
