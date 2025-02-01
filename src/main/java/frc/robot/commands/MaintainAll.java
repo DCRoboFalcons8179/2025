@@ -15,9 +15,10 @@ public class MaintainAll extends Command {
   Swerve swerve;
 
   // PID for the forwardSpeed PID loop
-  final double P_GAIN = 0.75;
+  final double P_GAIN = 0.12;
   final double D_GAIN = 0;
   PIDController controller = new PIDController(P_GAIN, 0, D_GAIN);
+  private double previousTranslationSpeed = 0;
 
   // PID for the rotSpeed PID loop
   final double ANGULAR_P = 0.2;
@@ -53,7 +54,8 @@ public class MaintainAll extends Command {
     */
     rotSpeed = yaw != 0 ? -turnController.calculate(yaw, 0) / 10 : 0;
     
-    forwardSpeed = range != 0 ? controller.calculate(range, 1.5) : 0;
+    forwardSpeed = range != 0 ? controller.calculate(range, 1.5) : previousTranslationSpeed;
+    previousTranslationSpeed = forwardSpeed;
     
     // Drives the robot at the desired forward and rotational speed
     swerve.drive(new Translation2d(forwardSpeed, rotSpeed), 0, true, false);

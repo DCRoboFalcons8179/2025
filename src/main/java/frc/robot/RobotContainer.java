@@ -1,5 +1,9 @@
 package frc.robot;
 
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -7,8 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.VisionSub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,8 +38,15 @@ public class RobotContainer {
     private final Swerve swerve = new Swerve();
     private final VisionSub visionSub = new VisionSub();
 
+    private final LoggedDashboardChooser<Command> autoChooser;
+
+
+
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        // Set up auto routines
+        autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
         swerve.setDefaultCommand(
             new TeleopSwerve(
                 swerve, 
@@ -77,6 +89,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new MaintainDistance(visionSub, swerve);
+        // return new MaintainDistance(visionSub, swerve);
+        return autoChooser.get();
     }
 }

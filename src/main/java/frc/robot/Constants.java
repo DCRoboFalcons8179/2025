@@ -3,6 +3,8 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.RobotConfig;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -23,14 +25,22 @@ public final class Constants {
         public static final double trackWidth = Units.inchesToMeters(27.75); //TODO: This must be tuned to specific robot
         public static final double wheelBase = Units.inchesToMeters(21.625); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
+        
+        // Wheel Locations
+        public static final Translation2d frontLeft = new Translation2d(wheelBase / 2.0, trackWidth / 2.0);
+        public static final Translation2d frontRight = new Translation2d(wheelBase / 2.0, -trackWidth / 2.0);
+        public static final Translation2d backRight = new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0);
+        public static final Translation2d backLeft = new Translation2d(-wheelBase / 2.0, trackWidth / 2.0);
+
+        public static final double massKG = Units.lbsToKilograms(31);
 
         /* Swerve Kinematics 
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
          public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-            new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+            frontLeft,
+            frontRight,
+            backRight,
+            backLeft);
 
         /* Module Gear Ratios */
         public static final double driveGearRatio = chosenModule.driveGearRatio;
@@ -85,6 +95,10 @@ public final class Constants {
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
         public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
 
+        public static final ModuleConfig MODULE_CONFIG = new ModuleConfig(wheelCircumference / (2 * Math.PI), maxSpeed, 1.200, null, stickDeadband, 0);
+
+        public static final RobotConfig RobotConfig = new RobotConfig(massKG, 6.883, MODULE_CONFIG, frontLeft, frontRight, backRight, backLeft);
+        
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 { //TODO: This must be tuned to specific robot
@@ -149,8 +163,8 @@ public final class Constants {
 
     public class FrontCameraValues {
       public static final String cameraName = "Logitech_Webcam_C925e";
-      public static final double cameraHeightMeters =
-          Units.inchesToMeters(4);
+    //   public static final double cameraHeightMeters =
+        //   Units.inchesToMeters(4);
       public static final double cameraAngleRadians =
           Units.degreesToRadians(25);
     }
@@ -159,5 +173,8 @@ public final class Constants {
       public static final double tag4HeightMeters =
           Units.inchesToMeters(57);
     }
+
+    public static final double maxAutonSpeedMPS = 3;
+    public static final double threshHoldDistanceMeters = 6;
   }
 }

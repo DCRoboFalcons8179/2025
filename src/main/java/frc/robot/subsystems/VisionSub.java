@@ -74,20 +74,19 @@ public class VisionSub extends SubsystemBase {
     }
 
     public double getDistance() {
-        // PhotonPipelineResult result = camera.getLatestResult();
-
-        // if (result.hasTargets()) {
-        //     return PhotonUtils.calculateDistanceToTargetMeters(Constants.Vision.FrontCameraValues.cameraHeightMeters,
-        //             Constants.Vision.AprilTags.tag4HeightMeters,
-        //             Rotation2d.fromDegrees(Constants.Vision.FrontCameraValues.cameraAngleRadians).getRadians(),
-        //             Units.degreesToRadians(result.getBestTarget().getPitch()));
-        // }
-
         if (hasTarget()) {
             return getTransform3dTo3dTarget().getX();
+        } else { 
+            return 0;
         }
+    }
 
-        return 0;
+    public double getYOffset() {
+        if (hasTarget()) {
+            return getTransform3dTo3dTarget().getY();
+        } else {
+            return 0;
+        }
     }
 
 }
