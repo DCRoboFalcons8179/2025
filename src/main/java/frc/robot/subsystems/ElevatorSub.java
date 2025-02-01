@@ -28,7 +28,11 @@ public class ElevatorSub extends SubsystemBase{
     //this is the motor we are using for the motor
     private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
 
+    private SparkMaxConfig test = new SparkMaxConfig();
+    private ClosedLoopConfig testclosed = new ClosedLoopConfig();
     private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {
+
+        
 
     };
     private SparkMax followerMotor = new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
@@ -38,7 +42,7 @@ public class ElevatorSub extends SubsystemBase{
     RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
     //pid stuff
-       public void autonomousInit(){
+    public void autonomousInit(){
         //zero encoder position
         elevatorEncoder.getPosition();
         //reset pid
@@ -60,7 +64,7 @@ public class ElevatorSub extends SubsystemBase{
 
     //does a bunch of math and uses pid loop to move the motor for the elevator
     public void moveMotor(){
-
+        
         //set sensor position equal to the encoder position
         double sensorPOS = elevatorEncoder.getPosition();
         //calculations for the pid loop
@@ -75,13 +79,14 @@ public class ElevatorSub extends SubsystemBase{
         //move the elevator motor
         elevatorEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
         followerEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
+        
     }
 
     //config for the elevator encoder
     public ElevatorSub() {
         var testConfig = new SparkMaxConfig();
         elevatorMotor.configure(testConfig, null, null);
-
+        test.apply(testclosed);
     }    
 
     
