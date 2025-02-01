@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.MaintainDistance;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.Music;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.VisionSub;
 
@@ -33,19 +35,22 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton nextTrack = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton backTrack = new JoystickButton(driver, XboxController.Button.kX.value); 
 
     /* Subsystems */
     private final Swerve swerve = new Swerve();
     private final VisionSub visionSub = new VisionSub();
+    private final Music music = new Music(swerve);
 
-    private final LoggedDashboardChooser<Command> autoChooser;
+    // private final LoggedDashboardChooser<Command> autoChooser;
 
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Set up auto routines
-        autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+        // autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
         swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -59,6 +64,9 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+
+        music.load(0);
+
     }
 
     /**
@@ -70,6 +78,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroHeading()));
+        nextTrack.onTrue(new InstantCommand(() -> music.nextTrack()));
+        backTrack.onTrue(new InstantCommand(() -> music.backTrack()));
     }
 
     public void periodic() {
@@ -89,7 +99,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        // return new MaintainDistance(visionSub, swerve);
-        return autoChooser.get();
+        return new MaintainDistance(visionSub, swerve);
+        // return autoChooser.get();
     }
 }

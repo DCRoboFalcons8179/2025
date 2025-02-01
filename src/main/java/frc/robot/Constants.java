@@ -95,9 +95,9 @@ public final class Constants {
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
         public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
 
-        public static final ModuleConfig MODULE_CONFIG = new ModuleConfig(wheelCircumference / (2 * Math.PI), maxSpeed, 1.200, null, stickDeadband, 0);
+        // public static final ModuleConfig MODULE_CONFIG = new ModuleConfig(wheelCircumference / (2 * Math.PI), maxSpeed, 1.200, null, stickDeadband, 0);
 
-        public static final RobotConfig RobotConfig = new RobotConfig(massKG, 6.883, MODULE_CONFIG, frontLeft, frontRight, backRight, backLeft);
+        // public static final RobotConfig RobotConfig = new RobotConfig(massKG, 6.883, MODULE_CONFIG, frontLeft, frontRight, backRight, backLeft);
         
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
