@@ -5,20 +5,20 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.Orchestra;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.SwerveModule;
+import frc.robot.subsystems.drive.Drive;
 
 public class Music extends SubsystemBase {
   private Orchestra orchestra = new Orchestra();
   private int trackIndex = 0;
-  private String[] tracks = {"halo_main_theme", "live_and_learn"};
+  private String[] tracks = {""};
   /** Creates a new Music. */
-  public Music(Swerve swerve) {
+  public Music(Drive swerve) {
     // Adds all the Swerve Modules to the Orchestra
-    for (SwerveModule module : swerve.mSwerveMods) {
-      orchestra.addInstrument(module.getDriveMotorPointer());
-      orchestra.addInstrument(module.getAngleMotorPointer());
+    for (frc.robot.subsystems.drive.Module module : swerve.modules) {
+
+      // orchestra.addInstrument(module.getDriveMotorPointer());
+      // orchestra.addInstrument(module.getAngleMotorPointer());
     }
   }
 
@@ -30,21 +30,18 @@ public class Music extends SubsystemBase {
     orchestra.stop();
   }
 
-  public void load(int index) {
-    orchestra.stop();
-    orchestra.loadMusic(String.format("music/%s.chrp",tracks[index]));
-    orchestra.play();
-  }
-
   public void nextTrack() {
-    trackIndex = trackIndex == tracks.length-1 ? 0 : trackIndex + 1; 
-    load(trackIndex);
+    stop();
+    trackIndex = trackIndex == tracks.length - 1 ? 0 : trackIndex + 1;
+    orchestra.loadMusic(tracks[trackIndex]);
+    play();
   }
 
   public void backTrack() {
-    trackIndex = trackIndex == 0 ? tracks.length-1 : trackIndex - 1;
-    load(trackIndex);
-    
+    stop();
+    trackIndex = trackIndex == 0 ? tracks.length - 1 : trackIndex - 1;
+    orchestra.loadMusic(tracks[trackIndex]);
+    play();
   }
 
   @Override
