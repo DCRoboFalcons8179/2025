@@ -4,21 +4,31 @@
 
 package frc.robot.subsystems;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import com.ctre.phoenix6.Orchestra;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.ModuleIOTalonFX;
 
 public class Music extends SubsystemBase {
   private Orchestra orchestra = new Orchestra();
   private int trackIndex = 0;
-  private String[] tracks = {""};
-  /** Creates a new Music. */
-  public Music(Drive swerve) {
-    // Adds all the Swerve Modules to the Orchestra
-    for (frc.robot.subsystems.drive.Module module : swerve.modules) {
+  private ArrayList<String> tracks = new ArrayList<String>();
 
-      // orchestra.addInstrument(module.getDriveMotorPointer());
-      // orchestra.addInstrument(module.getAngleMotorPointer());
+  File dir = new File("music/");
+
+  /** Creates a new Music. */
+  public Music(ModuleIOTalonFX... moduleIOTalonFXs) {
+    File[] file = dir.listFiles();
+    for (File song : file) {
+      tracks.add(song.getName());
+    }
+
+    // Adds all the Swerve Modules to the Orchestra
+    for (ModuleIOTalonFX module : moduleIOTalonFXs) {
+      orchestra.addInstrument(module.getDriveMotorPointer());
+      orchestra.addInstrument(module.getAngleMotorPointer());
     }
   }
 
@@ -30,17 +40,21 @@ public class Music extends SubsystemBase {
     orchestra.stop();
   }
 
+  public void loadMusic(String song) {
+    orchestra.loadMusic(String.format("music/%d", song));
+  }
+
   public void nextTrack() {
     stop();
-    trackIndex = trackIndex == tracks.length - 1 ? 0 : trackIndex + 1;
-    orchestra.loadMusic(tracks[trackIndex]);
+    trackIndex = trackIndex == tracks.size() - 1 ? 0 : trackIndex + 1;
+    loadMusic(tracks.get(trackIndex));
     play();
   }
 
   public void backTrack() {
     stop();
-    trackIndex = trackIndex == 0 ? tracks.length - 1 : trackIndex - 1;
-    orchestra.loadMusic(tracks[trackIndex]);
+    trackIndex = trackIndex == 0 ? tracks.size() - 1 : trackIndex - 1;
+    loadMusic(tracks.get(trackIndex));
     play();
   }
 

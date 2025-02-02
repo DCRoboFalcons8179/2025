@@ -34,4 +34,7 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
+
+  /** Is the robot at a comp? */
+  public static boolean comp = false;
 }
