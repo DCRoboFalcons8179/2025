@@ -13,11 +13,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 
 /**
- * This class defines the runtime mode used by AdvantageKit. The mode is always "real" when running
- * on a roboRIO. Change the value of "simMode" to switch between "sim" (physics sim) and "replay"
+ * This class defines the runtime mode used by AdvantageKit. The mode is always
+ * "real" when running
+ * on a roboRIO. Change the value of "simMode" to switch between "sim" (physics
+ * sim) and "replay"
  * (log replay from a file).
  */
 public final class Constants {
@@ -37,4 +40,18 @@ public final class Constants {
 
   /** Is the robot at a comp? */
   public static boolean comp = false;
+
+  public class Vision {
+    public static final double errorThreshHoldMeters = 0.005;
+
+    public class FrontCameraValues {
+      public static final String cameraName = "C270_HD_WEBCAM";
+      public static final double cameraHeightMeters = Units.inchesToMeters(4);
+      public static final double cameraAngleRadians = Units.degreesToRadians(25);
+    }
+
+    public class AprilTags {
+      public static final double tag4HeightMeters = Units.inchesToMeters(57);
+    }
+  }
 }

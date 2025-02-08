@@ -234,6 +234,9 @@ public class Drive extends SubsystemBase {
     Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
     Logger.recordOutput("SwerveChassisSpeeds/Setpoints", discreteSpeeds);
 
+    SmartDashboard.putNumber("Swerve Vx", discreteSpeeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("Swerve Vy", discreteSpeeds.vyMetersPerSecond);
+
     // Send setpoints to modules
     for (int i = 0; i < 4; i++) {
       modules[i].runSetpoint(setpointStates[i]);
@@ -247,6 +250,12 @@ public class Drive extends SubsystemBase {
   public void runCharacterization(double output) {
     for (int i = 0; i < 4; i++) {
       modules[i].runCharacterization(output);
+    }
+  }
+
+  public void getVelocity() {
+    for (int i = 0; i < 4; i++) {
+      SmartDashboard.putNumber("Speeds/" + i, modules[i].getVelocityMetersPerSec());
     }
   }
 

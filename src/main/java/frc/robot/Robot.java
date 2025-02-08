@@ -116,6 +116,7 @@ public class Robot extends LoggedRobot {
     // the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
+    robotContainer.periodic();
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
   }
