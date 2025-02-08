@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Music;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIONavX;
@@ -42,7 +43,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   public final Drive drive;
-  // private Music music;
+  private Music music;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -60,10 +61,9 @@ public class RobotContainer {
         ModuleIOTalonFX backLeft = new ModuleIOTalonFX(TunerConstants.BackLeft);
         ModuleIOTalonFX backRight = new ModuleIOTalonFX(TunerConstants.BackRight);
 
-        // if (!Constants.comp) {
-        //   music = new Music(frontLeft, frontRight, backLeft, backRight);
-        //   configMusicButtonBindings();
-        // }
+        music = new Music(frontLeft, frontRight, backLeft, backRight);
+        configMusicButtonBindings();
+
         // Real robot, instantiate hardware IO implementations
         drive = new Drive(new GyroIONavX(), frontLeft, frontRight, backLeft, backRight);
         break;
@@ -162,8 +162,11 @@ public class RobotContainer {
   }
 
   private void configMusicButtonBindings() {
-    // controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-    // controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+    if (!Constants.comp) {
+      controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
+      controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+      controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
+    }
   }
 
   /**

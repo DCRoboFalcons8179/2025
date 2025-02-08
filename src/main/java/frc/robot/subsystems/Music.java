@@ -7,21 +7,19 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.Orchestra;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import java.io.File;
 import java.util.ArrayList;
 
 public class Music extends SubsystemBase {
   private Orchestra orchestra = new Orchestra();
-  private int trackIndex = 0;
+  private int trackIndex = -1;
   private ArrayList<String> tracks = new ArrayList<String>();
 
-  File dir = new File("music/");
+  String[] songs = {"Cirice Ghost", "halo_main_theme", "live_and_learn"};
 
   /** Creates a new Music. */
   public Music(ModuleIOTalonFX... moduleIOTalonFXs) {
-    File[] file = dir.listFiles();
-    for (File song : file) {
-      tracks.add(song.getName());
+    for (String song : songs) {
+      tracks.add(song);
     }
 
     // Adds all the Swerve Modules to the Orchestra
@@ -40,7 +38,7 @@ public class Music extends SubsystemBase {
   }
 
   public void loadMusic(String song) {
-    orchestra.loadMusic(String.format("music/%d", song));
+    orchestra.loadMusic(String.format("music/%s.chrp", song));
   }
 
   public void nextTrack() {
