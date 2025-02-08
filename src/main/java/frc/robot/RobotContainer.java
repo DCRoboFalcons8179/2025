@@ -20,12 +20,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Music;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIONavX;
@@ -42,8 +40,8 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
   // Subsystems
-  private final Drive drive;
-  private Music music;
+  public final Drive drive;
+  // private Music music;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -57,22 +55,16 @@ public class RobotContainer {
       case REAL:
         ModuleIOTalonFX frontLeft = new ModuleIOTalonFX(TunerConstants.FrontLeft);
         ModuleIOTalonFX frontRight = new ModuleIOTalonFX(TunerConstants.FrontRight);
-    
+
         ModuleIOTalonFX backLeft = new ModuleIOTalonFX(TunerConstants.BackLeft);
         ModuleIOTalonFX backRight = new ModuleIOTalonFX(TunerConstants.BackRight);
 
-        if (!Constants.comp) {
-            music = new Music(frontLeft, frontRight, backLeft, backRight);
-            configMusicButtonBindings();
-        }
+        // if (!Constants.comp) {
+        //   music = new Music(frontLeft, frontRight, backLeft, backRight);
+        //   configMusicButtonBindings();
+        // }
         // Real robot, instantiate hardware IO implementations
-        drive =
-            new Drive(
-                new GyroIONavX(),
-                frontLeft,
-                frontRight,
-                backLeft,
-                backRight);
+        drive = new Drive(new GyroIONavX(), frontLeft, frontRight, backLeft, backRight);
         break;
 
       case SIM:
@@ -132,8 +124,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> controller.getLeftY(),
-            () -> controller.getLeftX(),
+            () -> -controller.getLeftY(),
+            () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
     // Lock to 0° when A button is held
@@ -162,8 +154,8 @@ public class RobotContainer {
   }
 
   private void configMusicButtonBindings() {
-    controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-    controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+    // controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
+    // controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
   }
 
   /**

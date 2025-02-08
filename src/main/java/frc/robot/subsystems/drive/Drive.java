@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -166,6 +167,7 @@ public class Drive extends SubsystemBase {
     for (var module : modules) {
       module.periodic();
     }
+    SmartDashboard.putNumber("Gyro Angle", gyroInputs.yawPosition.getDegrees());
     odometryLock.unlock();
 
     // Stop moving when disabled
@@ -354,6 +356,11 @@ public class Drive extends SubsystemBase {
   /** Returns the maximum angular speed in radians per sec. */
   public double getMaxAngularSpeedRadPerSec() {
     return getMaxLinearSpeedMetersPerSec() / DRIVE_BASE_RADIUS;
+  }
+
+  /** Zeros the NavX */
+  public void zeroYaw() {
+    gyroIO.zeroYaw();
   }
 
   /** Returns an array of module translations. */
