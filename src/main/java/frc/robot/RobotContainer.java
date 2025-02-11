@@ -28,7 +28,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Music;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
-import frc.robot.subsystems.drive.GyroIONavX;
+import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -65,7 +65,7 @@ public class RobotContainer {
         configMusicButtonBindings();
 
         // Real robot, instantiate hardware IO implementations
-        drive = new Drive(new GyroIONavX(), frontLeft, frontRight, backLeft, backRight);
+        drive = new Drive(new GyroIOPigeon2(), frontLeft, frontRight, backLeft, backRight);
         break;
 
       case SIM:
