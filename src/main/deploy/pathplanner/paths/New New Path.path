@@ -8,36 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.564241803278687,
-        "y": 2.0
+        "x": 6.150491803278686,
+        "y": 2.234
       },
       "isLocked": false,
       "linkedName": "RedStartCenter"
     },
     {
       "anchor": {
-        "x": 5.33452868852459,
-        "y": 2.658401639344263
+        "x": 2.36925,
+        "y": 5.975
       },
       "prevControl": {
-        "x": 5.58452868852459,
-        "y": 2.2253889374520437
+        "x": 3.6846250000000005,
+        "y": 5.9875
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefBottomRight"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 180.0
-    },
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 119.99999999999999
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -51,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.62098005640536
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "New Folder",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 179.6285576866292
