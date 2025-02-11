@@ -26,6 +26,7 @@ public class Elevator {
 
 
     public void execute(){
+        //command for the elevator
         elevatorSub.moveMotor();
     }
 

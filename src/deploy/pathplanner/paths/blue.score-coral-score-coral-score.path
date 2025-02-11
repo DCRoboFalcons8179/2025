@@ -146,7 +146,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "wait1",
+      "name": "",
       "waypointRelativePos": 1.0213399503721616,
       "endWaypointRelativePos": null,
       "command": {

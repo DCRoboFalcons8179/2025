@@ -1,45 +1,39 @@
 package frc.robot.subsystems;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
 import java.io.ObjectInputFilter.Config;
 import java.nio.file.DirectoryStream.Filter;
 import java.security.KeyPair;
-
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-
 import com.revrobotics.RelativeEncoder;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.revrobotics.*;
 import com.revrobotics.spark.SparkBase;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSub extends SubsystemBase{
     //this is the motor we are using for the motor
     private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
+    //create the elevator encoder
+    RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
+    //create the config for the motors
     private SparkMaxConfig test = new SparkMaxConfig();
     private ClosedLoopConfig testclosed = new ClosedLoopConfig();
-    private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {
+    //sparkbase for the motor
+    private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {};
 
-        
-
-    };
+    //create the follower motor
     private SparkMax followerMotor = new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
-    
+    //create the follower encoder
     RelativeEncoder followerEncoder = followerMotor.getEncoder();
-
-    RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
     //pid stuff
     public void autonomousInit(){
@@ -57,7 +51,10 @@ public class ElevatorSub extends SubsystemBase{
     final double iLimit = 1;
     final double kD = 0;
 
+    //current elevator setpoint (where the elevator is going)
     double setpoint = 0;
+
+    //more pid variables
     double errorSum = 0;
     double lastTimeStamp = 0;
     double lastError = 0;
@@ -79,7 +76,6 @@ public class ElevatorSub extends SubsystemBase{
         //move the elevator motor
         elevatorEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
         followerEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
-        
     }
 
     //config for the elevator encoder
