@@ -21,14 +21,17 @@ public class HookSub extends SubsystemBase {
   public void driveHook(double algaePower) {
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
     //Hook PID
-    hookConfiguration.Slot0.kP = Constants.Hook.kP;
-    hookConfiguration.Slot0.kI = Constants.Hook.kI;
-    hookConfiguration.Slot0.kD = Constants.Hook.kD;
+    hookConfiguration.Slot0.kP = Constants.HookPID.kP;
+    hookConfiguration.Slot0.kI = Constants.HookPID.kI;
+    hookConfiguration.Slot0.kD = Constants.HookPID.kD;
 
     hook.getConfigurator().apply( new TalonFXConfiguration());
 
     hook.getConfigurator().apply(hookConfiguration.Slot0);
 
+    hook.setNeutralMode(NeutralModeValue.Brake);
+
+    
     //ADD SOMETHING FOR ENCODERS HERE. I do not know how to make it work with TalonFX. (:
   }
 

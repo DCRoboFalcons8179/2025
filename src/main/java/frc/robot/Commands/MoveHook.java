@@ -32,6 +32,7 @@ public class MoveHook extends Command {
   public void execute() {
 
     hookSub.driveHook(
+      //Moves the Hook
       hookPower.getAsDouble()
     );
     

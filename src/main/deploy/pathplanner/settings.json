@@ -3,7 +3,10 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "New Folder"
+    "3 Coral",
+    "Algea + Coral",
+    "Drop Coral Leave",
+    "Test Auto"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,

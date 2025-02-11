@@ -3,57 +3,73 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.78475,
-        "y": 1.8994999999999993
+        "x": 8.745750000000001,
+        "y": 2.9915000000000003
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.784750000000003,
-        "y": 1.8994999999999993
+        "x": 9.915750000000001,
+        "y": 3.0499999999999994
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 10.910250000000001,
-        "y": 1.8994999999999993
+        "x": 12.1635,
+        "y": 5.273
       },
       "prevControl": {
-        "x": 10.625720593890074,
-        "y": 1.8576574402779509
+        "x": 12.04120022184493,
+        "y": 5.054956966946383
       },
       "nextControl": {
-        "x": 11.24175,
-        "y": 1.9482499999999994
+        "x": 12.294749999999999,
+        "y": 5.507000000000001
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.73775,
-        "y": 2.7965
+        "x": 11.5245,
+        "y": 7.3985
       },
       "prevControl": {
-        "x": 12.7335,
-        "y": 2.182249999999999
+        "x": 11.282129135595707,
+        "y": 7.4597891841022355
       },
       "nextControl": {
-        "x": 14.683840008579132,
-        "y": 3.375176413014421
+        "x": 12.372750000000002,
+        "y": 7.184
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 15.015,
-        "y": 0.56375
+        "x": 15.9705,
+        "y": 7.2425
       },
       "prevControl": {
-        "x": 14.015,
-        "y": 0.5637500000000001
+        "x": 15.68775,
+        "y": 7.4765
+      },
+      "nextControl": {
+        "x": 16.47465616948912,
+        "y": 6.825267308009004
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 13.87425,
+        "y": 5.273
+      },
+      "prevControl": {
+        "x": 14.332499999999998,
+        "y": 5.614249999999999
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,8 +78,16 @@
   ],
   "rotationTargets": [
     {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -61.87937547453807
+    },
+    {
       "waypointRelativePos": 2,
-      "rotationDegrees": 119.6831401791233
+      "rotationDegrees": 88.53119928561412
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 49.04448557418115
     }
   ],
   "constraintZones": [],
@@ -79,10 +103,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -121.53479190518857
   },
   "reversed": false,
-  "folder": "Drop Coral Leave",
+  "folder": "Algea + Coral",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

@@ -3,53 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.7555,
-        "y": 6.140750000000001
+        "x": 3.744,
+        "y": 5.273
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.750000000000018,
-        "y": 6.072500000000001
+        "x": 3.8220000000000005,
+        "y": 5.624
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7635,
-        "y": 5.302249999999999
+        "x": 4.04625,
+        "y": 7.515
       },
       "prevControl": {
-        "x": 5.148000000000001,
-        "y": 6.023749999999998
-      },
-      "nextControl": {
-        "x": 2.50269971291006,
-        "y": 4.645213230671438
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.12,
-        "y": 7.466749999999999
-      },
-      "prevControl": {
-        "x": 4.602,
-        "y": 7.417999999999999
+        "x": 3.8415,
+        "y": 7.11525
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": -61.95189424544694
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -63,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 179.25594079711126
+    "rotation": -88.72696997994323
   },
   "reversed": false,
-  "folder": "Drop Coral Leave",
+  "folder": "Test Auto",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -59.0362434679265
   },
   "useDefaultConstraints": true
 }

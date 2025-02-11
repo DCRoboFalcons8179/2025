@@ -82,12 +82,10 @@ public final class Constants {
         public final static int maxRPS = 10000;
     }
 
-    public class Hook {
+    public class HookPID {
         public final static double kP = 0;
         public final static double kI = 0;
         public final static double kD = 0;
-        public final static double kF = 0;
-        public final static int feedbackSensor = 0;
     }
 
     public class Vision {
