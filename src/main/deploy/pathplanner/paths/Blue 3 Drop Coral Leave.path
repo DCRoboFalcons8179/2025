@@ -40,7 +40,7 @@
         "y": 6.004250000000001
       },
       "nextControl": {
-        "x": 2.6230553169064827,
+        "x": 2.623055316906483,
         "y": 4.470403282856051
       },
       "isLocked": false,
@@ -82,7 +82,7 @@
     "rotation": 179.25594079711126
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Drop Coral Leave",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

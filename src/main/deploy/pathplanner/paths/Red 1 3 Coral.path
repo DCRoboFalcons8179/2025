@@ -24,8 +24,8 @@
         "y": 5.507000000000001
       },
       "nextControl": {
-        "x": 12.592560147048914,
-        "y": 5.329342595908789
+        "x": 12.59256014704892,
+        "y": 5.329342595908788
       },
       "isLocked": false,
       "linkedName": null
@@ -126,7 +126,7 @@
     "rotation": -123.38851357611166
   },
   "reversed": false,
-  "folder": null,
+  "folder": "3 Coral",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

@@ -23,7 +23,7 @@ public class AlgaeSub extends SubsystemBase {
   }
 
   public void driveAlgea(double AlgaePower){
-    //Algea PID
+    //Need to make into PID
     Algae.set(VictorSPXControlMode.PercentOutput, AlgaePower);
     
 
