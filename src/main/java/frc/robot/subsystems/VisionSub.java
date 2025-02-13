@@ -3,8 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -16,8 +14,6 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 public class VisionSub extends SubsystemBase {
   private PhotonCamera camera = new PhotonCamera(Constants.Vision.FrontCameraValues.cameraName);
-  private AprilTagFieldLayout aprilTagFieldLayout =
-      AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
   @Override
   public void periodic() {
@@ -63,18 +59,9 @@ public class VisionSub extends SubsystemBase {
   }
 
   public double getDistance() {
-    // PhotonPipelineResult result = camera.getLatestResult();
-    // if (result.hasTargets()) {
-    //     return
-    // PhotonUtils.calculateDistanceToTargetMeters(Constants.Vision.FrontCameraValues.cameraHeightMeters,
-    //             Constants.Vision.AprilTags.tag4HeightMeters,
-    //
-    // Rotation2d.fromDegrees(Constants.Vision.FrontCameraValues.cameraAngleRadians).getRadians(),
-    //             Units.degreesToRadians(result.getBestTarget().getPitch()));
-    // }
     if (hasTarget()) {
       return getTransform3dTo3dTarget().getX();
     }
-    return 0;
+    return -1;
   }
 }
