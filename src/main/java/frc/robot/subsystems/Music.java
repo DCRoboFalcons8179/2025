@@ -14,7 +14,7 @@ public class Music extends SubsystemBase {
   private int trackIndex = -1;
   private ArrayList<String> tracks = new ArrayList<String>();
 
-  String[] songs = {"Cirice Ghost", "halo_main_theme", "live_and_learn"};
+  String[] songs = {"Cirice Ghost", "halo_main_theme", "live_and_learn", "Hail to the King"};
 
   /** Creates a new Music. */
   public Music(ModuleIOTalonFX... moduleIOTalonFXs) {
