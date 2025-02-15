@@ -151,11 +151,12 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    // controller.rightBumper().onTrue(new MaintainDistance(visionSub, drive));
+    controller.rightBumper().whileTrue(new MaintainDistance(visionSub, drive));
   }
 
   private void configMusicButtonBindings() {
     if (!Constants.comp) {
+      controller.povUp().onTrue(new InstantCommand(() -> music.play()));
       controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
       controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
       controller.povDown().onTrue(new InstantCommand(() -> music.stop()));

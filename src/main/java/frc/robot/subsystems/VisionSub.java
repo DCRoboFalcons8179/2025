@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.photonvision.PhotonCamera;
@@ -32,7 +33,7 @@ public class VisionSub extends SubsystemBase {
     }
     return -1;
   }
-
+  
   public PhotonTrackedTarget getBestTarget() {
     PhotonPipelineResult result = camera.getLatestResult();
     if (hasTarget()) {
@@ -43,6 +44,7 @@ public class VisionSub extends SubsystemBase {
 
   public Transform3d getTransform3dTo3dTarget() {
     if (hasTarget()) {
+      SmartDashboard.putNumber("Tag Pitch", getBestTarget().getPitch());
       return getBestTarget().getBestCameraToTarget();
     } else {
       return new Transform3d(new Transform2d(0, 0, new Rotation2d(0)));

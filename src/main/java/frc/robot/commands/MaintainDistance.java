@@ -16,11 +16,14 @@ public class MaintainDistance extends Command {
   Drive drive;
   double forwardSpeed;
   double strafeSpeed;
+  /** How many times we failed to find the tag */
+  int counter;
 
   // PID for the forward speed loop
-  final double P_GAIN = 4;
+  final double P_GAIN = 2.25;
+  final double I_GAIN = 0;
   final double D_GAIN = 0.25;
-  PIDController controller = new PIDController(P_GAIN, 0, D_GAIN);
+  PIDController controller = new PIDController(P_GAIN, I_GAIN, D_GAIN);
 
   int desiredDistanceMeters = 2;
 
@@ -40,12 +43,28 @@ public class MaintainDistance extends Command {
   @Override
   public void execute() {
     double range = visionSub.getDistance();
-    forwardSpeed = range != 0 ? controller.calculate(range, 2) : 0;
+    // If range is equal to -1, add 1 to the counter, otherwise add 0
+    counter += range == -1 ? 1 : 0;
+
+    if (range > 1.5) {
+      forwardSpeed = -2;
+      counter = 0;
+    } else if (range != -1) {
+      forwardSpeed = controller.calculate(range, 1);
+      counter = 0;
+    } else if (counter >= Constants.Vision.tagFindingTries) {
+      System.out.println(counter);
+      forwardSpeed = 0;
+    }
     strafeSpeed = 0;
 
     ChassisSpeeds speeds = new ChassisSpeeds();
 
-    // drive.runVelocity(new Translation2d(-forwardSpeed, strafeSpeed), 0, true, false);
+    speeds.vxMetersPerSecond = -forwardSpeed;
+    speeds.vyMetersPerSecond = strafeSpeed;
+    speeds.omegaRadiansPerSecond = 0;
+
+    drive.runVelocity(speeds);
   }
 
   // Called once the command ends or is interrupted.
