@@ -4,16 +4,16 @@
 
 package frc.robot.Subsystems;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.math.Filter;
 import frc.robot.Constants;
 
 public class AlgaeSub extends SubsystemBase {
   //Put in Motor Id later
-  VictorSPX Algae = new VictorSPX(0);
+  VictorSPX algae = new VictorSPX(0);
   
   public AlgaeSub() {}
 
@@ -23,9 +23,17 @@ public class AlgaeSub extends SubsystemBase {
   }
 
   public void driveAlgea(double AlgaePower){
-    //Need to make into PID
-    Algae.set(VictorSPXControlMode.PercentOutput, AlgaePower);
+    VictorSPXConfiguration algaeConfiguration = new VictorSPXConfiguration();
+    //Algea PID
+    algaeConfiguration.slot0.kP = Constants.AlgaePID.kP;
+    algaeConfiguration.slot0.kI = Constants.AlgaePID.kI;
+    algaeConfiguration.slot0.kD = Constants.AlgaePID.kD;
+    algaeConfiguration.slot0.kF = Constants.AlgaePID.kF;
     
-
+    algae.getAllConfigs(algaeConfiguration);
+    
+    //Replace "feedbackSensor" when I know what to call it. (:
+    algae.configSelectedFeedbackSensor(RemoteFeedbackDevice.None,
+    Constants.Algae.feedbackSensor, 10);
   }
 }
