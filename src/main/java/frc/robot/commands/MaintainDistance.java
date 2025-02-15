@@ -5,9 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.VisionSub;
@@ -23,7 +21,7 @@ public class MaintainDistance extends Command {
   final double P_GAIN = 4;
   final double D_GAIN = 0.25;
   PIDController controller = new PIDController(P_GAIN, 0, D_GAIN);
-  
+
   int desiredDistanceMeters = 2;
 
   /** Creates a new MaintainDistance. */
@@ -45,10 +43,7 @@ public class MaintainDistance extends Command {
     forwardSpeed = range != 0 ? controller.calculate(range, 2) : 0;
     strafeSpeed = 0;
 
-    ChassisSpeeds speeds =
-        new ChassisSpeeds(
-               
-        );
+    ChassisSpeeds speeds = new ChassisSpeeds();
 
     // drive.runVelocity(new Translation2d(-forwardSpeed, strafeSpeed), 0, true, false);
   }

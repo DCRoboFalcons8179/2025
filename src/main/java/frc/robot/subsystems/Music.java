@@ -50,7 +50,7 @@ public class Music extends SubsystemBase {
 
   public void backTrack() {
     stop();
-    trackIndex = trackIndex == 0 ? tracks.size() - 1 : trackIndex - 1;
+    trackIndex = trackIndex == 0 || trackIndex == -1 ? tracks.size() - 1 : trackIndex - 1;
     loadMusic(tracks.get(trackIndex));
     play();
   }
