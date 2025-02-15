@@ -4,8 +4,6 @@
 
 package frc.robot.Subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -18,7 +16,7 @@ public class HookSub extends SubsystemBase {
   /** Insert Id later */
   TalonFX hook = new TalonFX(0);
   Encoder hookEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k2X);
-  public void driveHook(double algaePower) {
+  public void driveHook(double hookPower) {
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
     //Hook PID
     hookConfiguration.Slot0.kP = Constants.HookPID.kP;

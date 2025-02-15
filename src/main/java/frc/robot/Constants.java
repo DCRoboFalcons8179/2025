@@ -14,8 +14,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * This class defines the runtime mode used by AdvantageKit. The mode is always "real" when running
@@ -88,6 +86,16 @@ public final class Constants {
         public final static double kD = 0;
     }
 
+    public class AlgaePID {
+        public final static double kP = 0;
+        public final static double kI = 0;
+        public final static double kD = 0;
+        public final static double kF = 0;
+    }
+
+    public class Algae {
+        public final static int feedbackSensor = 0;
+    }
     public class Vision {
         public class FrontCameraValues {
             public final static String cameraName = "PLACEHOLDER"; //TODO: Add the camera names
