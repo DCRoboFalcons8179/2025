@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.SubCoral;
 import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.commands.Wrist;
 
 public class RobotContainer {
   private final Joystick xboxController = new Joystick(0);
@@ -32,6 +33,8 @@ private final Joystick m_driverController =
   new Joystick(Controllers.xboxController);
   private final JoystickButton aButton = new JoystickButton(m_driverController, XboxController.Button.kA.value);
   private final JoystickButton bButton = new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  private final JoystickButton xButton = new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  private final JoystickButton yButton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
   // subsystems;
   DriveSub driveSub;
   VisionSub visionSub;
@@ -49,6 +52,10 @@ private final Joystick m_driverController =
     aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
     bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
     bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
+     xButton.whileTrue(new Wrist(() -> 0.2, subCoral));
+    xButton.whileFalse(new Wrist(()-> 0, subCoral));
+    yButton.whileTrue(new Wrist(() -> -0.2, subCoral));
+    yButton.whileFalse(new Wrist(() -> 0, subCoral));
   }
 
   public void updateCameras() {

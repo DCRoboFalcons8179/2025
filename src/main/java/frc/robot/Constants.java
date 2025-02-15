@@ -31,7 +31,7 @@ public class Constants {
         public final static int rightFollowerID = 5;
         public final static boolean rightFollowerInvert = false;
 
-        public final static int coralMotorId = 6;
+        
 
 
         public final static double kP = 0;
@@ -53,5 +53,9 @@ public class Constants {
         public class AprilTags {
             public final static double tag1HeightMeters = Units.inchesToMeters(50); //TODO: Add the correct height
         }
+    }
+    public class CoralValues {
+        public final static int wristID = 6;
+        public final static int coralMotorID = 7;
     }
 }
