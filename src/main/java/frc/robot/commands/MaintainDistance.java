@@ -16,6 +16,8 @@ public class MaintainDistance extends Command {
   Drive drive;
   double forwardSpeed;
   double strafeSpeed;
+  double omegaSpeed = 0;
+
   /** How many times we failed to find the tag */
   int counter;
 
@@ -24,6 +26,12 @@ public class MaintainDistance extends Command {
   final double I_GAIN = 0;
   final double D_GAIN = 0.25;
   PIDController controller = new PIDController(P_GAIN, I_GAIN, D_GAIN);
+
+  final double ANGULAR_P_GAIN = 0.1;
+  final double ANGULAR_I_GAIN = 0;
+  final double ANGULAR_D_GAIN = 0;
+  PIDController angularController =
+      new PIDController(ANGULAR_P_GAIN, ANGULAR_I_GAIN, ANGULAR_P_GAIN);
 
   int desiredDistanceMeters = 2;
 
@@ -46,6 +54,15 @@ public class MaintainDistance extends Command {
     // If range is equal to -1, add 1 to the counter, otherwise add 0
     counter += range == -1 ? 1 : 0;
 
+    double yaw = visionSub.getYaw();
+
+    if (Math.abs(yaw) < 1) {
+      omegaSpeed = 0;
+    } else {
+      // If the returned yaw is zero, set the speed to zero, it doesn't like 0/10 :(, not wahoo
+      omegaSpeed = yaw != 181 ? angularController.calculate(yaw, 0) / 10 : 0;
+    }
+
     if (range > 1.5) {
       forwardSpeed = -2;
       counter = 0;
@@ -62,7 +79,7 @@ public class MaintainDistance extends Command {
 
     speeds.vxMetersPerSecond = -forwardSpeed;
     speeds.vyMetersPerSecond = strafeSpeed;
-    speeds.omegaRadiansPerSecond = 0;
+    speeds.omegaRadiansPerSecond = omegaSpeed;
 
     drive.runVelocity(speeds);
   }

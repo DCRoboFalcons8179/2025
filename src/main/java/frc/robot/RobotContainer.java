@@ -107,6 +107,7 @@ public class RobotContainer {
     drive.getVelocity();
 
     SmartDashboard.putNumber("Tag Distance", visionSub.getDistance());
+    SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
   }
 
   /**
