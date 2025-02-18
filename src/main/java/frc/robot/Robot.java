@@ -27,12 +27,12 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-/**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
- * project.
- */
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
@@ -72,35 +72,17 @@ public class Robot extends LoggedRobot {
       case REPLAY:
         // Replaying a log, set up replay source
         setUseTiming(false); // Run as fast as possible
-        String logPath = LogFileUtil.findReplayLog();
-        Logger.setReplaySource(new WPILOGReader(logPath));
-        Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
-        break;
+        String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+        Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+        Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
     }
 
-    // Start AdvantageKit logger
-    Logger.start();
+    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
 
-    // Check for valid swerve config
-    var modules =
-        new SwerveModuleConstants[] {
-          TunerConstants.FrontLeft,
-          TunerConstants.FrontRight,
-          TunerConstants.BackLeft,
-          TunerConstants.BackRight
-        };
-    for (var constants : modules) {
-      if (constants.DriveMotorType != DriveMotorArrangement.TalonFX_Integrated
-          || constants.SteerMotorType != SteerMotorArrangement.TalonFX_Integrated) {
-        throw new RuntimeException(
-            "You are using an unsupported swerve configuration, which this template does not support without manual customization. The 2025 release of Phoenix supports some swerve configurations which were not available during 2025 beta testing, preventing any development and support from the AdvantageKit developers.");
-      }
-    }
+    boolean flip = false;
+    SmartDashboard.putBoolean("boolean", flip);
 
-    // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our autonomous chooser on the dashboard.
-    robotContainer = new RobotContainer();
-    robotContainer.drive.zeroYaw();
+    m_robotContainer = new RobotContainer();
   }
 
   /** This function is called periodically during all modes. */
@@ -155,12 +137,19 @@ public class Robot extends LoggedRobot {
       autonomousCommand.cancel();
     }
   }
-
-  /** This function is called periodically during operator control. */
+  
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
 
-  /** This function is called once when test mode is enabled. */
+    boolean flip = false;
+    SmartDashboard.putBoolean("boolean", flip);
+
+    SmartDashboard.putNumber(null, defaultPeriodSecs);
+  }
+
+  @Override
+  public void teleopExit() {}
+
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
