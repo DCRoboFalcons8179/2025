@@ -13,6 +13,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -36,6 +37,9 @@ public class Robot extends LoggedRobot {
     }
 
     Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
+    boolean flip = false;
+    SmartDashboard.putBoolean("boolean", flip);
 
     m_robotContainer = new RobotContainer();
   }
@@ -76,9 +80,15 @@ public class Robot extends LoggedRobot {
       m_autonomousCommand.cancel();
     }
   }
-
+  
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    boolean flip = false;
+    SmartDashboard.putBoolean("boolean", flip);
+
+    SmartDashboard.putNumber(null, defaultPeriodSecs);
+  }
 
   @Override
   public void teleopExit() {}
