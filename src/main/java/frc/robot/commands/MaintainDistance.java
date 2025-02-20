@@ -27,7 +27,7 @@ public class MaintainDistance extends Command {
   final double D_GAIN = 0.25;
   PIDController controller = new PIDController(P_GAIN, I_GAIN, D_GAIN);
 
-  final double ANGULAR_P_GAIN = 0.1;
+  final double ANGULAR_P_GAIN = 0.05;
   final double ANGULAR_I_GAIN = 0;
   final double ANGULAR_D_GAIN = 0;
   PIDController angularController =
@@ -56,12 +56,21 @@ public class MaintainDistance extends Command {
 
     double yaw = visionSub.getYaw();
 
-    if (Math.abs(yaw) < 1) {
-      omegaSpeed = 0;
+    if (yaw < Math.PI - Constants.Vision.errorThreshHoldRadians && yaw > 0) {
+      omegaSpeed = 0.2;
+    } else if (yaw > -Math.PI + Constants.Vision.errorThreshHoldRadians && yaw < 0) {
+      omegaSpeed = -0.2;
     } else {
-      // If the returned yaw is zero, set the speed to zero, it doesn't like 0/10 :(, not wahoo
-      omegaSpeed = yaw != 181 ? angularController.calculate(yaw, 0) / 10 : 0;
+      omegaSpeed = 0;
     }
+    // else if (yaw < 2 && yaw > 0) {
+    //   omegaSpeed = 0.2;
+    // } else if (yaw > -2 && yaw < 0) {
+    //   omegaSpeed = -0.2;
+    // } else {
+    //   // If the returned yaw is 181, set the speed to zero, it doesn't like 0/10 :(, not wahoo
+    //   omegaSpeed = yaw != 181 ? angularController.calculate(yaw, 0) / 10 : 0;
+    // }
 
     if (range > 1.5) {
       forwardSpeed = -2;
@@ -94,7 +103,9 @@ public class MaintainDistance extends Command {
   @Override
   public boolean isFinished() {
     double range = visionSub.getDistance();
-    if (Math.abs(range - desiredDistanceMeters) < Constants.Vision.errorThreshHoldMeters) {
+    double yaw = visionSub.getYaw();
+    if (Math.abs(range - desiredDistanceMeters) < Constants.Vision.errorThreshHoldMeters
+        && Math.abs(yaw) < Constants.Vision.errorThreshHoldRadians) {
       return true;
     } else {
       return false;

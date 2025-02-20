@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.MaintainDistance;
+import frc.robot.commands.VisionTesting;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Music;
 import frc.robot.subsystems.VisionSub;
@@ -126,14 +127,14 @@ public class RobotContainer {
             () -> -controller.getRightX()));
 
     // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
+    // controller
+    //     .a()
+    //     .whileTrue(
+    //         DriveCommands.joystickDriveAtAngle(
+    //             drive,
+    //             () -> -controller.getLeftY(),
+    //             () -> -controller.getLeftX(),
+    //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -153,6 +154,8 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     controller.rightBumper().whileTrue(new MaintainDistance(visionSub, drive));
+
+    controller.leftBumper().whileTrue(new VisionTesting(drive, visionSub, controller));
   }
 
   private void configMusicButtonBindings() {
