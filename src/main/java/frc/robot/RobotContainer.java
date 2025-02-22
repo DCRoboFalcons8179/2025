@@ -24,8 +24,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.MaintainAll;
 import frc.robot.commands.MaintainDistance;
-import frc.robot.commands.StrafeAlignment;
+import frc.robot.commands.MaintainStrafe;
 import frc.robot.commands.VisionTesting;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Music;
@@ -99,7 +100,7 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    autoChooser.addOption("Maintain Distance", new MaintainDistance(visionSub, drive));
+    autoChooser.addOption("Maintain Distance", new MaintainDistance(drive, visionSub));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -128,19 +129,17 @@ public class RobotContainer {
             () -> -controller.getRightX()));
 
     // Lock to 0° when A button is held
-    // controller
-    //     .a()
-    //     .whileTrue(
-    //         DriveCommands.joystickDriveAtAngle(
-    //             drive,
-    //             () -> -controller.getLeftY(),
-    //             () -> -controller.getLeftX(),
-    //             () -> new Rotation2d()));
+    controller
+        .a()
+        .whileTrue(
+            DriveCommands.joystickDriveAtAngle(
+                drive,
+                () -> -controller.getLeftY(),
+                () -> -controller.getLeftX(),
+                () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-    controller.rightTrigger().whileTrue(new StrafeAlignment(drive, visionSub));
 
     // Reset gyro to 0
     controller.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));
@@ -156,9 +155,13 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    controller.rightBumper().whileTrue(new MaintainDistance(visionSub, drive));
+    controller.rightBumper().whileTrue(new MaintainDistance(drive, visionSub));
+
+    controller.rightTrigger().whileTrue(new MaintainStrafe(drive, visionSub));
 
     controller.leftBumper().whileTrue(new VisionTesting(drive, visionSub, controller));
+
+    controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
   }
 
   private void configMusicButtonBindings() {
