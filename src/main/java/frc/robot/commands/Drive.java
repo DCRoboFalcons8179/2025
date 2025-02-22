@@ -6,14 +6,19 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSub;
+import frc.robot.subsystems.ElevatorSub;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Drive extends Command {
   DriveSub driveSub;
   DoubleSupplier forwardSpeed;
   DoubleSupplier turnSpeed;
+
+  ElevatorSub elevatorSub;
 
   /**
    * Drives the robot with a forward speed and turn speed
@@ -36,6 +41,7 @@ public class Drive extends Command {
   @Override
   public void execute() {
     driveSub.drive(forwardSpeed.getAsDouble(), turnSpeed.getAsDouble());    
+    SmartDashboard.putNumber("bob", 1);
   }
 
   // Called once the command ends or is interrupted.

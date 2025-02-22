@@ -15,6 +15,7 @@ import com.revrobotics.spark.SparkBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -24,7 +25,7 @@ public class ElevatorSub extends SubsystemBase{
     //create the elevator encoder
     RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
-    //create the config for the motors
+    //create the configs for the motors
     private SparkMaxConfig test = new SparkMaxConfig();
     private ClosedLoopConfig testclosed = new ClosedLoopConfig();
     //sparkbase for the motor
@@ -34,6 +35,11 @@ public class ElevatorSub extends SubsystemBase{
     private SparkMax followerMotor = new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
     //create the follower encoder
     RelativeEncoder followerEncoder = followerMotor.getEncoder();
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
+    }
 
     //pid stuff
     public void autonomousInit(){
@@ -52,16 +58,16 @@ public class ElevatorSub extends SubsystemBase{
     final double kD = 0;
 
     //current elevator setpoint (where the elevator is going)
-    double setpoint = 0;
+    
 
     //more pid variables
     double errorSum = 0;
     double lastTimeStamp = 0;
     double lastError = 0;
 
+
     //does a bunch of math and uses pid loop to move the motor for the elevator
-    public void moveMotor(){
-        
+    public void moveMotor(double setpoint){
         //set sensor position equal to the encoder position
         double sensorPOS = elevatorEncoder.getPosition();
         //calculations for the pid loop
@@ -76,20 +82,18 @@ public class ElevatorSub extends SubsystemBase{
         //move the elevator motor
         elevatorEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
         followerEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
+        
     }
 
     //config for the elevator encoder
     public ElevatorSub() {
+        //set the new config for the motor
         var testConfig = new SparkMaxConfig();
+        //apply conifguration to the elevator motor
         elevatorMotor.configure(testConfig, null, null);
         test.apply(testclosed);
-    }    
-
-    
+    }
     //use this function later for if/when we do setpoints
     public void setPosition(double position){
     }
-
-    
-    
 }

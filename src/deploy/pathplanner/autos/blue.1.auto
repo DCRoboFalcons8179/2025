@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "leave.1"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "blue.1.1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "leave.2"
+            "pathName": "blue.1.2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue.1.3"
           }
         }
       ]
