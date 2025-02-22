@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.calcVelocities.DistanceX;
 import frc.robot.calcVelocities.DistanceY;
 import frc.robot.subsystems.VisionSub;
@@ -19,6 +20,7 @@ public class MaintainAll extends Command {
   // Velocities
   double translationVelocity;
   double strafeVelocity;
+  double omegaRadians;
 
   // Distance Objects
   DistanceX distanceX;
@@ -32,6 +34,7 @@ public class MaintainAll extends Command {
     // Sets the distance objects to use the visionSub with the correct pointer
     distanceX = new DistanceX(visionSub);
     distanceY = new DistanceY(visionSub);
+
     addRequirements(drive, visionSub);
   }
 
@@ -44,12 +47,17 @@ public class MaintainAll extends Command {
   public void execute() {
     translationVelocity = distanceX.getVelocity();
     strafeVelocity = distanceY.getVelocity();
+    double yaw = visionSub.getRemappedYaw();
 
     ChassisSpeeds chassisSpeeds =
         new ChassisSpeeds() {
           {
             vxMetersPerSecond = -translationVelocity;
             vyMetersPerSecond = -strafeVelocity;
+            omegaRadiansPerSecond =
+                yaw > Constants.Vision.errorThreshHoldRadians
+                    ? 0.2
+                    : yaw < Constants.Vision.errorThreshHoldRadians ? -0.2 : 0;
           }
         };
 

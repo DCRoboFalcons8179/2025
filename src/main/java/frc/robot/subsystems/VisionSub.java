@@ -62,6 +62,16 @@ public class VisionSub extends SubsystemBase {
     return 181;
   }
 
+  public double getRemappedYaw() {
+    PhotonPipelineResult result = camera.getLatestResult();
+    if (result.hasTargets()) {
+      double yaw = getTransform3dTo3dTarget().getRotation().getZ();
+      return yaw < 0 ? yaw + Math.PI : yaw - Math.PI;
+    }
+
+    return 181;
+  }
+
   public double getDistanceX() {
     if (hasTarget()) {
       return getTransform3dTo3dTarget().getX();
