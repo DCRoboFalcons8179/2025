@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.MaintainDistance;
+import frc.robot.commands.StrafeAlignment;
 import frc.robot.commands.VisionTesting;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Music;
@@ -107,7 +108,7 @@ public class RobotContainer {
   public void periodic() {
     drive.getVelocity();
 
-    SmartDashboard.putNumber("Tag Distance", visionSub.getDistance());
+    SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
     SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
   }
 
@@ -138,6 +139,8 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+
+    controller.rightTrigger().whileTrue(new StrafeAlignment(drive, visionSub));
 
     // Reset gyro to 0
     controller.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));

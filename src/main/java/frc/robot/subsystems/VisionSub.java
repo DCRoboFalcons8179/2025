@@ -62,10 +62,16 @@ public class VisionSub extends SubsystemBase {
     return 181;
   }
 
-  public double getDistance() {
+  public double getDistanceX() {
     if (hasTarget()) {
-      getTransform3dTo3dTarget().getRotation().getZ();
       return getTransform3dTo3dTarget().getX();
+    }
+    return -1;
+  }
+
+  public double getDistanceY() {
+    if (hasTarget()) {
+      return getTransform3dTo3dTarget().getY();
     }
     return -1;
   }

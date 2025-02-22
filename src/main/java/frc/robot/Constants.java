@@ -43,6 +43,7 @@ public final class Constants {
 
   public class Vision {
     public static final double errorThreshHoldMeters = 0.005;
+    public static final double errorThreshHoldStrafeMeters = 0.05;
     public static final double errorThreshHoldRadians = 0.0174532925199;
     public static final int tagFindingTries = 15;
 

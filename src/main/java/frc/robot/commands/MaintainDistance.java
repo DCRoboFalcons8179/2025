@@ -50,7 +50,7 @@ public class MaintainDistance extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double range = visionSub.getDistance();
+    double range = visionSub.getDistanceX();
     // If range is equal to -1, add 1 to the counter, otherwise add 0
     counter += range == -1 ? 1 : 0;
 
@@ -82,7 +82,7 @@ public class MaintainDistance extends Command {
       System.out.println(counter);
       forwardSpeed = 0;
     }
-    strafeSpeed = 0;
+    // strafeSpeed = 0;
 
     ChassisSpeeds speeds = new ChassisSpeeds();
 
@@ -102,7 +102,7 @@ public class MaintainDistance extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double range = visionSub.getDistance();
+    double range = visionSub.getDistanceX();
     double yaw = visionSub.getYaw();
     if (Math.abs(range - desiredDistanceMeters) < Constants.Vision.errorThreshHoldMeters
         && Math.abs(yaw) < Constants.Vision.errorThreshHoldRadians) {
