@@ -65,8 +65,6 @@ public class MaintainAll extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (distanceX.isDone() && distanceY.isDone()) return true;
-
-    return false;
+    return distanceX.isDone() && distanceY.isDone();
   }
 }
