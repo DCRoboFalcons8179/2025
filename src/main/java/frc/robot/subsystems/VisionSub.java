@@ -66,7 +66,7 @@ public class VisionSub extends SubsystemBase {
     PhotonPipelineResult result = camera.getLatestResult();
     if (result.hasTargets()) {
       double yaw = getTransform3dTo3dTarget().getRotation().getZ();
-      return yaw < 0 ? yaw + Math.PI : yaw - Math.PI;
+      return yaw < 0 ? -yaw - Math.PI : -yaw + Math.PI;
     }
 
     return 181;

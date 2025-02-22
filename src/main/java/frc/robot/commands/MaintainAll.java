@@ -56,8 +56,8 @@ public class MaintainAll extends Command {
             vyMetersPerSecond = -strafeVelocity;
             omegaRadiansPerSecond =
                 yaw > Constants.Vision.errorThreshHoldRadians
-                    ? 0.2
-                    : yaw < Constants.Vision.errorThreshHoldRadians ? -0.2 : 0;
+                    ? -0.2
+                    : yaw < Constants.Vision.errorThreshHoldRadians ? 0.2 : 0;
           }
         };
 
