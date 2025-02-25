@@ -54,10 +54,14 @@ public class MaintainAll extends Command {
           {
             vxMetersPerSecond = -translationVelocity;
             vyMetersPerSecond = -strafeVelocity;
-            omegaRadiansPerSecond =
-                yaw > Constants.Vision.errorThreshHoldRadians
-                    ? -0.2
-                    : yaw < Constants.Vision.errorThreshHoldRadians ? 0.2 : 0;
+            if (yaw != 181) {
+              omegaRadiansPerSecond =
+                  yaw > Constants.Vision.errorThreshHoldRadians
+                      ? -0.3
+                      : yaw < Constants.Vision.errorThreshHoldRadians ? 0.3 : 0;
+            } else {
+              omegaRadiansPerSecond = 0;
+            }
           }
         };
 
@@ -73,6 +77,10 @@ public class MaintainAll extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return distanceX.isDone() && distanceY.isDone();
+    double yaw = visionSub.getRemappedYaw();
+
+    return distanceX.isDone()
+        && distanceY.isDone()
+        && Math.abs(yaw) < Constants.Vision.errorThreshHoldRadians;
   }
 }

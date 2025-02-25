@@ -16,7 +16,7 @@ public class DistanceY implements Distance {
   double strafeSpeed = 0;
 
   // PID for the strafe speed loop
-  final double STRAFE_P_GAIN = 0.75;
+  final double STRAFE_P_GAIN = 1.75;
   final double STRAFE_I_GAIN = 0;
   final double STRAFE_D_GAIN = 0.25;
   PIDController strafeController = new PIDController(STRAFE_P_GAIN, STRAFE_I_GAIN, STRAFE_D_GAIN);
@@ -36,7 +36,6 @@ public class DistanceY implements Distance {
       strafeSpeed = strafeController.calculate(distanceY, 0);
       tagMisses = 0;
     } else if (tagMisses >= Constants.Vision.tagFindingTries) {
-      System.out.println(tagMisses);
       strafeSpeed = 0;
     }
 

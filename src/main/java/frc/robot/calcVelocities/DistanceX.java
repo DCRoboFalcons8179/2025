@@ -7,8 +7,9 @@ import frc.robot.subsystems.VisionSub;
 public class DistanceX implements Distance {
   VisionSub visionSub;
 
-  double targetMisses = 0;
   double forwardSpeed = 0;
+
+  int tagMisses = 0;
 
   // PID for the forward speed loop
   final double P_GAIN = 2.25;
@@ -23,14 +24,16 @@ public class DistanceX implements Distance {
   public double getVelocity() {
     double distanceX = visionSub.getDistanceX();
 
+    // If the tag is not found, increment the counter by 1
+    tagMisses += distanceX != -1 ? 0 : 1;
+
     if (distanceX > 1.5) {
       forwardSpeed = -2;
-      targetMisses = 0;
+      tagMisses = 0;
     } else if (distanceX != -1) {
       forwardSpeed = controller.calculate(distanceX, 1);
-      targetMisses = 0;
-    } else if (targetMisses >= Constants.Vision.tagFindingTries) {
-      System.out.println(targetMisses);
+      tagMisses = 0;
+    } else if (tagMisses >= Constants.Vision.tagFindingTries) {
       forwardSpeed = 0;
     }
 
