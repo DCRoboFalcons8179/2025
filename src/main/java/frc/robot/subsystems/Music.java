@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.Orchestra;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import java.io.File;
 import java.util.ArrayList;
 
 public class Music extends SubsystemBase {
@@ -14,12 +16,12 @@ public class Music extends SubsystemBase {
   private int trackIndex = -1;
   private ArrayList<String> tracks = new ArrayList<String>();
 
-  String[] songs = {"Cirice Ghost", "halo_main_theme", "live_and_learn"};
+  final File folder = new File("/home/lvuser/deploy/music");
 
   /** Creates a new Music. */
   public Music(ModuleIOTalonFX... moduleIOTalonFXs) {
-    for (String song : songs) {
-      tracks.add(song);
+    for (File song : folder.listFiles()) {
+      tracks.add(song.getName().replace(".chrp", ""));
     }
 
     // Adds all the Swerve Modules to the Orchestra
@@ -39,6 +41,7 @@ public class Music extends SubsystemBase {
 
   public void loadMusic(String song) {
     orchestra.loadMusic(String.format("music/%s.chrp", song));
+    SmartDashboard.putString("Current Track", song);
   }
 
   public void nextTrack() {
@@ -50,7 +53,7 @@ public class Music extends SubsystemBase {
 
   public void backTrack() {
     stop();
-    trackIndex = trackIndex == 0 ? tracks.size() - 1 : trackIndex - 1;
+    trackIndex = trackIndex == 0 || trackIndex == -1 ? tracks.size() - 1 : trackIndex - 1;
     loadMusic(tracks.get(trackIndex));
     play();
   }

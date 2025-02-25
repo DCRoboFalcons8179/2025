@@ -22,9 +22,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.MaintainDistance;
+import frc.robot.commands.MaintainAll;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Music;
 import frc.robot.subsystems.VisionSub;
@@ -47,6 +48,8 @@ public class RobotContainer {
   public final Drive drive;
   private Music music;
   private final VisionSub visionSub = new VisionSub();
+
+  private final CommandJoystick flightStick = new CommandJoystick(2);
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -97,8 +100,6 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    autoChooser.addOption("Maintain Distance", new MaintainDistance(visionSub, drive));
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -106,7 +107,8 @@ public class RobotContainer {
   public void periodic() {
     drive.getVelocity();
 
-    SmartDashboard.putNumber("Tag Distance", visionSub.getDistance());
+    SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
+    SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
   }
 
   /**
@@ -123,6 +125,13 @@ public class RobotContainer {
             () -> -controller.getLeftY(),
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
+
+    // drive.setDefaultCommand(
+    //     DriveCommands.joystickDrive(
+    //         drive,
+    //         () -> -flightStick.getY(),
+    //         () -> -flightStick.getX(),
+    //         () -> -flightStick.getTwist()));
 
     // Lock to 0° when A button is held
     controller
@@ -151,11 +160,12 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    // controller.rightBumper().onTrue(new MaintainDistance(visionSub, drive));
+    controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
   }
 
   private void configMusicButtonBindings() {
     if (!Constants.comp) {
+      controller.povUp().onTrue(new InstantCommand(() -> music.play()));
       controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
       controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
       controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
@@ -169,6 +179,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     drive.zeroYaw();
+    // return new PathPlannerAuto("Reef");
+    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
     return autoChooser.get();
   }
 }

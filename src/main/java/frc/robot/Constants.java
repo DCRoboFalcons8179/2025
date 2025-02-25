@@ -39,8 +39,14 @@ public final class Constants {
   /** Is the robot at a comp? */
   public static boolean comp = false;
 
+  public static double maxSpeed = 0.5;
+
   public class Vision {
-    public static final double errorThreshHoldMeters = 0.005;
+    public static final double errorThreshHoldMeters = 0.05;
+    public static final double errorThreshHoldStrafeMeters = 0.05;
+    public static final double errorThreshHoldRadians = 0.0174532925199;
+    public static final int tagFindingTries = 15;
+    public static final double desiredXTagDistanceMeters = 1;
 
     public class FrontCameraValues {
       public static final String cameraName = "C270_HD_WEBCAM";

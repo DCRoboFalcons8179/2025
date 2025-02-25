@@ -25,6 +25,10 @@ public class VisionSub extends SubsystemBase {
     return result.hasTargets();
   }
 
+  public PhotonCamera getFrontCamera() {
+    return camera;
+  }
+
   public int getBestTargetID() {
     PhotonPipelineResult result = camera.getLatestResult();
     if (result.hasTargets()) {
@@ -52,15 +56,32 @@ public class VisionSub extends SubsystemBase {
   public double getYaw() {
     PhotonPipelineResult result = camera.getLatestResult();
     if (result.hasTargets()) {
-      PhotonTrackedTarget target = result.getBestTarget();
-      return target.getYaw();
+      return getTransform3dTo3dTarget().getRotation().getZ();
     }
-    return 0;
+
+    return 181;
   }
 
-  public double getDistance() {
+  public double getRemappedYaw() {
+    PhotonPipelineResult result = camera.getLatestResult();
+    if (result.hasTargets()) {
+      double yaw = getTransform3dTo3dTarget().getRotation().getZ();
+      return yaw < 0 ? -yaw - Math.PI : -yaw + Math.PI;
+    }
+
+    return 181;
+  }
+
+  public double getDistanceX() {
     if (hasTarget()) {
       return getTransform3dTo3dTarget().getX();
+    }
+    return -1;
+  }
+
+  public double getDistanceY() {
+    if (hasTarget()) {
+      return getTransform3dTo3dTarget().getY();
     }
     return -1;
   }
