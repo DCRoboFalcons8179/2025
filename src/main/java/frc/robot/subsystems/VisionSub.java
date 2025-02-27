@@ -39,7 +39,7 @@ public class VisionSub extends SubsystemBase {
 
   public PhotonTrackedTarget getBestTarget() {
     PhotonPipelineResult result = camera.getLatestResult();
-    if (hasTarget()) {
+    if (result.hasTargets()) {
       return result.getBestTarget();
     }
     return null;
@@ -64,6 +64,7 @@ public class VisionSub extends SubsystemBase {
 
   public double getRemappedYaw() {
     PhotonPipelineResult result = camera.getLatestResult();
+    if (result == null) return 181;
     if (result.hasTargets()) {
       double yaw = getTransform3dTo3dTarget().getRotation().getZ();
       return yaw < 0 ? -yaw - Math.PI : -yaw + Math.PI;

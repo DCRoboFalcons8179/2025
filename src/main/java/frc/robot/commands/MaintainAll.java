@@ -28,7 +28,7 @@ public class MaintainAll extends Command {
   DistanceY distanceY;
 
   // PID for the angle speed loop
-  final double ANGLE_P_GAIN = 4;
+  final double ANGLE_P_GAIN = 3;
   final double ANGLE_I_GAIN = 0;
   final double ANGLE_D_GAIN = 0.25;
   PIDController strafeController = new PIDController(ANGLE_P_GAIN, ANGLE_I_GAIN, ANGLE_D_GAIN);
