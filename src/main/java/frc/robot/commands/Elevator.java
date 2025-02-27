@@ -31,7 +31,7 @@ public class Elevator {
 
     }
     
-    //dont delete this
+    //sets the elevator speed
     public Elevator(DoubleSupplier elevatorSpeed, ElevatorSub elevatorSub) {
         this.elevatorSpeed = elevatorSpeed;
         this.elevatorSub = elevatorSub;
@@ -39,21 +39,19 @@ public class Elevator {
 
 
     public void execute(){
-        //command for the elevator
+        //commanded speed for the elevator
+        //if up button is pressed and down button is not pressed, command 0.5 speed up
         double upSpeed = upButtonPressed.getAsBoolean() && !downButtonPressed.getAsBoolean() ? 0.5 : 0;
         elevatorSub.moveMotor(upSpeed);
-        double downSpeed = !upButtonPressed.getAsBoolean() && !downButtonPressed.getAsBoolean() ? -0.5 : 0;
+
+        //if down button is pressed and up button is not pressed, command -0.5 speed down
+        double downSpeed = !upButtonPressed.getAsBoolean() && downButtonPressed.getAsBoolean() ? -0.5 : 0;
         elevatorSub.moveMotor(downSpeed);
 
-        //display values in dashboard
-        //isgt if smartdashboard doesnt work im gonna tweak out
+        //display the commanded up and down speeds in dashboard
         SmartDashboard.putNumber("up", upSpeed);
         SmartDashboard.putNumber("down", downSpeed);
+        //editor's note: isgt if smartdashboard doesnt work im gonna tweak out
     }
 
 }
-/* 
-what im gonna need
-
-stop elevator when limit switch pressed
-*/
