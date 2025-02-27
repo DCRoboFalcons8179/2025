@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -25,6 +26,12 @@ public class MaintainAll extends Command {
   // Distance Objects
   DistanceX distanceX;
   DistanceY distanceY;
+
+  // PID for the angle speed loop
+  final double ANGLE_P_GAIN = 4;
+  final double ANGLE_I_GAIN = 0;
+  final double ANGLE_D_GAIN = 0.25;
+  PIDController strafeController = new PIDController(ANGLE_P_GAIN, ANGLE_I_GAIN, ANGLE_D_GAIN);
 
   /** Creates a new MaintainAll. */
   public MaintainAll(Drive drive, VisionSub visionSub) {
@@ -55,10 +62,11 @@ public class MaintainAll extends Command {
             vxMetersPerSecond = -translationVelocity;
             vyMetersPerSecond = -strafeVelocity;
             if (yaw != 181) {
-              omegaRadiansPerSecond =
-                  yaw > Constants.Vision.errorThreshHoldRadians
-                      ? -0.3
-                      : yaw < Constants.Vision.errorThreshHoldRadians ? 0.3 : 0;
+              omegaRadiansPerSecond = strafeController.calculate(yaw, 0);
+              // omegaRadiansPerSecond =
+              //     yaw > Constants.Vision.errorThreshHoldRadians
+              //         ? -0.25
+              //         : yaw < Constants.Vision.errorThreshHoldRadians ? 0.25 : 0;
             } else {
               omegaRadiansPerSecond = 0;
             }

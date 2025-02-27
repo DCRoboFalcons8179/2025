@@ -37,12 +37,12 @@ public final class Constants {
   }
 
   /** Is the robot at a comp? */
-  public static boolean comp = false;
+  public static boolean comp = true;
 
   public static double maxSpeed = 0.5;
 
   public class Vision {
-    public static final double errorThreshHoldMeters = 0.05;
+    public static final double errorThreshHoldMeters = 0.10;
     public static final double errorThreshHoldStrafeMeters = 0.05;
     public static final double errorThreshHoldRadians = 0.0174532925199;
     public static final int tagFindingTries = 15;

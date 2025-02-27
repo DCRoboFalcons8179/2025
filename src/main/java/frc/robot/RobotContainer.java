@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -161,6 +162,10 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
+  }
+
+  public void registerNamedCommands() {
+    NamedCommands.registerCommand("align", new MaintainAll(drive, visionSub));
   }
 
   private void configMusicButtonBindings() {

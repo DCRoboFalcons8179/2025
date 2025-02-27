@@ -12,7 +12,7 @@ public class DistanceX implements Distance {
   int tagMisses = 0;
 
   // PID for the forward speed loop
-  final double P_GAIN = 2.25;
+  final double P_GAIN = 2.5;
   final double I_GAIN = 0;
   final double D_GAIN = 0.25;
   PIDController controller = new PIDController(P_GAIN, I_GAIN, D_GAIN);
@@ -28,7 +28,7 @@ public class DistanceX implements Distance {
     tagMisses += distanceX != -1 ? 0 : 1;
 
     if (distanceX > 1.5) {
-      forwardSpeed = -2;
+      forwardSpeed = -2.25;
       tagMisses = 0;
     } else if (distanceX != -1) {
       forwardSpeed = controller.calculate(distanceX, 1);
