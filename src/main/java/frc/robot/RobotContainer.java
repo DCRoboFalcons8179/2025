@@ -23,26 +23,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Elevator;
-import frc.robot.subsystems.ElevatorSub;
-
-import frc.robot.Constants.Controllers;
-import frc.robot.commands.CoralGrab;
-import frc.robot.subsystems.VisionSub;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.SubCoral;
-import edu.wpi.first.wpilibj.DigitalInput;
-import frc.robot.commands.Wrist;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.Controllers;
+import frc.robot.commands.CoralGrab;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.Elevator;
 import frc.robot.commands.MaintainAll;
+import frc.robot.commands.Wrist;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.Music;
+import frc.robot.subsystems.SubCoral;
 import frc.robot.subsystems.VisionSub;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -69,18 +62,20 @@ public class RobotContainer {
   private final CommandJoystick flightStick = new CommandJoystick(2);
 
   // Controller Bindings
-private final Joystick m_driverController = 
-  new Joystick(Controllers.xboxController);
-  private final JoystickButton aButton = new JoystickButton(m_driverController, XboxController.Button.kA.value);
-  private final JoystickButton bButton = new JoystickButton(m_driverController, XboxController.Button.kB.value);
-  private final JoystickButton xButton = new JoystickButton(m_driverController, XboxController.Button.kX.value);
-  private final JoystickButton yButton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
+  private final Joystick m_driverController = new Joystick(Controllers.xboxController);
+  private final JoystickButton aButton =
+      new JoystickButton(m_driverController, XboxController.Button.kA.value);
+  private final JoystickButton bButton =
+      new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  private final JoystickButton xButton =
+      new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  private final JoystickButton yButton =
+      new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
   ElevatorSub elevatorSub;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -124,7 +119,6 @@ private final Joystick m_driverController =
                 new ModuleIO() {});
         break;
     }
-    
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -189,23 +183,22 @@ private final Joystick m_driverController =
                     drive)
                 .ignoringDisable(true));
 
-
     controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
 
-    //y button (elevator up)
+    // y button (elevator up)
     yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -5.00, elevatorSub)));
     yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
-    //x button (elevator down)
+    // x button (elevator down)
     xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 5.00, elevatorSub)));
     xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
 
-    //coral grab keybinds      
+    // coral grab keybinds
     aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
     aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
     bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
     bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
     xButton.whileTrue(new Wrist(() -> 0.2, subCoral));
-    xButton.whileFalse(new Wrist(()-> 0, subCoral));
+    xButton.whileFalse(new Wrist(() -> 0, subCoral));
     yButton.whileTrue(new Wrist(() -> -0.2, subCoral));
     yButton.whileFalse(new Wrist(() -> 0, subCoral));
   }

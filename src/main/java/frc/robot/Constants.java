@@ -15,7 +15,6 @@ package frc.robot;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Add your docs here. */
 public class Constants {
@@ -38,33 +37,30 @@ public class Constants {
 
   /** The port numbers for our controllers */
   public class Controllers {
-    public final static int xboxController = 0;
+    public static final int xboxController = 0;
   }
 
   /** Values for configuring Motors */
   public class DriveValues {
-    public final static int leftDriveID = 2;
-    public final static boolean leftDriveInvert = false;
+    public static final int leftDriveID = 2;
+    public static final boolean leftDriveInvert = false;
 
-    public final static int leftFollowerID = 3;
-    public final static boolean leftFollowerInvert = false;
+    public static final int leftFollowerID = 3;
+    public static final boolean leftFollowerInvert = false;
 
-    public final static int rightDriveID = 4;
-    public final static boolean rightDriveInvert = false;
+    public static final int rightDriveID = 4;
+    public static final boolean rightDriveInvert = false;
 
-    public final static int rightFollowerID = 5;
-    public final static boolean rightFollowerInvert = false;
+    public static final int rightFollowerID = 5;
+    public static final boolean rightFollowerInvert = false;
 
-    public final static double kP = 0;
-    public final static double kI = 0;
-    public final static double kD = 0;
-    /**
-     * <p>
-     * kV is the same as kP
-     */
-    public final static double kV = 0;
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    /** kV is the same as kP */
+    public static final double kV = 0;
 
-    public final static int maxRPS = 10000;
+    public static final int maxRPS = 10000;
   }
 
   /** Is the robot at a comp? */
@@ -89,13 +85,14 @@ public class Constants {
       public static final double tag4HeightMeters = Units.inchesToMeters(57);
     }
   }
+
   public class CoralValues {
-    public final static int wristID = 6;
-    public final static int coralMotorID = 7;
+    public static final int wristID = 6;
+    public static final int coralMotorID = 7;
   }
 
-  public class Elevator{
-      public final static int motorID = 1;
-      public final static int followerMotorID = 2;
+  public class Elevator {
+    public static final int motorID = 1;
+    public static final int followerMotorID = 2;
   }
 }

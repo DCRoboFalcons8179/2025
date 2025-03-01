@@ -1,15 +1,14 @@
 package frc.robot.commands;
-import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SubCoral;
-
+import java.util.function.DoubleSupplier;
 
 public class Wrist extends Command {
-    private DoubleSupplier wristSpeed;
-    private SubCoral subCoral;
+  private DoubleSupplier wristSpeed;
+  private SubCoral subCoral;
 
-
-public Wrist(DoubleSupplier wristSpeed, SubCoral subCoral) {
+  public Wrist(DoubleSupplier wristSpeed, SubCoral subCoral) {
     this.wristSpeed = wristSpeed;
     this.subCoral = subCoral;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -23,9 +22,7 @@ public Wrist(DoubleSupplier wristSpeed, SubCoral subCoral) {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subCoral.moveWrist(
-        wristSpeed.getAsDouble()
-    );
+    subCoral.moveWrist(wristSpeed.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
