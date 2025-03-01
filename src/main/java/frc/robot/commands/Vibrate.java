@@ -28,7 +28,7 @@ public class Vibrate extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    timer.start();  
+    timer.start();
 
     xboxController.setRumble(RumbleType.kBothRumble, 1);
   }
@@ -44,7 +44,6 @@ public class Vibrate extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println(timer.get());
     return timer.get() > Constants.Controllers.rumbleTimeSeconds;
   }
 }
