@@ -4,9 +4,9 @@
 
 package frc.robot.Commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.HookSub;
 
@@ -15,6 +15,15 @@ public class MoveHook extends Command {
 
   private DoubleSupplier hookPower;
   private HookSub hookSub;
+
+  //This hopefully works for the control box but idk if it will
+  BooleanSupplier switch1Pressed;
+  BooleanSupplier switch2Pressed;
+
+  public void HookControl(BooleanSupplier switch1Pressed, BooleanSupplier switch2Pressed){
+    this.switch1Pressed = switch1Pressed;
+    this.switch2Pressed = switch2Pressed;
+  }
 
   /** Creates a new MoveHook. */
   public MoveHook(DoubleSupplier hookPower, HookSub hookSub) {
@@ -31,12 +40,12 @@ public class MoveHook extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    hookSub.driveHook(
       //Moves the Hook
-      hookPower.getAsDouble()
-    );
-    
+    double downPower = switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? 0.5 : 0;
+    hookSub.driveHook(downPower);
+    double upPower = !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? -0.5 : 0;
+    hookSub.driveHook(upPower);
+
   }
 
   // Called once the command ends or is interrupted.
