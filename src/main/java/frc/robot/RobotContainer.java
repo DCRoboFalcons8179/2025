@@ -22,6 +22,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Drive;
+import frc.robot.commands.Elevator;
+import frc.robot.subsystems.DriveSub;
+import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.Constants.Controllers;
 import frc.robot.commands.CoralGrab;
@@ -71,6 +77,11 @@ private final Joystick m_driverController =
   private final JoystickButton bButton = new JoystickButton(m_driverController, XboxController.Button.kB.value);
   private final JoystickButton xButton = new JoystickButton(m_driverController, XboxController.Button.kX.value);
   private final JoystickButton yButton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
+
+  // subsystems;
+  DriveSub driveSub;
+  VisionSub visionSub;
+  ElevatorSub elevatorSub;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -127,6 +138,15 @@ private final Joystick m_driverController =
     configureButtonBindings();
   }
 
+  private void configureBindings() {
+
+    //y button (elevator up)
+    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -5.00, elevatorSub)));
+    yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+    //x button (elevator down)
+    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 5.00, elevatorSub)));
+    xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+  }
   private void configureBindings() {
     //coral grab keybinds
       

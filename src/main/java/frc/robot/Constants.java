@@ -15,6 +15,7 @@ package frc.robot;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Add your docs here. */
 public class Constants {
@@ -88,9 +89,25 @@ public class Constants {
       public static final double tag4HeightMeters = Units.inchesToMeters(57);
     }
   }
-
   public class CoralValues {
     public final static int wristID = 6;
     public final static int coralMotorID = 7;
+  }
+
+  public class Vision {
+      public class FrontCameraValues {
+          public final static String cameraName = "PLACEHOLDER"; //TODO: Add the camera names
+          public final static double cameraHeightMeters = Units.inchesToMeters(12); //TODO: Add the correct height
+          public final static double cameraAngleRadians = Units.degreesToRadians(20); //TODO: Add the correct angle
+      }
+
+      public class AprilTags {
+          public final static double tag1HeightMeters = Units.inchesToMeters(50); //TODO: Add the correct height
+      }
+  }
+
+  public class Elevator{
+      public final static int motorID = 1;
+      public final static int followerMotorID = 2;
   }
 }
