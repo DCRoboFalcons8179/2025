@@ -42,7 +42,11 @@ import frc.robot.Commands.Drive;
 import frc.robot.Commands.FireAlgae;
 import frc.robot.Commands.MoveHook;
 import frc.robot.Subsystems.AlgaeSub;
+import frc.robot.Commands.FireAlgae;
+import frc.robot.Commands.MoveHook;
+import frc.robot.Subsystems.AlgaeSub;
 import frc.robot.Subsystems.DriveSub;
+import frc.robot.Subsystems.HookSub;
 import frc.robot.Subsystems.HookSub;
 import frc.robot.Subsystems.VisionSub;
 
@@ -76,7 +80,11 @@ public class RobotContainer {
   private final JoystickButton leftBumper = new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value);
   private final JoystickButton rightBumper = new JoystickButton(xboxController, XboxController.Button.kRightBumper.value);
   private final JoystickButton startButton = new JoystickButton(xboxController, XboxController.Button.kStart.value);
+  private final JoystickButton leftBumper = new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton rightBumper = new JoystickButton(xboxController, XboxController.Button.kRightBumper.value);
+  private final JoystickButton startButton = new JoystickButton(xboxController, XboxController.Button.kStart.value);
 
+  Trigger algaeTrigger = new Trigger(() -> (leftBumper.getAsBoolean() & rightBumper.getAsBoolean()));
   Trigger algaeTrigger = new Trigger(() -> (leftBumper.getAsBoolean() & rightBumper.getAsBoolean()));
   // Subsystems;
   DriveSub driveSub;
