@@ -14,6 +14,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 
 /**
  * This class defines the runtime mode used by AdvantageKit. The mode is always "real" when running
@@ -55,57 +56,47 @@ public final class Constants {
 
     public class AprilTags {
       public static final double tag4HeightMeters = Units.inchesToMeters(57);
-    /**Values for configuring Motors*/
-    public class DriveValues {
-        public final static int leftDriveID = 2;
-        public final static boolean leftDriveInvert = false;
-        
-
-        public final static int leftFollowerID = 3;
-        public final static boolean leftFollowerInvert = false;
-
-        public final static int rightDriveID = 4;
-        public final static boolean rightDriveInvert = false;
-
-        public final static int rightFollowerID = 5;
-        public final static boolean rightFollowerInvert = false;
-
-
-        public final static double kP = 0;
-        public final static double kI = 0;
-        public final static double kD = 0;
-        /** <p>kV is the same as kP*/
-        public final static double kV = 0;
-
-        public final static int maxRPS = 10000;
     }
+  }
+  /**Values for configuring Motors*/
+  public class DriveValues {
+    public final static int leftDriveID = 2;
+    public final static boolean leftDriveInvert = false;
+    
 
-    public class HookPID {
-        public final static double kP = 0;
-        public final static double kI = 0;
-        public final static double kD = 0;
-    }
+    public final static int leftFollowerID = 3;
+    public final static boolean leftFollowerInvert = false;
 
-    public class AlgaePID {
-        public final static double kP = 0;
-        public final static double kI = 0;
-        public final static double kD = 0;
-        public final static double kF = 0;
-    }
+    public final static int rightDriveID = 4;
+    public final static boolean rightDriveInvert = false;
 
-    public class Algae {
-        public final static int feedbackSensor = 0;
-    }
-    public class Vision {
-        public class FrontCameraValues {
-            public final static String cameraName = "PLACEHOLDER"; //TODO: Add the camera names
-            public final static double cameraHeightMeters = Units.inchesToMeters(12); //TODO: Add the correct height
-            public final static double cameraAngleRadians = Units.degreesToRadians(20); //TODO: Add the correct angle
-        }
+    public final static int rightFollowerID = 5;
+    public final static boolean rightFollowerInvert = false;
 
-        public class AprilTags {
-            public final static double tag1HeightMeters = Units.inchesToMeters(50); //TODO: Add the correct height
-        }
-    }
+
+    public final static double kP = 0;
+    public final static double kI = 0;
+    public final static double kD = 0;
+    /** <p>kV is the same as kP*/
+    public final static double kV = 0;
+
+    public final static int maxRPS = 10000;
+  }
+
+  public class HookPID {
+      public final static double kP = 0;
+      public final static double kI = 0;
+      public final static double kD = 0;
+  }
+
+  public class AlgaePID {
+      public final static double kP = 0;
+      public final static double kI = 0;
+      public final static double kD = 0;
+      public final static double kF = 0;
+  }
+
+  public class Algae {
+      public final static int feedbackSensor = 0;
   }
 }

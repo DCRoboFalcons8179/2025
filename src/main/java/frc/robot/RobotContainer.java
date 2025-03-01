@@ -17,16 +17,21 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.DriveCommands;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.FireAlgae;
 import frc.robot.commands.MaintainAll;
+import frc.robot.commands.MoveHook;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AlgaeSub;
+import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
 import frc.robot.subsystems.VisionSub;
 import frc.robot.subsystems.drive.Drive;
@@ -36,19 +41,6 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Commands.Drive;
-import frc.robot.Commands.FireAlgae;
-import frc.robot.Commands.MoveHook;
-import frc.robot.Subsystems.AlgaeSub;
-import frc.robot.Commands.FireAlgae;
-import frc.robot.Commands.MoveHook;
-import frc.robot.Subsystems.AlgaeSub;
-import frc.robot.Subsystems.DriveSub;
-import frc.robot.Subsystems.HookSub;
-import frc.robot.Subsystems.HookSub;
-import frc.robot.Subsystems.VisionSub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -57,7 +49,7 @@ import frc.robot.Subsystems.VisionSub;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // Subsystems
+  // subsystems
   public final Drive drive;
   private Music music;
   private final VisionSub visionSub = new VisionSub();
@@ -66,9 +58,9 @@ public class RobotContainer {
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-  // Subsystems and commands
-    private final AlgaeSub algaeSub = new AlgaeSub();
-    private final HookSub hookSub = new HookSub();
+  // subsystems and commands
+  private final AlgaeSub algaeSub = new AlgaeSub();
+  private final HookSub hookSub = new HookSub();
   // If needed   private final FireAlgae fireAlgae = new FireAlgae(() -> 0.5, algaeSub);
 
   // Controller bindings
@@ -77,18 +69,15 @@ public class RobotContainer {
   /* Drive Controls */
   private final int leftX = XboxController.Axis.kLeftX.value;
   private final int rightY = XboxController.Axis.kRightY.value;
-  private final JoystickButton leftBumper = new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton rightBumper = new JoystickButton(xboxController, XboxController.Button.kRightBumper.value);
-  private final JoystickButton startButton = new JoystickButton(xboxController, XboxController.Button.kStart.value);
-  private final JoystickButton leftBumper = new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton rightBumper = new JoystickButton(xboxController, XboxController.Button.kRightBumper.value);
-  private final JoystickButton startButton = new JoystickButton(xboxController, XboxController.Button.kStart.value);
+  private final JoystickButton leftBumper =
+      new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton rightBumper =
+      new JoystickButton(xboxController, XboxController.Button.kRightBumper.value);
+  private final JoystickButton startButton =
+      new JoystickButton(xboxController, XboxController.Button.kStart.value);
 
-  Trigger algaeTrigger = new Trigger(() -> (leftBumper.getAsBoolean() & rightBumper.getAsBoolean()));
-  Trigger algaeTrigger = new Trigger(() -> (leftBumper.getAsBoolean() & rightBumper.getAsBoolean()));
-  // Subsystems;
-  DriveSub driveSub;
-  VisionSub visionSub;
+  Trigger algaeTrigger =
+      new Trigger(() -> (leftBumper.getAsBoolean() & rightBumper.getAsBoolean()));
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -142,16 +131,17 @@ public class RobotContainer {
 
   public void periodic() {
     drive.getVelocity();
+  }
+
   private void configureBindings() {
-    //Bumpers Algea (right takes in and left pushes out)
+    // Bumpers Algea (right takes in and left pushes out)
     leftBumper.whileTrue(new FireAlgae(() -> 0.5, algaeSub));
     rightBumper.whileTrue(new FireAlgae(() -> -0.5, algaeSub));
     algaeTrigger.whileFalse(new FireAlgae(() -> 0, algaeSub));
 
-    //Start button hook
+    // Start button hook
     startButton.whileTrue(new MoveHook(() -> 0.5, hookSub));
     startButton.whileFalse(new MoveHook(() -> 0, hookSub));
-  }
 
     SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
     SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
@@ -166,14 +156,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
+        Drivecommands.joystickDrive(
             drive,
             () -> -controller.getLeftY(),
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
     // drive.setDefaultCommand(
-    //     DriveCommands.joystickDrive(
+    //     Drivecommands.joystickDrive(
     //         drive,
     //         () -> -flightStick.getY(),
     //         () -> -flightStick.getX(),
@@ -183,14 +173,14 @@ public class RobotContainer {
     controller
         .a()
         .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
+            Drivecommands.joystickDriveAtAngle(
                 drive,
                 () -> -controller.getLeftY(),
                 () -> -controller.getLeftX(),
                 () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    controller.x().onTrue(commands.runOnce(drive::stopWithX, drive));
 
     // Reset gyro to 0
     controller.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));
@@ -199,7 +189,8 @@ public class RobotContainer {
     controller
         .b()
         .onTrue(
-            Commands.runOnce(
+            commands
+                .runOnce(
                     () ->
                         drive.setPose(
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
@@ -226,7 +217,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     drive.zeroYaw();
     // return new PathPlannerAuto("Reef");
-    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
+    // return Drivecommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
     return autoChooser.get();
   }
 }
