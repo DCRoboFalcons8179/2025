@@ -9,12 +9,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SubCoral extends SubsystemBase{
     //create motor
-    TalonFX coralMotor = new TalonFX(Constants.CoralValues.coralMotorId);
+    TalonFX coralMotor = new TalonFX(Constants.CoralValues.coralMotorID);
     TalonFX wristMotor = new TalonFX(Constants.CoralValues.wristID);
 
-    public SubCoral(){
-    
-    }
+    public SubCoral(){}
 
 
 //Get percent power

@@ -17,15 +17,14 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
-import frc.robot.commands.Drive;
 import frc.robot.Constants.Controllers;
 import frc.robot.commands.CoralGrab;
-import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.VisionSub;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -72,9 +71,7 @@ private final Joystick m_driverController =
   private final JoystickButton bButton = new JoystickButton(m_driverController, XboxController.Button.kB.value);
   private final JoystickButton xButton = new JoystickButton(m_driverController, XboxController.Button.kX.value);
   private final JoystickButton yButton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
-  // subsystems;
-  DriveSub driveSub;
-  VisionSub visionSub;
+
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -84,23 +81,6 @@ private final Joystick m_driverController =
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    driveSub = new DriveSub();
-    configureDefaults();
-    configureBindings();
-  }
-
-  private void configureBindings() {
-    //coral grab keybinds
-      
-    aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
-    aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
-    bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
-    bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
-     xButton.whileTrue(new Wrist(() -> 0.2, subCoral));
-    xButton.whileFalse(new Wrist(()-> 0, subCoral));
-    yButton.whileTrue(new Wrist(() -> -0.2, subCoral));
-    yButton.whileFalse(new Wrist(() -> 0, subCoral));
-  }
     switch (Constants.currentMode) {
       case REAL:
         ModuleIOTalonFX frontLeft = new ModuleIOTalonFX(TunerConstants.FrontLeft);
@@ -138,12 +118,26 @@ private final Joystick m_driverController =
                 new ModuleIO() {});
         break;
     }
+    
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  private void configureBindings() {
+    //coral grab keybinds
+      
+    aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
+    aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
+    bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
+    bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
+    xButton.whileTrue(new Wrist(() -> 0.2, subCoral));
+    xButton.whileFalse(new Wrist(()-> 0, subCoral));
+    yButton.whileTrue(new Wrist(() -> -0.2, subCoral));
+    yButton.whileFalse(new Wrist(() -> 0, subCoral));
   }
 
   public void periodic() {
