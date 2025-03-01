@@ -50,12 +50,12 @@ public class RobotContainer {
   private Music music;
   private final VisionSub visionSub = new VisionSub();
 
-  private final CommandJoystick flightStick = new CommandJoystick(2);
 
-  // Controller
+  // Controllers
+  private final CommandJoystick flightStick = new CommandJoystick(2);
   private final CommandXboxController controller = new CommandXboxController(0);
 
-  // Dashboard inputs
+  // Auton Input
   private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -105,6 +105,7 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
+  // Runs every loop, meant for logging
   public void periodic() {
     drive.getVelocity();
 
@@ -168,6 +169,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("align", new MaintainAll(drive, visionSub));
   }
 
+  /**As long as Constants.comp is false */
   private void configMusicButtonBindings() {
     if (!Constants.comp) {
       controller.povUp().onTrue(new InstantCommand(() -> music.play()));

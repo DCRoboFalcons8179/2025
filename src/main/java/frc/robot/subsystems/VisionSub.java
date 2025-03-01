@@ -37,6 +37,10 @@ public class VisionSub extends SubsystemBase {
     return -1;
   }
 
+  /**
+   * Returns the tracked target if one is found, else null
+   * @return PhotonTrackedTarget
+   */
   public PhotonTrackedTarget getBestTarget() {
     PhotonPipelineResult result = camera.getLatestResult();
     if (result.hasTargets()) {
@@ -45,6 +49,10 @@ public class VisionSub extends SubsystemBase {
     return null;
   }
 
+  /**
+   * Gets the stuff needed for calcuating distance to the tag
+   * @return Transform3d
+   */
   public Transform3d getTransform3dTo3dTarget() {
     if (hasTarget()) {
       return getBestTarget().getBestCameraToTarget();
