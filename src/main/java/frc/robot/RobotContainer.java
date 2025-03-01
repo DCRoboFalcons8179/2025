@@ -31,6 +31,7 @@ import frc.robot.commands.CoralGrab;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Elevator;
 import frc.robot.commands.MaintainAll;
+import frc.robot.commands.Vibrate;
 import frc.robot.commands.Wrist;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ElevatorSub;
@@ -168,6 +169,8 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+
+    controller.rightBumper().onTrue(new Vibrate(controller));
 
     // Reset gyro to 0
     controller.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));

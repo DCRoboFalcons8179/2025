@@ -38,6 +38,7 @@ public class Constants {
   /** The port numbers for our controllers */
   public class Controllers {
     public static final int xboxController = 0;
+    public static final double rumbleTimeSeconds = 0.5;
   }
 
   /** Values for configuring Motors */
