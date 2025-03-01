@@ -24,7 +24,7 @@ public class AlgaeSub extends SubsystemBase {
 
   public void driveAlgea(double AlgaePower){
     VictorSPXConfiguration algaeConfiguration = new VictorSPXConfiguration();
-    //Algea PID
+    // Algea PID
     algaeConfiguration.slot0.kP = Constants.AlgaePID.kP;
     algaeConfiguration.slot0.kI = Constants.AlgaePID.kI;
     algaeConfiguration.slot0.kD = Constants.AlgaePID.kD;
@@ -32,7 +32,7 @@ public class AlgaeSub extends SubsystemBase {
     
     algae.getAllConfigs(algaeConfiguration);
     
-    //Replace "feedbackSensor" when I know what to call it. (:
+    // Replace "feedbackSensor" when I know what to call it. (:
     algae.configSelectedFeedbackSensor(RemoteFeedbackDevice.None,
     Constants.Algae.feedbackSensor, 10);
   }
