@@ -4,36 +4,38 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.DriveSub;
+import frc.robot.Constants;
+import frc.robot.calcVelocities.DistanceX;
+import frc.robot.calcVelocities.DistanceY;
 import frc.robot.subsystems.VisionSub;
+import frc.robot.subsystems.drive.Drive;
 
 public class MaintainAll extends Command {
+  // Subsystems
+  Drive drive;
   VisionSub visionSub;
-  DriveSub driveSub;
 
-  // PID for the forwardSpeed PID loop
-  final double SPEED_P_GAIN = 0.75;
-  final double SPEED_D_GAIN = 0;
+  // Velocities
+  double translationVelocity;
+  double strafeVelocity;
+  double omegaRadians;
 
-  PIDController controller = new PIDController(SPEED_P_GAIN, 0, SPEED_D_GAIN);
-
-  // PID for the rotSpeed PID loop
-  final double ANGULAR_P_GAIN = 0.2;
-  final double ANGULAR_D_GAIN = 0.0;
-
-  PIDController turnController = new PIDController(ANGULAR_P_GAIN, 0, ANGULAR_D_GAIN);
-
-  // Initialize the variable for speed, not really needed here but why not
-  private double forwardSpeed;
-  private double rotSpeed;
+  // Distance Objects
+  DistanceX distanceX;
+  DistanceY distanceY;
 
   /** Creates a new MaintainAll. */
-  public MaintainAll(VisionSub visionSub, DriveSub driveSub) {
+  public MaintainAll(Drive drive, VisionSub visionSub) {
+    this.drive = drive;
     this.visionSub = visionSub;
-    this.driveSub = driveSub;
-    addRequirements(visionSub, driveSub);
+
+    // Sets the distance objects to use the visionSub with the correct pointer
+    distanceX = new DistanceX(visionSub);
+    distanceY = new DistanceY(visionSub);
+
+    addRequirements(drive, visionSub);
   }
 
   // Called when the command is initially scheduled.
@@ -43,28 +45,42 @@ public class MaintainAll extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double yaw = visionSub.getYaw(visionSub.getFrontCameraUnreadResults());
-    double range = visionSub.getDistance(visionSub.getFrontCameraUnreadResults());
+    translationVelocity = distanceX.getVelocity();
+    strafeVelocity = distanceY.getVelocity();
+    double yaw = visionSub.getRemappedYaw();
 
-    /**
-    The PID controller didn't like calculating when the value was zero since I return zero when no tag is found
-    so these ternary operators will just set the speed to zero when there isn't an april tag detected
-    */
-    rotSpeed = yaw != 0 ? -turnController.calculate(yaw, 0) / 10 : 0;
-    
-    forwardSpeed = range != 0 ? controller.calculate(range, 1.5) : 0;
-    
-    // Drives the robot at the desired forward and rotational speed
-    driveSub.drive(forwardSpeed, rotSpeed);
+    ChassisSpeeds chassisSpeeds =
+        new ChassisSpeeds() {
+          {
+            vxMetersPerSecond = -translationVelocity;
+            vyMetersPerSecond = -strafeVelocity;
+            if (yaw != 181) {
+              omegaRadiansPerSecond =
+                  yaw > Constants.Vision.errorThreshHoldRadians
+                      ? -0.3
+                      : yaw < Constants.Vision.errorThreshHoldRadians ? 0.3 : 0;
+            } else {
+              omegaRadiansPerSecond = 0;
+            }
+          }
+        };
+
+    drive.runVelocity(chassisSpeeds);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Distance has been maintained");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    double yaw = visionSub.getRemappedYaw();
+
+    return distanceX.isDone()
+        && distanceY.isDone()
+        && Math.abs(yaw) < Constants.Vision.errorThreshHoldRadians;
   }
 }
