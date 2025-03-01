@@ -21,6 +21,18 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+
+import frc.robot.commands.Drive;
+import frc.robot.Constants.Controllers;
+import frc.robot.commands.CoralGrab;
+import frc.robot.subsystems.DriveSub;
+import frc.robot.subsystems.VisionSub;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.SubCoral;
+import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.commands.Wrist;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -44,6 +56,8 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final Joystick xboxController = new Joystick(0);
+  private final SubCoral subCoral = new SubCoral();
   // Subsystems
   public final Drive drive;
   private Music music;
@@ -51,14 +65,42 @@ public class RobotContainer {
 
   private final CommandJoystick flightStick = new CommandJoystick(2);
 
+  // Controller Bindings
+private final Joystick m_driverController = 
+  new Joystick(Controllers.xboxController);
+  private final JoystickButton aButton = new JoystickButton(m_driverController, XboxController.Button.kA.value);
+  private final JoystickButton bButton = new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  private final JoystickButton xButton = new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  private final JoystickButton yButton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
+  // subsystems;
+  DriveSub driveSub;
+  VisionSub visionSub;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
+
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    driveSub = new DriveSub();
+    configureDefaults();
+    configureBindings();
+  }
+
+  private void configureBindings() {
+    //coral grab keybinds
+      
+    aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
+    aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
+    bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
+    bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
+     xButton.whileTrue(new Wrist(() -> 0.2, subCoral));
+    xButton.whileFalse(new Wrist(()-> 0, subCoral));
+    yButton.whileTrue(new Wrist(() -> -0.2, subCoral));
+    yButton.whileFalse(new Wrist(() -> 0, subCoral));
+  }
     switch (Constants.currentMode) {
       case REAL:
         ModuleIOTalonFX frontLeft = new ModuleIOTalonFX(TunerConstants.FrontLeft);
@@ -159,6 +201,7 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
+
 
     controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
   }

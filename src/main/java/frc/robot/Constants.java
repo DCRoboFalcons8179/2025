@@ -14,27 +14,43 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
 
-/**
- * This class defines the runtime mode used by AdvantageKit. The mode is always "real" when running
- * on a roboRIO. Change the value of "simMode" to switch between "sim" (physics sim) and "replay"
- * (log replay from a file).
- */
-public final class Constants {
-  public static final Mode simMode = Mode.SIM;
-  public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+/** Add your docs here. */
+public class Constants {
+    /**Are we debugging the bot?*/
+    public static boolean debug;
+    
+    /**The port numbers for our controllers*/
+    public class Controllers {
+        public final static int xboxController = 0;
+    }
 
-  public static enum Mode {
-    /** Running on a real robot. */
-    REAL,
+    /**Values for configuring Motors*/
+    public class DriveValues {
+        public final static int leftDriveID = 2;
+        public final static boolean leftDriveInvert = false;
+        
 
-    /** Running a physics simulator. */
-    SIM,
+        public final static int leftFollowerID = 3;
+        public final static boolean leftFollowerInvert = false;
 
-    /** Replaying from a log file. */
-    REPLAY
-  }
+        public final static int rightDriveID = 4;
+        public final static boolean rightDriveInvert = false;
+
+        public final static int rightFollowerID = 5;
+        public final static boolean rightFollowerInvert = false;
+
+        
+
+
+        public final static double kP = 0;
+        public final static double kI = 0;
+        public final static double kD = 0;
+        /** <p>kV is the same as kP*/
+        public final static double kV = 0;
+
+        public final static int maxRPS = 10000;
+
 
   /** Is the robot at a comp? */
   public static boolean comp = false;
@@ -57,5 +73,10 @@ public final class Constants {
     public class AprilTags {
       public static final double tag4HeightMeters = Units.inchesToMeters(57);
     }
+   }
+   public class CoralValues {
+        public final static int wristID = 6;
+        public final static int coralMotorID = 7;
+   }
   }
 }
