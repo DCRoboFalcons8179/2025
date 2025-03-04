@@ -14,20 +14,30 @@ import frc.robot.Constants;
 public class ElevatorSub extends SubsystemBase {
   // this is the motor we are using for the motor
   private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
+  // create the follower motor
+  private SparkMax followerMotor =
+      new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
+
   // create the elevator encoder
   RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
+  // create the follower encoder
+  RelativeEncoder followerEncoder = followerMotor.getEncoder();
 
+  
   // create the configs for the motors
   private SparkMaxConfig test = new SparkMaxConfig();
   private ClosedLoopConfig testclosed = new ClosedLoopConfig();
   // sparkbase for the motor
   private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {};
 
-  // create the follower motor
-  private SparkMax followerMotor =
-      new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
-  // create the follower encoder
-  RelativeEncoder followerEncoder = followerMotor.getEncoder();
+  // config for the elevator encoder
+  public ElevatorSub() {
+    // set the new config for the motor
+    var testConfig = new SparkMaxConfig();
+    // apply conifguration to the elevator motor
+    elevatorMotor.configure(testConfig, null, null);
+    test.apply(testclosed);
+  }
 
   @Override
   public void periodic() {
@@ -75,14 +85,6 @@ public class ElevatorSub extends SubsystemBase {
     followerEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
   }
 
-  // config for the elevator encoder
-  public ElevatorSub() {
-    // set the new config for the motor
-    var testConfig = new SparkMaxConfig();
-    // apply conifguration to the elevator motor
-    elevatorMotor.configure(testConfig, null, null);
-    test.apply(testclosed);
-  }
   // use this function later for if/when we do setpoints
   public void setPosition(double position) {}
 }
