@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controllers;
@@ -53,14 +52,12 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final Joystick xboxController = new Joystick(0);
   private final SubCoral subCoral = new SubCoral();
   // Subsystems
   public final Drive drive;
   private Music music;
   private final VisionSub visionSub = new VisionSub();
 
-  private final CommandJoystick flightStick = new CommandJoystick(2);
 
   // Controller Bindings
   private final Joystick m_driverController = new Joystick(Controllers.xboxController);

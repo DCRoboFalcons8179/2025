@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.*;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
