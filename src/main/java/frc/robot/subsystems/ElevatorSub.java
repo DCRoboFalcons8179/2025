@@ -23,7 +23,6 @@ public class ElevatorSub extends SubsystemBase {
   // create the follower encoder
   RelativeEncoder followerEncoder = followerMotor.getEncoder();
 
-  
   // create the configs for the motors
   private SparkMaxConfig test = new SparkMaxConfig();
   private ClosedLoopConfig testclosed = new ClosedLoopConfig();

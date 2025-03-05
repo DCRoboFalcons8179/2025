@@ -58,7 +58,6 @@ public class RobotContainer {
   private Music music;
   private final VisionSub visionSub = new VisionSub();
 
-
   // Controller Bindings
   private final Joystick m_driverController = new Joystick(Controllers.xboxController);
   private final JoystickButton aButton =
