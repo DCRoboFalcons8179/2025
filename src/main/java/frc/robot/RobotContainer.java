@@ -58,7 +58,6 @@ public class RobotContainer {
   private Music music;
   private final VisionSub visionSub = new VisionSub();
 
-
   // Controller Bindings
   private final Joystick m_driverController = new Joystick(Controllers.xboxController);
   private final JoystickButton aButton =
@@ -74,6 +73,30 @@ public class RobotContainer {
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
+
+  //control box
+  private final Joystick controlBoxLeft = new Joystick(1);
+  private final Joystick controlBoxRight = new Joystick(2);
+
+  //control box inputs
+  private final JoystickButton rawElevatorUp = new JoystickButton(controlBoxLeft, 4);
+  private final JoystickButton rawElevatorDown = new JoystickButton(controlBoxLeft, 6);
+  private final JoystickButton rawTiltUp = new JoystickButton(controlBoxLeft, 5);
+  private final JoystickButton rawTiltDown = new JoystickButton(controlBoxLeft, 7);
+  private final JoystickButton coralIn = new JoystickButton(controlBoxLeft, 2);
+  private final JoystickButton coralOut = new JoystickButton(controlBoxLeft, 3);
+  private final JoystickButton algaeIn = new JoystickButton(controlBoxLeft, 0);
+  private final JoystickButton algaeOut = new JoystickButton(controlBoxLeft, 1);
+  private final JoystickButton hangDown = new JoystickButton(controlBoxLeft, 9);
+  private final JoystickButton hangUp = new JoystickButton(controlBoxLeft, 10);
+  private final JoystickButton algaeProcessor = new JoystickButton(controlBoxRight, 6);
+  private final JoystickButton algaeL2 = new JoystickButton(controlBoxRight, 5);
+  private final JoystickButton algaeL3 = new JoystickButton(controlBoxRight, 4);
+  private final JoystickButton humanCoral = new JoystickButton(controlBoxRight, 11);
+  private final JoystickButton coralTrough = new JoystickButton(controlBoxRight, 10);
+  private final JoystickButton coralL1 = new JoystickButton(controlBoxRight, 9);
+  private final JoystickButton coralL2 = new JoystickButton(controlBoxRight, 8);
+  private final JoystickButton coralL3 = new JoystickButton(controlBoxRight, 7);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -120,6 +143,7 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    elevatorSub = new ElevatorSub(0);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -185,12 +209,9 @@ public class RobotContainer {
 
     controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
 
-    // y button (elevator up)
-    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -5.00, elevatorSub)));
-    yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
-    // x button (elevator down)
-    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 5.00, elevatorSub)));
-    xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+ 
+    rawElevatorUp.whileTrue(new Elevator(() -> 5.00, elevatorSub));
+    rawElevatorDown.whileFalse(new Elevator(() -> 0.00, elevatorSub));
 
     // coral grab keybinds
     aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));

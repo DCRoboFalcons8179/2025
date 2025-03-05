@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig;
@@ -13,7 +12,7 @@ import frc.robot.Constants;
 
 public class ElevatorSub extends SubsystemBase {
   // this is the motor we are using for the motor
-  private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
+  SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
   // create the elevator encoder
   RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
@@ -21,7 +20,7 @@ public class ElevatorSub extends SubsystemBase {
   private SparkMaxConfig test = new SparkMaxConfig();
   private ClosedLoopConfig testclosed = new ClosedLoopConfig();
   // sparkbase for the motor
-  private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {};
+  // private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {};
 
   // create the follower motor
   private SparkMax followerMotor =
@@ -31,7 +30,7 @@ public class ElevatorSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
+    // SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
   }
 
   // pid stuff
@@ -73,15 +72,20 @@ public class ElevatorSub extends SubsystemBase {
     // move the elevator motor
     elevatorEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
     followerEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
+
+    
   }
 
   // config for the elevator encoder
-  public ElevatorSub() {
-    // set the new config for the motor
-    var testConfig = new SparkMaxConfig();
-    // apply conifguration to the elevator motor
-    elevatorMotor.configure(testConfig, null, null);
-    test.apply(testclosed);
+  public ElevatorSub(double elevatorPosition) {
+    // // set the new config for the motor
+    // var testConfig = new SparkMaxConfig();
+    // // apply conifguration to the elevator motor
+    // elevatorMotor.configure(testConfig, null, null);
+    // test.apply(testclosed);
+
+    moveMotor(elevatorPosition);
+    SmartDashboard.putNumber("elevator Position", elevatorPosition);
   }
   // use this function later for if/when we do setpoints
   public void setPosition(double position) {}
