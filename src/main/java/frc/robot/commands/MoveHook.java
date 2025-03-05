@@ -24,8 +24,12 @@ public class MoveHook extends Command {
     this.switch1Pressed = switch1Pressed;
     this.switch2Pressed = switch2Pressed;
   }
-  public MoveHook() {
-    // Use addRequirements() here to declare subsystem dependencies.
+
+  public MoveHook(DoubleSupplier hookPower, HookSub hookSub) {
+    this.hookPower = hookPower;
+    this.hookSub = hookSub;
+
+    addRequirements(hookSub);
   }
 
   // Called when the command is initially scheduled.
