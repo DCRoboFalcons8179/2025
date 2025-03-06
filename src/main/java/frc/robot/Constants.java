@@ -77,7 +77,7 @@ public class Constants {
     public static final double desiredXTagDistanceMeters = 1;
 
     public class FrontCameraValues {
-      public static final String cameraName = "C270_HD_WEBCAM";
+      public static final String cameraName = "HD_Web_Camera";
       public static final double cameraHeightMeters = Units.inchesToMeters(4);
       public static final double cameraAngleRadians = Units.degreesToRadians(25);
     }
