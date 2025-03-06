@@ -110,9 +110,17 @@ public class Constants {
     public static final int followerMotorID = 2;
   }
 
-  public class HookPID {
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
+  public class HookInfo {
+    public static final int HookID = 17;
+
+    public class HookPID {
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+    }
+
+    public static final double hookDown = 0.5;
+    public static final double hookUp = -0.5;
+    public static final double hookStop = 0;
   }
 }
