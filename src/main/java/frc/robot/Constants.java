@@ -88,12 +88,31 @@ public class Constants {
   }
 
   public class CoralValues {
-    public static final int wristID = 6;
-    public static final int coralMotorID = 7;
+    public class Wrist {
+      public static final int wristID = 6;
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+      public static final double kF = 0;
+    }
+
+    public class Motor {
+      public static final int coralMotorID = 7;
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+      public static final double kV = 0;
+    }
   }
 
   public class Elevator {
     public static final int motorID = 1;
     public static final int followerMotorID = 2;
+  }
+
+  public class HookPID {
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 }
