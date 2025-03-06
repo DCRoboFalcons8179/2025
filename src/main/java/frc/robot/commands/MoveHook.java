@@ -24,6 +24,7 @@ public class MoveHook extends Command {
     this.switch2Pressed = switch2Pressed;
   }
 
+  /** Creates a new MoveHook. */
   public MoveHook(DoubleSupplier hookPower, HookSub hookSub) {
     this.hookPower = hookPower;
     this.hookSub = hookSub;
@@ -39,9 +40,9 @@ public class MoveHook extends Command {
   @Override
   public void execute() {
     // Moves the Hook
-    double downPower = switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? 0.5 : 0;
+    double downPower = switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? Constants.HookInfo.hookDown : Constants.HookInfo.hookStop;
     hookSub.driveHook(downPower);
-    double upPower = !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? -0.5 : 0;
+    double upPower = !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? Constants.HookInfo.hookUp : Constants.HookInfo.hookStop;
     hookSub.driveHook(upPower);
   }
 
