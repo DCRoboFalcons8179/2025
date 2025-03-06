@@ -7,16 +7,15 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class HookSub extends SubsystemBase {
 
-/** Insert Id later */
+  /** Insert Id later */
   TalonFX hook = new TalonFX(0);
 
- public void driveHook(double hookPower) {
+  public void driveHook(double hookPower) {
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
     // Hook PID
     hookConfiguration.Slot0.kP = Constants.HookPID.kP;

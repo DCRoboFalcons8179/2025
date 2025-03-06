@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,17 +18,19 @@ public class SubCoral extends SubsystemBase {
   public SubCoral() {
     TalonSRXConfiguration wristConfigs = new TalonSRXConfiguration();
 
-    wristConfigs.slot0 = new SlotConfiguration() {{
-      kP = Constants.CoralValues.Wrist.kP;
-      kI = Constants.CoralValues.Wrist.kI;
-      kD = Constants.CoralValues.Wrist.kD;
-      kF = Constants.CoralValues.Wrist.kF;
-    }};
+    wristConfigs.slot0 =
+        new SlotConfiguration() {
+          {
+            kP = Constants.CoralValues.Wrist.kP;
+            kI = Constants.CoralValues.Wrist.kI;
+            kD = Constants.CoralValues.Wrist.kD;
+            kF = Constants.CoralValues.Wrist.kF;
+          }
+        };
 
     wristConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
 
     wristMotor.configAllSettings(wristConfigs);
-
   }
 
   // Get percent power
