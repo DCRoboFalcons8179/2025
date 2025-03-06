@@ -29,7 +29,7 @@ import frc.robot.Constants.Controllers;
 import frc.robot.commands.CoralGrab;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Elevator;
-import frc.robot.commands.MaintainAll;
+import frc.robot.commands.MoveCoral;
 import frc.robot.commands.Vibrate;
 import frc.robot.commands.Wrist;
 import frc.robot.generated.TunerConstants;
@@ -154,19 +154,27 @@ public class RobotContainer {
     //         () -> -flightStick.getTwist()));
 
     // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
+    // controller
+    //     .a()
+    //     .whileTrue(
+    //         DriveCommands.joystickDriveAtAngle(
+    //             drive,
+    //             () -> -controller.getLeftY(),
+    //             () -> -controller.getLeftX(),
+    //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
     controller.rightBumper().onTrue(new Vibrate(controller));
+
+    // Pushing
+    controller.rightTrigger().whileTrue(new MoveCoral(subCoral, () -> -1));
+    controller.rightTrigger().whileFalse(new MoveCoral(subCoral, () -> 0));
+
+    // Pulling
+    controller.leftTrigger().whileTrue(new MoveCoral(subCoral, () -> 0.5));
+    controller.leftTrigger().whileFalse(new MoveCoral(subCoral, () -> 0));
 
     // Reset gyro to 0
     controller.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));
@@ -182,17 +190,26 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
+    // controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
 
     // y button (elevator up)
-    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -5.00, elevatorSub)));
+    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 50.00, elevatorSub)));
     yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
     // x button (elevator down)
-    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 5.00, elevatorSub)));
+    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -50.00, elevatorSub)));
     xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
 
+    // Coral Tilting
+    controller.povUp().onTrue(new Wrist(() -> -0.5, subCoral));
+    controller
+        .povUp()
+        .onFalse(new Wrist(() -> 0, subCoral))
+        .and(() -> controller.povDown().getAsBoolean());
+
+    controller.povDown().onTrue(new Wrist(() -> 0.3, subCoral));
+
     // coral grab keybinds
-    aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
+    // aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
     aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
     bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
     bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
@@ -203,12 +220,12 @@ public class RobotContainer {
   }
 
   private void configMusicButtonBindings() {
-    if (!Constants.comp) {
-      controller.povUp().onTrue(new InstantCommand(() -> music.play()));
-      controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-      controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
-      controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
-    }
+    // if (!Constants.comp) {
+    //   controller.povUp().onTrue(new InstantCommand(() -> music.play()));
+    //   controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
+    //   controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+    //   controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
+    // }
   }
 
   /**
