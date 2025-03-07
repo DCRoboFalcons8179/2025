@@ -43,9 +43,15 @@ public class MoveHook extends Command {
   @Override
   public void execute() {
     // Moves the Hook
-    double downPower = switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? Constants.HookInfo.hookDown : Constants.HookInfo.hookStop;
+    double downPower =
+        switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean()
+            ? Constants.HookInfo.hookDown
+            : Constants.HookInfo.hookStop;
     hookSub.driveHook(downPower);
-    double upPower = !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? Constants.HookInfo.hookUp : Constants.HookInfo.hookStop;
+    double upPower =
+        !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean()
+            ? Constants.HookInfo.hookUp
+            : Constants.HookInfo.hookStop;
     hookSub.driveHook(upPower);
   }
 
