@@ -1,13 +1,13 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -27,20 +27,22 @@ public class ElevatorSub extends SubsystemBase {
   private SparkMaxConfig test = new SparkMaxConfig();
   private ClosedLoopConfig testclosed = new ClosedLoopConfig();
   // sparkbase for the motor
-  private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {};
+  // private SparkBase elevatorSparkBase = new SparkBase(0, null, null) {};
 
   // config for the elevator encoder
   public ElevatorSub() {
     // set the new config for the motor
     var testConfig = new SparkMaxConfig();
+    ResetMode configResetMode = ResetMode.kResetSafeParameters;
+    PersistMode configPersistMode = PersistMode.kPersistParameters;
     // apply conifguration to the elevator motor
-    elevatorMotor.configure(testConfig, null, null);
+    elevatorMotor.configure(testConfig, configResetMode, configPersistMode);
     test.apply(testclosed);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
+    // SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
   }
 
   // pid stuff
