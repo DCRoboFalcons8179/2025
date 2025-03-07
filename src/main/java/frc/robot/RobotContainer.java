@@ -34,6 +34,7 @@ import frc.robot.commands.Vibrate;
 import frc.robot.commands.Wrist;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ElevatorSub;
+import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
 import frc.robot.subsystems.SubCoral;
 import frc.robot.subsystems.VisionSub;
@@ -70,15 +71,16 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
   ElevatorSub elevatorSub;
+  HookSub hookSub;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
-  //control box
+  // control box
   private final Joystick controlBoxLeft = new Joystick(1);
   private final Joystick controlBoxRight = new Joystick(2);
 
-  //control box inputs
+  // control box inputs
   private final JoystickButton rawElevatorUp = new JoystickButton(controlBoxLeft, 4);
   private final JoystickButton rawElevatorDown = new JoystickButton(controlBoxLeft, 6);
   private final JoystickButton rawTiltUp = new JoystickButton(controlBoxLeft, 5);
@@ -143,7 +145,8 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    elevatorSub = new ElevatorSub(0);
+    elevatorSub = new ElevatorSub();
+    hookSub = new HookSub();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -154,6 +157,7 @@ public class RobotContainer {
 
     SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
     SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
+
   }
 
   /**
@@ -209,19 +213,23 @@ public class RobotContainer {
 
     controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
 
- 
     rawElevatorUp.whileTrue(new Elevator(() -> 5.00, elevatorSub));
     rawElevatorDown.whileFalse(new Elevator(() -> 0.00, elevatorSub));
 
     // coral grab keybinds
-    aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
-    aButton.whileFalse(new CoralGrab(() -> 0, subCoral));
-    bButton.whileTrue(new CoralGrab(() -> -0.2, subCoral));
-    bButton.whileFalse(new CoralGrab(() -> 0, subCoral));
-    xButton.whileTrue(new Wrist(() -> 0.2, subCoral));
-    xButton.whileFalse(new Wrist(() -> 0, subCoral));
-    yButton.whileTrue(new Wrist(() -> -0.2, subCoral));
-    yButton.whileFalse(new Wrist(() -> 0, subCoral));
+    coralIn.whileTrue(new CoralGrab(() -> 0.2, subCoral));
+    coralIn.whileFalse(new CoralGrab(() -> 0, subCoral));
+    coralOut.whileTrue(new CoralGrab(() -> -0.2, subCoral));
+    coralOut.whileFalse(new CoralGrab(() -> 0, subCoral));
+    rawTiltUp.whileTrue(new Wrist(() -> 0.2, subCoral));
+    rawTiltUp.whileFalse(new Wrist(() -> 0, subCoral));
+    rawTiltDown.whileTrue(new Wrist(() -> -0.2, subCoral));
+    rawTiltDown.whileFalse(new Wrist(() -> 0, subCoral));
+
+    // hangUp.whileTrue(new MoveHook(() -> 0.2, hookSub));
+    // hangUp.whileFalse(new MoveHook(() -> 0, hookSub));
+    // hangDown.whileTrue(new MoveHook(() -> -0.2, hookSub));
+    // hangDown.whileFalse(new MoveHook(() -> 0, hookSub));
   }
 
   private void configMusicButtonBindings() {

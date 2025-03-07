@@ -4,16 +4,15 @@
 
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HookSub;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class MoveHook extends Command {
 
-   private DoubleSupplier hookPower;
+  private DoubleSupplier hookPower;
   private HookSub hookSub;
 
   // This hopefully works for the control box but idk if it will
@@ -39,11 +38,11 @@ public class MoveHook extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        // Moves the Hook
-        double downPower = switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? 0.5 : 0;
-        hookSub.driveHook(downPower);
-        double upPower = !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? -0.5 : 0;
-        hookSub.driveHook(upPower);
+    // Moves the Hook
+    double downPower = switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? 0.5 : 0;
+    hookSub.driveHook(downPower);
+    double upPower = !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean() ? -0.5 : 0;
+    hookSub.driveHook(upPower);
   }
 
   // Called once the command ends or is interrupted.

@@ -6,7 +6,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -81,8 +80,6 @@ public class ElevatorSub extends SubsystemBase {
     // move the elevator motor
     elevatorEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
     followerEncoder.setPosition(elevatorEncoder.getPosition() + outputSpeed);
-
-    
   }
 
   // use this function later for if/when we do setpoints
