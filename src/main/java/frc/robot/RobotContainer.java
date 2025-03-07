@@ -28,12 +28,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controllers;
 import frc.robot.commands.CoralGrab;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Elevator;
 import frc.robot.commands.MoveCoral;
+import frc.robot.commands.MoveHook;
 import frc.robot.commands.Vibrate;
 import frc.robot.commands.Wrist;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
 import frc.robot.subsystems.SubCoral;
@@ -58,6 +57,7 @@ public class RobotContainer {
   public final Drive drive;
   private Music music;
   private final VisionSub visionSub = new VisionSub();
+  private final HookSub hookSub;
 
   // Controller Bindings
   private final Joystick m_driverController = new Joystick(Controllers.xboxController);
@@ -69,9 +69,6 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kX.value);
   private final JoystickButton yButton =
       new JoystickButton(m_driverController, XboxController.Button.kY.value);
-
-  ElevatorSub elevatorSub;
-  HookSub hookSub;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -145,7 +142,7 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    elevatorSub = new ElevatorSub();
+
     hookSub = new HookSub();
 
     // Configure the button bindings
@@ -157,7 +154,6 @@ public class RobotContainer {
 
     SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
     SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
-
   }
 
   /**
@@ -198,8 +194,8 @@ public class RobotContainer {
     controller.rightBumper().onTrue(new Vibrate(controller));
 
     // Pushing
-    controller.rightTrigger().whileTrue(new MoveCoral(subCoral, () -> -1));
-    controller.rightTrigger().whileFalse(new MoveCoral(subCoral, () -> 0));
+    // controller.rightTrigger().whileTrue(new MoveCoral(subCoral, () -> -1));
+    // controller.rightTrigger().whileFalse(new MoveCoral(subCoral, () -> 0));
 
     // Pulling
     controller.leftTrigger().whileTrue(new MoveCoral(subCoral, () -> 0.5));
@@ -222,20 +218,22 @@ public class RobotContainer {
     // controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
 
     // y button (elevator up)
-    yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 50.00, elevatorSub)));
-    yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
-    // x button (elevator down)
-    xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -50.00, elevatorSub)));
-    xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+    // yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 50.00, elevatorSub)));
+    // yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+    // // x button (elevator down)
+    // xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -50.00, elevatorSub)));
+    // xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
 
-    // Coral Tilting
-    controller.povUp().onTrue(new Wrist(() -> -0.5, subCoral));
+    // // Coral Tilting
+    controller.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
     controller
         .povUp()
-        .onFalse(new Wrist(() -> 0, subCoral))
+        .onFalse(new MoveHook(() -> 0, hookSub))
         .and(() -> controller.povDown().getAsBoolean());
 
-    controller.povDown().onTrue(new Wrist(() -> 0.3, subCoral));
+    controller.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
+
+    controller.rightTrigger().whileTrue(new MoveHook(() -> -2, hookSub));
 
     // coral grab keybinds
     // aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));

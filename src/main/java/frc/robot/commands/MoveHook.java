@@ -6,9 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HookSub;
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.HookSub;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -43,16 +40,7 @@ public class MoveHook extends Command {
   @Override
   public void execute() {
     // Moves the Hook
-    double downPower =
-        switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean()
-            ? Constants.HookInfo.hookDown
-            : Constants.HookInfo.hookStop;
-    hookSub.driveHook(downPower);
-    double upPower =
-        !switch1Pressed.getAsBoolean() && switch2Pressed.getAsBoolean()
-            ? Constants.HookInfo.hookUp
-            : Constants.HookInfo.hookStop;
-    hookSub.driveHook(upPower);
+    hookSub.setPosition(hookPower.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

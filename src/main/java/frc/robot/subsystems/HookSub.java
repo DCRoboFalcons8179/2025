@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -17,7 +19,7 @@ public class HookSub extends SubsystemBase {
 
   Encoder hookEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k2X);
 
-  public void driveHook(double hookPower) {
+  public HookSub() {
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
     // Hook PID
     hookConfiguration.Slot0.kP = Constants.HookInfo.HookPID.kP;
@@ -33,6 +35,10 @@ public class HookSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Hook Position", hook.getPosition().getValueAsDouble());
+  }
+
+  public void setPosition(double position) {
+    hook.setControl(new PositionVoltage(hook.getPosition().getValueAsDouble() + position));
   }
 }
