@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -30,12 +29,12 @@ public class SubCoral extends SubsystemBase {
     wristMotor.getConfigurator().apply(wristConfigs);
   }
 
-  // Get percent power
+  // Move the coral motor with percent power
   public void moveCoral(double power) {
     coralMotor.set(power);
   }
 
-  // Get Power
+  // Move the wrist motor to a specific position
   public void moveWrist(double position) {
     wristMotor.setPosition(wristMotor.getPosition().getValueAsDouble() + position);
   }

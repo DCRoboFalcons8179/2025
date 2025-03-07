@@ -77,7 +77,7 @@ public class Constants {
     public static final double desiredXTagDistanceMeters = 1;
 
     public class FrontCameraValues {
-      public static final String cameraName = "C270_HD_WEBCAM";
+      public static final String cameraName = "HD_Web_Camera";
       public static final double cameraHeightMeters = Units.inchesToMeters(4);
       public static final double cameraAngleRadians = Units.degreesToRadians(25);
     }
@@ -89,15 +89,15 @@ public class Constants {
 
   public class CoralValues {
     public class Wrist {
-      public static final int wristID = 6;
-      public static final double kP = 0;
+      public static final int wristID = 14;
+      public static final double kP = 5;
       public static final double kI = 0;
       public static final double kD = 0;
-      public static final double kF = 0;
+      public static final double kF = 0.1;
     }
 
     public class Motor {
-      public static final int coralMotorID = 7;
+      public static final int coralMotorID = 15;
       public static final double kP = 0;
       public static final double kI = 0;
       public static final double kD = 0;
@@ -106,13 +106,21 @@ public class Constants {
   }
 
   public class Elevator {
-    public static final int motorID = 1;
-    public static final int followerMotorID = 2;
+    public static final int motorID = 12;
+    public static final int followerMotorID = 7;
   }
 
-  public class HookPID {
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
+  public class HookInfo {
+    public static final int HookID = 17;
+
+    public class HookPID {
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+    }
+
+    public static final double hookDown = 0.5;
+    public static final double hookUp = -0.5;
+    public static final double hookStop = 0;
   }
 }

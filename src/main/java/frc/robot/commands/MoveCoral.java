@@ -11,12 +11,12 @@ import java.util.function.DoubleSupplier;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class MoveCoral extends Command {
   SubCoral subCoral;
-  DoubleSupplier position;
+  DoubleSupplier velocity;
 
   /** Creates a new MoveCoral. */
-  public MoveCoral(SubCoral subCoral, DoubleSupplier position) {
+  public MoveCoral(SubCoral subCoral, DoubleSupplier velocity) {
     this.subCoral = subCoral;
-    this.position = position;
+    this.velocity = velocity;
 
     addRequirements(subCoral);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -29,7 +29,7 @@ public class MoveCoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subCoral.moveWrist(position.getAsDouble());
+    subCoral.moveCoral(velocity.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
