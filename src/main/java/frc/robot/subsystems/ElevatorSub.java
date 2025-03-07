@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig;
@@ -31,8 +33,10 @@ public class ElevatorSub extends SubsystemBase {
   public ElevatorSub() {
     // set the new config for the motor
     var testConfig = new SparkMaxConfig();
+    ResetMode configResetMode = ResetMode.kResetSafeParameters;
+    PersistMode configPersistMode = PersistMode.kPersistParameters;
     // apply conifguration to the elevator motor
-    elevatorMotor.configure(testConfig, null, null);
+    elevatorMotor.configure(testConfig, configResetMode, configPersistMode);
     test.apply(testclosed);
   }
 
