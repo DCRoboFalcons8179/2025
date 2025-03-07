@@ -5,41 +5,38 @@ import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class SubCoral extends SubsystemBase {
   // create motor
-  TalonSRX coralMotor = new TalonSRX(Constants.CoralValues.Motor.coralMotorID);
-  TalonSRX wristMotor = new TalonSRX(Constants.CoralValues.Wrist.wristID);
+  TalonFX coralMotor = new TalonFX(Constants.CoralValues.Motor.coralMotorID);
+  TalonFX wristMotor = new TalonFX(Constants.CoralValues.Wrist.wristID);
   RelativeEncoder relativeEncoder;
 
   public SubCoral() {
-    TalonSRXConfiguration wristConfigs = new TalonSRXConfiguration();
+    TalonFXConfiguration wristConfigs = new TalonFXConfiguration();
 
-    wristConfigs.slot0 =
-        new SlotConfiguration() {
-          {
-            kP = Constants.CoralValues.Wrist.kP;
-            kI = Constants.CoralValues.Wrist.kI;
-            kD = Constants.CoralValues.Wrist.kD;
-            kF = Constants.CoralValues.Wrist.kF;
-          }
-        };
+    wristConfigs.Slot0 = new Slot0Configs();
+    wristConfigs.Slot0.kP = Constants.CoralValues.Wrist.kP;
+    wristConfigs.Slot0.kI = Constants.CoralValues.Wrist.kI;
+    wristConfigs.Slot0.kD = Constants.CoralValues.Wrist.kD;
+    wristConfigs.Slot0.kS = Constants.CoralValues.Wrist.kF;
 
-    wristConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
-
-    wristMotor.configAllSettings(wristConfigs);
+    wristMotor.getConfigurator().apply(wristConfigs);
   }
 
   // Get percent power
   public void moveCoral(double power) {
-    coralMotor.set(TalonSRXControlMode.PercentOutput, power);
+    coralMotor.set(power);
   }
 
   // Get Power
   public void moveWrist(double position) {
-    wristMotor.setSelectedSensorPosition(wristMotor.getSelectedSensorPosition() + position);
+    wristMotor.setPosition(wristMotor.getPosition().getValueAsDouble() + position);
   }
 }
