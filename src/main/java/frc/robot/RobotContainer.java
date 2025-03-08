@@ -235,7 +235,7 @@ public class RobotContainer {
     controller.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
 
     // Hang
-    controller.rightTrigger().whileTrue(new Hang(() -> -0.75, hookSub));
+    controller.rightTrigger().whileTrue(new Hang(() -> -0.6, hookSub));
 
     // coral grab keybinds
     // aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));
