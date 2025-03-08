@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controllers;
+import frc.robot.commands.UpdateElevatorPose;
+import frc.robot.commands.UpdateWristPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
@@ -43,13 +45,13 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final CoralSub coralSub = new CoralSub();
   // Subsystems
   public final Drive drive;
   private Music music;
   private final VisionSub visionSub = new VisionSub();
   private final HookSub hookSub;
   private final ElevatorSub elevatorSub;
+  private final CoralSub coralSub;
 
   // Controller Bindings
   private final Joystick m_driverController = new Joystick(Controllers.xboxController);
@@ -127,6 +129,7 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
     elevatorSub = new ElevatorSub();
+    coralSub = new CoralSub(elevatorSub);
     hookSub = new HookSub();
 
     // Configure the button bindings
@@ -150,6 +153,9 @@ public class RobotContainer {
     ControllerButtons controllerButtons =
         new ControllerButtons(controller, drive, coralSub, elevatorSub, hookSub);
     controllerButtons.configureButtonBindings();
+
+    coralSub.setDefaultCommand(new UpdateWristPose(coralSub));
+    elevatorSub.setDefaultCommand(new UpdateElevatorPose(elevatorSub));
   }
 
   private void configMusicButtonBindings() {

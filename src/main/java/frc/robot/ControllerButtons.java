@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Elevator;
 import frc.robot.commands.GoToPose;
 import frc.robot.commands.MoveCoral;
+import frc.robot.commands.MoveElevator;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
@@ -87,12 +87,12 @@ public class ControllerButtons {
                 .ignoringDisable(true));
 
     // Elevator
-    commandXboxController.leftBumper().onTrue(new Elevator(() -> 1, elevatorSub));
-    commandXboxController.rightBumper().onTrue(new Elevator(() -> -1, elevatorSub));
+    commandXboxController.leftBumper().onTrue(new MoveElevator(() -> 100, elevatorSub));
+    commandXboxController.rightBumper().onTrue(new MoveElevator(() -> -100, elevatorSub));
 
     commandXboxController
         .leftBumper()
-        .onFalse(new Elevator(() -> 0, elevatorSub))
+        .onFalse(new MoveElevator(() -> 0, elevatorSub))
         .and(() -> !commandXboxController.rightBumper().getAsBoolean());
 
     // // Coral Tilting

@@ -12,22 +12,22 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.math.Filter;
 import frc.robot.Constants;
 
 public class ElevatorSub extends SubsystemBase {
   // this is the motor we are using for the motor
-  private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.motorID, MotorType.kBrushless);
+  private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.driverID, MotorType.kBrushless);
   // create the follower motor
   private SparkMax followerMotor =
       new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
 
   private SparkClosedLoopController elevatorSparkClosedLoopController;
-  private SparkClosedLoopController followerSparkClosedLoopController;
 
   // create the elevator encoder
   RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
-  // create the follower encoder
-  RelativeEncoder followerEncoder = followerMotor.getEncoder();
+
+  private double desiredPos = 0;
 
   // config for the elevator encoder
   public ElevatorSub() {
@@ -51,32 +51,40 @@ public class ElevatorSub extends SubsystemBase {
 
     followerConfig.inverted(false).idleMode(IdleMode.kCoast);
 
-    followerConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
-    followerConfig
-        .closedLoop
-        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-        .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+    followerConfig.follow(Constants.Elevator.driverID);
 
     followerMotor.configure(
         elevatorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-    followerSparkClosedLoopController = followerMotor.getClosedLoopController();
+    // Zeros Position
+    elevatorEncoder.setPosition(0);
   }
 
   @Override
   public void periodic() {
     // SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
-    SmartDashboard.putNumber("Elevator Position", elevatorEncoder.getPosition());
-    SmartDashboard.putNumber("Elevator Temperature Celsius", elevatorMotor.getMotorTemperature());
-    SmartDashboard.putNumber("Elevator Amps", elevatorMotor.getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Driver Position", elevatorEncoder.getPosition());
+    SmartDashboard.putNumber(
+        "Elevator Driver Temperature Celsius", elevatorMotor.getMotorTemperature());
+    SmartDashboard.putNumber(
+        "Elevator Follower Temperature Celsius", followerMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Elevator Driver Amps", elevatorMotor.getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Follower Amps", followerMotor.getOutputCurrent());
   }
 
-  // use this function later for if/when we do setpoints
-  public void setPosition(double position) {
-    elevatorSparkClosedLoopController.setReference(
-        elevatorEncoder.getPosition() + position, ControlType.kPosition);
-    // elevatorMotor.set(position);
-    // followerMotor.set(position);
-    // followerSparkClosedLoopController.setReference(position, ControlType.kPosition);
+  public double getPose() {
+    return elevatorEncoder.getPosition();
+  }
+
+  public void updatePosition() {
+    double limitedPose = Filter.cutoffFilter(desiredPos, 9000, 0);
+
+    SmartDashboard.putNumber("Desired Elevator Position", limitedPose);
+
+    elevatorSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
+  }
+
+  public void goToPose(double position) {
+    desiredPos = Filter.cutoffFilter(desiredPos + position, 9000, 0);
   }
 }

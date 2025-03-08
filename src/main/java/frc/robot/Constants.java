@@ -106,10 +106,13 @@ public class Constants {
   }
 
   public class Elevator {
-    public static final int motorID = 12;
+    public static final int driverID = 12;
     public static final int followerMotorID = 7;
 
-    public static final double kP = 0.25;
+    public static final int maxHeight = 9000;
+    public static final int avoidanceHeight = 3000;
+
+    public static final double kP = 0.0075 / 100;
     public static final double kI = 0;
     public static final double kD = 0;
   }

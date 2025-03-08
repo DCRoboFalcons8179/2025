@@ -24,9 +24,14 @@ public class CoralSub extends SubsystemBase {
   SparkClosedLoopController wristSparkClosedLoopController;
   // create the elevator encoder
   RelativeEncoder wristEncoder = wristMotor.getEncoder();
+  ElevatorSub elevatorSub;
 
-  public CoralSub() {
+  private int minPosition;
+
+  public CoralSub(ElevatorSub elevatorSub) {
     SparkMaxConfig wristConfig = new SparkMaxConfig();
+
+    this.elevatorSub = elevatorSub;
 
     wristConfig.inverted(false).idleMode(IdleMode.kBrake);
 
@@ -65,13 +70,26 @@ public class CoralSub extends SubsystemBase {
     SmartDashboard.putNumber("No Filter Pose", wristEncoder.getPosition() + position);
     desiredPos = Filter.cutoffFilter(desiredPos + position, 1750, 0);
 
-    SmartDashboard.putNumber("Desired Position", desiredPos);
-
     wristSparkClosedLoopController.setReference(desiredPos, ControlType.kPosition);
   }
 
+  public void updatePosition() {
+    double limitedPose =
+        Filter.cutoffFilter(
+            desiredPos,
+            1750,
+            elevatorSub.getPose() >= Constants.Elevator.avoidanceHeight ? 250 : 0);
+
+    SmartDashboard.putNumber("Desired Position", limitedPose);
+
+    wristSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
+  }
+
   public void goToPose(double position) {
-    position = Filter.cutoffFilter(position, 1750, 0);
-    wristSparkClosedLoopController.setReference(position, ControlType.kPosition);
+    desiredPos = position;
+  }
+
+  public void avoidCollision() {
+    minPosition = 250;
   }
 }
