@@ -49,12 +49,12 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig followerConfig = new SparkMaxConfig();
 
-    followerConfig.inverted(false).idleMode(IdleMode.kCoast);
+    followerConfig.inverted(false).idleMode(IdleMode.kBrake);
 
     followerConfig.follow(Constants.Elevator.driverID);
 
     followerMotor.configure(
-        elevatorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
     // Zeros Position
     elevatorEncoder.setPosition(0);
