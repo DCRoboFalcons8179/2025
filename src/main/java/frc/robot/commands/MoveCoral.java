@@ -5,20 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.SubCoral;
+import frc.robot.subsystems.CoralSub;
 import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class MoveCoral extends Command {
-  SubCoral subCoral;
+  CoralSub coralSub;
   DoubleSupplier velocity;
 
   /** Creates a new MoveCoral. */
-  public MoveCoral(SubCoral subCoral, DoubleSupplier velocity) {
-    this.subCoral = subCoral;
+  public MoveCoral(CoralSub coralSub, DoubleSupplier velocity) {
+    this.coralSub = coralSub;
     this.velocity = velocity;
 
-    addRequirements(subCoral);
+    addRequirements(coralSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,7 +29,7 @@ public class MoveCoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subCoral.moveCoral(velocity.getAsDouble());
+    coralSub.moveCoral(velocity.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

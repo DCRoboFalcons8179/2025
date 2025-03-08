@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -30,6 +31,7 @@ public class ElevatorSub extends SubsystemBase {
 
   // config for the elevator encoder
   public ElevatorSub() {
+
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 
     elevatorConfig.inverted(false).idleMode(IdleMode.kBrake);
@@ -47,7 +49,7 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig followerConfig = new SparkMaxConfig();
 
-    followerConfig.inverted(false).idleMode(IdleMode.kBrake);
+    followerConfig.inverted(false).idleMode(IdleMode.kCoast);
 
     followerConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
     followerConfig
@@ -65,13 +67,16 @@ public class ElevatorSub extends SubsystemBase {
   public void periodic() {
     // SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
     SmartDashboard.putNumber("Elevator Position", elevatorEncoder.getPosition());
+    SmartDashboard.putNumber("Elevator Temperature Celsius", elevatorMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Elevator Amps", elevatorMotor.getOutputCurrent());
   }
 
   // use this function later for if/when we do setpoints
   public void setPosition(double position) {
-    // elevatorSparkClosedLoopController.setReference(position, ControlType.kPosition);
-    elevatorMotor.set(position);
-    followerMotor.set(position);
+    elevatorSparkClosedLoopController.setReference(
+        elevatorEncoder.getPosition() + position, ControlType.kPosition);
+    // elevatorMotor.set(position);
+    // followerMotor.set(position);
     // followerSparkClosedLoopController.setReference(position, ControlType.kPosition);
   }
 }

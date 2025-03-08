@@ -1,22 +1,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.SubCoral;
+import frc.robot.subsystems.CoralSub;
 import java.util.function.DoubleSupplier;
 
 public class CoralGrab extends Command {
   private DoubleSupplier power;
-  private SubCoral subCoral;
+  private CoralSub coralSub;
   // creates new coralgrab
-  public CoralGrab(DoubleSupplier power, SubCoral subCoral) {
+  public CoralGrab(DoubleSupplier power, CoralSub coralSub) {
     this.power = power;
-    this.subCoral = subCoral;
+    this.coralSub = coralSub;
 
-    addRequirements(subCoral);
+    addRequirements(coralSub);
   }
 
   @Override
   public void execute() {
-    subCoral.moveCoral(power.getAsDouble());
+    coralSub.moveCoral(power.getAsDouble());
   }
 }
