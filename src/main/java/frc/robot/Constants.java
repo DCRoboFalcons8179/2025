@@ -108,6 +108,10 @@ public class Constants {
   public class Elevator {
     public static final int motorID = 12;
     public static final int followerMotorID = 7;
+
+    public static final double kP = 0.1;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 
   public class HookInfo {

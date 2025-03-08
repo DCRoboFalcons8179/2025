@@ -28,11 +28,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controllers;
 import frc.robot.commands.CoralGrab;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.Elevator;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveHook;
-import frc.robot.commands.Vibrate;
 import frc.robot.commands.Wrist;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
 import frc.robot.subsystems.SubCoral;
@@ -58,6 +59,7 @@ public class RobotContainer {
   private Music music;
   private final VisionSub visionSub = new VisionSub();
   private final HookSub hookSub;
+  private final ElevatorSub elevatorSub;
 
   // Controller Bindings
   private final Joystick m_driverController = new Joystick(Controllers.xboxController);
@@ -142,7 +144,7 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-
+    elevatorSub = new ElevatorSub();
     hookSub = new HookSub();
 
     // Configure the button bindings
@@ -172,26 +174,24 @@ public class RobotContainer {
             () -> -controller.getRightX()));
 
     // drive.setDefaultCommand(
-    //     DriveCommands.joystickDrive(
-    //         drive,
-    //         () -> -flightStick.getY(),
-    //         () -> -flightStick.getX(),
-    //         () -> -flightStick.getTwist()));
+    // DriveCommands.joystickDrive(
+    // drive,
+    // () -> -flightStick.getY(),
+    // () -> -flightStick.getX(),
+    // () -> -flightStick.getTwist()));
 
     // Lock to 0° when A button is held
     // controller
-    //     .a()
-    //     .whileTrue(
-    //         DriveCommands.joystickDriveAtAngle(
-    //             drive,
-    //             () -> -controller.getLeftY(),
-    //             () -> -controller.getLeftX(),
-    //             () -> new Rotation2d()));
+    // .a()
+    // .whileTrue(
+    // DriveCommands.joystickDriveAtAngle(
+    // drive,
+    // () -> -controller.getLeftY(),
+    // () -> -controller.getLeftX(),
+    // () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-    controller.rightBumper().onTrue(new Vibrate(controller));
 
     // Pushing
     // controller.rightTrigger().whileTrue(new MoveCoral(subCoral, () -> -1));
@@ -215,14 +215,13 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    // controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
+    controller.leftBumper().whileTrue(new Elevator(() -> 0.25, elevatorSub));
+    controller.rightBumper().whileTrue(new Elevator(() -> -0.1, elevatorSub));
 
-    // y button (elevator up)
-    // yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 50.00, elevatorSub)));
-    // yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
-    // // x button (elevator down)
-    // xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -50.00, elevatorSub)));
-    // xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+    controller
+        .leftBumper()
+        .onFalse(new Elevator(() -> 0, elevatorSub))
+        .and(() -> controller.rightBumper().getAsBoolean());
 
     // // Coral Tilting
     controller.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
@@ -248,10 +247,10 @@ public class RobotContainer {
 
   private void configMusicButtonBindings() {
     // if (!Constants.comp) {
-    //   controller.povUp().onTrue(new InstantCommand(() -> music.play()));
-    //   controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-    //   controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
-    //   controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
+    // controller.povUp().onTrue(new InstantCommand(() -> music.play()));
+    // controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
+    // controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+    // controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
     // }
   }
 
@@ -263,7 +262,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     drive.zeroYaw();
     // return new PathPlannerAuto("Reef");
-    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
+    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () ->
+    // 0).withTimeout(1);
     return autoChooser.get();
   }
 }

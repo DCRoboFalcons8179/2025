@@ -18,6 +18,6 @@ public class Elevator extends Command {
   }
 
   public void execute() {
-    elevatorSub.moveMotor(5);
+    elevatorSub.setPosition(elevatorPosition.getAsDouble());
   }
 }
