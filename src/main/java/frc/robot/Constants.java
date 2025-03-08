@@ -127,4 +127,19 @@ public class Constants {
     public static final double hookUp = -0.5;
     public static final double hookStop = 0;
   }
+
+  public class AlgaeInfo {
+    public static final int AlgaeID = 0;
+
+    public class AlgaePID {
+      //Configue PID needed
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+      public static final double kF = 0;
+    }
+      
+    
+   
+  }
 }
