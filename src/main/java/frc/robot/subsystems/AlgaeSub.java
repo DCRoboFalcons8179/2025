@@ -6,19 +6,16 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class AlgaeSub extends SubsystemBase {
 
-    VictorSPX algae = new VictorSPX(Constants.AlgaeInfo.AlgaeID);
+  VictorSPX algae = new VictorSPX(Constants.AlgaeInfo.AlgaeID);
   /** Creates a new AlgaeSub. */
   public AlgaeSub() {}
 
-  
-
-    public void driveAlgea(double AlgaePower) {
+  public void driveAlgea(double AlgaePower) {
     VictorSPXConfiguration algaeConfiguration = new VictorSPXConfiguration();
     // Algea PID
     algaeConfiguration.slot0.kP = Constants.AlgaeInfo.AlgaePID.kP;
@@ -27,10 +24,10 @@ public class AlgaeSub extends SubsystemBase {
     algaeConfiguration.slot0.kF = Constants.AlgaeInfo.AlgaePID.kF;
 
     algae.getAllConfigs(algaeConfiguration);
-    }
-
-    @Override
-    public void periodic() {
-      // This method will be called once per scheduler run
-    }
   }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+}

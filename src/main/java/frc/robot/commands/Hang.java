@@ -5,22 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.AlgaeSub;
+import frc.robot.subsystems.HookSub;
 import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class FireAlgae extends Command {
+public class Hang extends Command {
+  DoubleSupplier power;
+  HookSub hookSub;
 
-  private DoubleSupplier algaePower;
-  private AlgaeSub algaeSub;
-
-  /** Creates a new FireAlgea. */
-  public FireAlgae(DoubleSupplier algeaPower, AlgaeSub algaeSub) {
-    this.algaePower = algeaPower;
-    this.algaeSub = algaeSub;
-
-    addRequirements(algaeSub);
+  /** Creates a new Hang. */
+  public Hang(DoubleSupplier power, HookSub hookSub) {
+    this.power = power;
+    this.hookSub = hookSub;
+    addRequirements(hookSub);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -28,7 +28,7 @@ public class FireAlgae extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    algaeSub.driveAlgea(algaePower.getAsDouble());
+    hookSub.hang(power.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

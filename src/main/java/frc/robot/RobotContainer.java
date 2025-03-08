@@ -29,6 +29,7 @@ import frc.robot.Constants.Controllers;
 import frc.robot.commands.CoralGrab;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Elevator;
+import frc.robot.commands.Hang;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveHook;
 import frc.robot.commands.Wrist;
@@ -227,12 +228,14 @@ public class RobotContainer {
     controller.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
     controller
         .povUp()
-        .onFalse(new MoveHook(() -> 0, hookSub))
-        .and(() -> controller.povDown().getAsBoolean());
+        .onFalse(new Hang(() -> 0, hookSub))
+        .and(() -> !controller.povDown().getAsBoolean())
+        .and(() -> !controller.rightTrigger().getAsBoolean());
 
     controller.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
 
-    controller.rightTrigger().whileTrue(new MoveHook(() -> -2, hookSub));
+    // Hang
+    controller.rightTrigger().whileTrue(new Hang(() -> -0.75, hookSub));
 
     // coral grab keybinds
     // aButton.whileTrue(new CoralGrab(() -> 0.2, subCoral));

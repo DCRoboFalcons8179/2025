@@ -41,4 +41,8 @@ public class HookSub extends SubsystemBase {
   public void setPosition(double position) {
     hook.setControl(new PositionVoltage(hook.getPosition().getValueAsDouble() + position));
   }
+
+  public void hang(double power) {
+    hook.set(power);
+  }
 }
