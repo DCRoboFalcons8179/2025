@@ -41,7 +41,7 @@ public final class Constants {
 
   public static double maxSpeed = 0.5;
 
-  /**Vision Constants */
+  /** Vision Constants */
   public class Vision {
     public static final double errorThreshHoldMeters = 0.10;
     public static final double errorThreshHoldStrafeMeters = 0.05;
@@ -49,7 +49,7 @@ public final class Constants {
     public static final int tagFindingTries = 15;
     public static final double desiredXTagDistanceMeters = 1;
 
-    /**Values for the Front Camera */
+    /** Values for the Front Camera */
     public class FrontCameraValues {
       public static final String cameraName = "C270_HD_WEBCAM";
       public static final double cameraHeightMeters = Units.inchesToMeters(4);

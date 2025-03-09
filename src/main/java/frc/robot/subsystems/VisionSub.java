@@ -39,6 +39,7 @@ public class VisionSub extends SubsystemBase {
 
   /**
    * Returns the tracked target if one is found, else null
+   *
    * @return PhotonTrackedTarget
    */
   public PhotonTrackedTarget getBestTarget() {
@@ -51,6 +52,7 @@ public class VisionSub extends SubsystemBase {
 
   /**
    * Gets the stuff needed for calcuating distance to the tag
+   *
    * @return Transform3d
    */
   public Transform3d getTransform3dTo3dTarget() {

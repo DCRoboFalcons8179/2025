@@ -50,7 +50,6 @@ public class RobotContainer {
   private Music music;
   private final VisionSub visionSub = new VisionSub();
 
-
   // Controllers
   private final CommandJoystick flightStick = new CommandJoystick(2);
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -169,7 +168,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("align", new MaintainAll(drive, visionSub));
   }
 
-  /**As long as Constants.comp is false */
+  /** As long as Constants.comp is false */
   private void configMusicButtonBindings() {
     if (!Constants.comp) {
       controller.povUp().onTrue(new InstantCommand(() -> music.play()));
