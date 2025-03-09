@@ -112,7 +112,7 @@ public class Constants {
     public static final int maxHeight = 9000;
     public static final int avoidanceHeight = 3000;
 
-    public static final double kP = 0.0075 / 10;
+    public static final double kP = 0.0005 / 10;
     public static final double kI = 0;
     public static final double kD = 0;
   }

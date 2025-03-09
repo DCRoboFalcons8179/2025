@@ -49,12 +49,12 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig followerConfig = new SparkMaxConfig();
 
-    followerConfig.inverted(false).idleMode(IdleMode.kBrake);
+    followerConfig.inverted(false).idleMode(IdleMode.kCoast);
 
     followerConfig.follow(Constants.Elevator.driverID);
 
     followerMotor.configure(
-        followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // Zeros Position
     elevatorEncoder.setPosition(0);
@@ -70,6 +70,7 @@ public class ElevatorSub extends SubsystemBase {
         "Elevator Follower Temperature Celsius", followerMotor.getMotorTemperature());
     SmartDashboard.putNumber("Elevator Driver Amps", elevatorMotor.getOutputCurrent());
     SmartDashboard.putNumber("Elevator Follower Amps", followerMotor.getOutputCurrent());
+    SmartDashboard.putBoolean("Follower Command", followerMotor.isFollower());
   }
 
   public double getPose() {
