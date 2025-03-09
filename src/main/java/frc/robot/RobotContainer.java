@@ -14,16 +14,24 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controllers;
-import frc.robot.commands.UpdateElevatorPose;
-import frc.robot.commands.UpdateWristPose;
+import frc.robot.commands.CoralGrab;
+import frc.robot.commands.DriveCommands;
+import frc.robot.commands.MoveCoral;
+import frc.robot.commands.MoveHook;
+import frc.robot.commands.Vibrate;
+import frc.robot.commands.Wrist;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
@@ -45,16 +53,24 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // Subsystems
   public final Drive drive;
   private Music music;
   private final VisionSub visionSub = new VisionSub();
   private final HookSub hookSub;
-  private final ElevatorSub elevatorSub;
-  private final CoralSub coralSub;
-
+  private final ElevatorSub elevatorSub = new ElevatorSub();
+  private final CoralSub coralSub = new CoralSub(elevatorSub);
   // Controller Bindings
   private final Joystick m_driverController = new Joystick(Controllers.xboxController);
+  private final JoystickButton aButton =
+      new JoystickButton(m_driverController, XboxController.Button.kA.value);
+  private final JoystickButton bButton =
+      new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  private final JoystickButton xButton =
+      new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  private final JoystickButton yButton =
+      new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -128,8 +144,7 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    elevatorSub = new ElevatorSub();
-    coralSub = new CoralSub(elevatorSub);
+
     hookSub = new HookSub();
 
     // Configure the button bindings
@@ -150,20 +165,99 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    ControllerButtons controllerButtons =
-        new ControllerButtons(controller, drive, coralSub, elevatorSub, hookSub);
-    controllerButtons.configureButtonBindings();
+    // Default command, normal field-relative drive
+    drive.setDefaultCommand(
+        DriveCommands.joystickDrive(
+            drive,
+            () -> -controller.getLeftY(),
+            () -> -controller.getLeftX(),
+            () -> -controller.getRightX()));
 
-    coralSub.setDefaultCommand(new UpdateWristPose(coralSub));
-    elevatorSub.setDefaultCommand(new UpdateElevatorPose(elevatorSub));
+    // drive.setDefaultCommand(
+    //     DriveCommands.joystickDrive(
+    //         drive,
+    //         () -> -flightStick.getY(),
+    //         () -> -flightStick.getX(),
+    //         () -> -flightStick.getTwist()));
+
+    // Lock to 0° when A button is held
+    // controller
+    //     .a()
+    //     .whileTrue(
+    //         DriveCommands.joystickDriveAtAngle(
+    //             drive,
+    //             () -> -controller.getLeftY(),
+    //             () -> -controller.getLeftX(),
+    //             () -> new Rotation2d()));
+
+    // Switch to X pattern when X button is pressed
+    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+
+    controller.rightBumper().onTrue(new Vibrate(controller));
+
+    // Pushing
+    // controller.rightTrigger().whileTrue(new MoveCoral(subCoral, () -> -1));
+    // controller.rightTrigger().whileFalse(new MoveCoral(subCoral, () -> 0));
+
+    // Pulling
+    controller.leftTrigger().whileTrue(new MoveCoral(coralSub, () -> 0.5));
+    controller.leftTrigger().whileFalse(new MoveCoral(coralSub, () -> 0));
+
+    // Reset gyro to 0
+    controller.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));
+
+    // Reset gyro to 0° when B button is pressed
+    controller
+        .b()
+        .onTrue(
+            Commands.runOnce(
+                    () ->
+                        drive.setPose(
+                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+                    drive)
+                .ignoringDisable(true));
+
+    // controller.leftTrigger().whileTrue(new MaintainAll(drive, visionSub));
+
+    // y button (elevator up)
+    // yButton.whileTrue(new InstantCommand(() -> new Elevator(() -> 50.00, elevatorSub)));
+    // yButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+    // // x button (elevator down)
+    // xButton.whileTrue(new InstantCommand(() -> new Elevator(() -> -50.00, elevatorSub)));
+    // xButton.whileFalse(new InstantCommand(() -> new Elevator(() -> 0.00, elevatorSub)));
+
+    // // Coral Tilting
+    controller.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
+    controller
+        .povUp()
+        .onFalse(new MoveHook(() -> 0, hookSub))
+        .and(() -> controller.povDown().getAsBoolean());
+
+    controller.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
+
+    controller.rightTrigger().whileTrue(new MoveHook(() -> -2, hookSub));
+
+    // coral grab keybinds
+    coralIn.whileTrue(new CoralGrab(() -> 0.2, coralSub));
+    coralIn.whileFalse(new CoralGrab(() -> 0, coralSub));
+    coralOut.whileTrue(new CoralGrab(() -> -0.2, coralSub));
+    coralOut.whileFalse(new CoralGrab(() -> 0, coralSub));
+    rawTiltUp.whileTrue(new Wrist(() -> 0.2, coralSub));
+    rawTiltUp.whileFalse(new Wrist(() -> 0, coralSub));
+    rawTiltDown.whileTrue(new Wrist(() -> -0.2, coralSub));
+    rawTiltDown.whileFalse(new Wrist(() -> 0, coralSub));
+
+    // rawElevatorUp.whileTrue(new Elevator(() -> 0.2, elevatorSub));
+
+    // coralL1.onTrue(new Elevator(() -> 5.0, elevatorSub));
   }
 
   private void configMusicButtonBindings() {
     // if (!Constants.comp) {
-    // controller.povUp().onTrue(new InstantCommand(() -> music.play()));
-    // controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-    // controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
-    // controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
+    //   controller.povUp().onTrue(new InstantCommand(() -> music.play()));
+    //   controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
+    //   controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+    //   controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
     // }
   }
 
@@ -175,8 +269,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     drive.zeroYaw();
     // return new PathPlannerAuto("Reef");
-    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () ->
-    // 0).withTimeout(1);
+    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
     return autoChooser.get();
   }
 }
