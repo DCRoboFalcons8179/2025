@@ -9,11 +9,17 @@
           "data": {
             "pathName": "Blue Cage Move Test"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lift Elevator"
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Testing",
+  "folder": null,
   "choreoAuto": false
 }
