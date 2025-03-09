@@ -1,3 +1,7 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
@@ -8,84 +12,137 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.math.Filter;
 import frc.robot.Constants;
+import frc.robot.Constants.Elevator;
 
 public class ElevatorSub extends SubsystemBase {
-  // this is the motor we are using for the motor
-  private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.driverID, MotorType.kBrushless);
-  // create the follower motor
-  private SparkMax followerMotor =
-      new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
+    /**Elevator Motors */
+    private SparkMax m_LiftA = new SparkMax(Elevator.driverID, MotorType.kBrushless);
+    private SparkMax m_LiftB = new SparkMax(Elevator.followerMotorID, MotorType.kBrushless);
+    
+    /**Elevator Sensors */
+    private RelativeEncoder LiftEncoderA = m_LiftA.getEncoder();
+    private RelativeEncoder liftEncoderB = m_LiftB.getEncoder();
 
-  private SparkClosedLoopController elevatorSparkClosedLoopController;
+    /**Elevator PID Controllers */
+    private SparkClosedLoopController lifControllerA = m_LiftA.getClosedLoopController();
+    private SparkClosedLoopController lifControllerB = m_LiftB.getClosedLoopController();
+    
+    /**Elevator Configurations */
+    private SparkMaxConfig liftConfigA = new SparkMaxConfig();
+    private SparkMaxConfig liftConfigB = new SparkMaxConfig();
+    
+    /** Soft Limit Config */
+    private SoftLimitConfig softLimitConfig = new SoftLimitConfig();
 
-  // create the elevator encoder
-  RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
+    /** Internal Variables */
+    private double setPoint = 0;
 
-  private double desiredPos = 0;
+    /** Creates a new Elevator. */
+    public ElevatorSub() {
+        /**Factory Reset */
+        m_LiftA.configure(liftConfigA, ResetMode.kResetSafeParameters,null);
+        m_LiftB.configure(liftConfigB, ResetMode.kResetSafeParameters, null);
 
-  // config for the elevator encoder
-  public ElevatorSub() {
+        /**Inversion Factors */
+        liftConfigA.inverted(false);
+        liftConfigB.inverted(true);
 
-    SparkMaxConfig elevatorConfig = new SparkMaxConfig();
+        /**Current Limits */
+        liftConfigA.smartCurrentLimit(Elevator.currentLimit);
+        liftConfigB.smartCurrentLimit(Elevator.currentLimit);
 
-    elevatorConfig.inverted(false).idleMode(IdleMode.kBrake);
+        /** Set Position */
+        liftEncoderB.setPosition(0);
+        LiftEncoderA.setPosition(0);
 
-    elevatorConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
-    elevatorConfig
-        .closedLoop
-        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-        .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+        /**Software Limits */
+        // softLimitConfig.apply(liftConfigA.softLimit);
+        // softLimitConfig.apply(liftConfigB.softLimit);
+        // liftConfigA.softLimit.reverseSoftLimitEnabled(false);
+        // liftConfigB.softLimit.reverseSoftLimitEnabled(false);
+        // liftConfigA.softLimit.forwardSoftLimitEnabled(true);
+        // liftConfigB.softLimit.forwardSoftLimitEnabled(true);
+        // liftConfigA.softLimit.reverseSoftLimit(0);
+        // liftConfigB.softLimit.reverseSoftLimit(0);
+        // liftConfigA.softLimit.forwardSoftLimit(Elevator.fwdSoftLimitNum);
+        // liftConfigB.softLimit.forwardSoftLimit(Elevator.fwdSoftLimitNum);
 
-    elevatorMotor.configure(
-        elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        /** Neutral Modes */
+        liftConfigA.idleMode(Elevator.defaultIdleMode);
+        liftConfigB.idleMode(Elevator.defaultIdleMode);
 
-    elevatorSparkClosedLoopController = elevatorMotor.getClosedLoopController();
+        /* PIDS */
+        liftConfigA.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(Elevator.kP, 0, 0);
+        liftConfigB.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(Elevator.kP, 0, 0);
 
-    SparkMaxConfig followerConfig = new SparkMaxConfig();
+        /* Burning Configs */
+        m_LiftA.configure(liftConfigA, null, PersistMode.kPersistParameters);
+        m_LiftB.configure(liftConfigB, null, PersistMode.kPersistParameters);
+    }
+        
+    /**
+     * returns the value of the motor encoder in rotations
+     * @return double, motor rotations
+     */
+    private double getPosition(){
+        return LiftEncoderA.getPosition();
+    }
 
-    followerConfig.inverted(false).idleMode(IdleMode.kCoast);
+    /**
+     * Sets the Elevator position set point
+     * @param targetSetPoint, double, units of motor rotations
+     */
+    public void setPosition(double targetSetPoint){
+        setPoint = Filter.cutoffFilter(targetSetPoint, Constants.Elevator.maxHeight, 0);
+        lifControllerA.setReference(setPoint, ControlType.kPosition);
+        lifControllerB.setReference(setPoint, ControlType.kPosition);
+    }
 
-    followerConfig.follow(Constants.Elevator.driverID);
+    /**
+     * Sets output to lift motors.
+     * @param speed double, percentage output
+     */
+    public void setElevatorSpeed(double speed){
+        m_LiftA.set(speed);
+        m_LiftB.set(speed);
+    }
 
-    followerMotor.configure(
-        followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    /**
+     * Updates the position of the elevator
+     */
+    public void updatePosition(){
+        setPosition(Filter.cutoffFilter(setPoint, Constants.Elevator.maxHeight, 0));
+    }
 
-    // Zeros Position
-    elevatorEncoder.setPosition(0);
-  }
+    /**
+     * Tells us if it between the upper and lower position 
+     * @return true if between upper and lower limit, else
+     */
+    public boolean atPosition(){
+        double lowerLimit = setPoint - Elevator.encoderSetPointError;
+        double UpperLimit = setPoint + Elevator.encoderSetPointError;
+        // System.out.println("Encoder value:" + getPosition() + ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)));
 
-  @Override
-  public void periodic() {
-    // SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
-    SmartDashboard.putNumber("Elevator Driver Position", elevatorEncoder.getPosition());
-    SmartDashboard.putNumber(
-        "Elevator Driver Temperature Celsius", elevatorMotor.getMotorTemperature());
-    SmartDashboard.putNumber(
-        "Elevator Follower Temperature Celsius", followerMotor.getMotorTemperature());
-    SmartDashboard.putNumber("Elevator Driver Amps", elevatorMotor.getOutputCurrent());
-    SmartDashboard.putNumber("Elevator Follower Amps", followerMotor.getOutputCurrent());
-    SmartDashboard.putBoolean("Follower Command", followerMotor.isFollower());
-  }
+        if ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-  public double getPose() {
-    return elevatorEncoder.getPosition();
-  }
-
-  public void updatePosition() {
-    double limitedPose = Filter.cutoffFilter(desiredPos, 9000, 0);
-
-    SmartDashboard.putNumber("Desired Elevator Position", limitedPose);
-
-    elevatorSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
-  }
-
-  public void goToPose(double position) {
-    desiredPos = Filter.cutoffFilter(desiredPos + position, 9000, 0);
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        SmartDashboard.putNumber("Elevator encoder position", getPosition());
+        SmartDashboard.putNumber("Elevator set point", setPoint);
+        SmartDashboard.putBoolean("Elevator At Pose", atPosition());
+    }
 }
