@@ -79,8 +79,8 @@ public class ElevatorSub extends SubsystemBase {
         liftConfigB.idleMode(Elevator.defaultIdleMode);
 
         /* PIDS */
-        liftConfigA.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(Elevator.kP, 0, 0);
-        liftConfigB.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(Elevator.kP, 0, 0);
+        liftConfigA.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(Elevator.kP, Elevator.kI, Elevator.kD);
+        liftConfigB.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(Elevator.kP, Elevator.kI, Elevator.kD);
 
         /* Burning Configs */
         m_LiftA.configure(liftConfigA, null, PersistMode.kPersistParameters);
