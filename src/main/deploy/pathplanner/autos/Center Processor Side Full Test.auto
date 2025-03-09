@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Processor Side to Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Algae to Processor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to Bottom Human"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
