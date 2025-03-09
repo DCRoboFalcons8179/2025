@@ -144,5 +144,7 @@ public class ElevatorSub extends SubsystemBase {
         SmartDashboard.putNumber("Elevator encoder position", getPosition());
         SmartDashboard.putNumber("Elevator set point", setPoint);
         SmartDashboard.putBoolean("Elevator At Pose", atPosition());
+        SmartDashboard.putNumber("Elevator Drive Temp Celsius", m_LiftA.getMotorTemperature());
+        SmartDashboard.putNumber("Elevator Drive Temp Celsius", m_LiftB.getMotorTemperature());
     }
 }
