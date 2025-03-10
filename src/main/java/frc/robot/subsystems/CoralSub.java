@@ -78,7 +78,7 @@ public class CoralSub extends SubsystemBase {
         Filter.cutoffFilter(
             desiredPos,
             1750,
-            elevatorSub.getPose() >= Constants.Elevator.avoidanceHeight ? 250 : 0);
+            elevatorSub.getPosition() >= Constants.Elevator.avoidanceHeight ? 250 : 0);
 
     SmartDashboard.putNumber("Desired Position", limitedPose);
 
