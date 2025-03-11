@@ -10,7 +10,14 @@ public class MoveElevator extends InstantCommand {
   // loads the elevator subsystem into this file
   private ElevatorSub elevatorSub;
 
-  // sets the elevator speed
+  /**
+   * Creates a new MoveElevator.
+   *
+   * <p>Uses PID to move the elevator.
+   *
+   * @param elevatorPosition The position the elevator should move to
+   * @param elevatorSub The subsystem used by this command.
+   */
   public MoveElevator(DoubleSupplier sup, ElevatorSub elevatorSub) {
     this.elevatorPosition = sup;
     this.elevatorSub = elevatorSub;

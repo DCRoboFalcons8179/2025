@@ -13,7 +13,14 @@ public class MoveCoral extends Command {
   CoralSub coralSub;
   DoubleSupplier percentOut;
 
-  /** Creates a new MoveCoral. */
+  /**
+   * Creates a new MoveCoral.
+   *
+   * <p>Uses PercentOutput to move the coral.
+   *
+   * @param percentOut The speed at which the coral should move
+   * @param coralSub The subsystem used by this command.
+   */
   public MoveCoral(DoubleSupplier percentOut, CoralSub coralSub) {
     this.percentOut = percentOut;
     this.coralSub = coralSub;

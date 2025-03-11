@@ -53,30 +53,10 @@ public class RobotContainer {
   private final CoralSub coralSub;
   private final AlgaeSub algaeSub;
 
-  // Controller
+  // Controllers
   private final CommandXboxController controller = new CommandXboxController(0);
   private final CommandJoystick boxLeft = new CommandJoystick(1);
   private final CommandJoystick boxRight = new CommandJoystick(2);
-
-  // control box inputs
-  // private final JoystickButton rawElevatorUp = new JoystickButton(controlBoxLeft, 4);
-  // private final JoystickButton rawElevatorDown = new JoystickButton(controlBoxLeft, 6);
-  // private final JoystickButton rawTiltUp = new JoystickButton(controlBoxLeft, 5);
-  // private final JoystickButton rawTiltDown = new JoystickButton(controlBoxLeft, 7);
-  // private final JoystickButton coralIn = new JoystickButton(controlBoxLeft, 2);
-  // private final JoystickButton coralOut = new JoystickButton(controlBoxLeft, 3);
-  // private final JoystickButton algaeIn = new JoystickButton(controlBoxLeft, 0);
-  // private final JoystickButton algaeOut = new JoystickButton(controlBoxLeft, 1);
-  // private final JoystickButton hangDown = new JoystickButton(controlBoxLeft, 9);
-  // private final JoystickButton hangUp = new JoystickButton(controlBoxLeft, 10);
-  // private final JoystickButton algaeProcessor = new JoystickButton(controlBoxRight, 6);
-  // private final JoystickButton algaeL2 = new JoystickButton(controlBoxRight, 5);
-  // private final JoystickButton algaeL3 = new JoystickButton(controlBoxRight, 4);
-  // private final JoystickButton humanCoral = new JoystickButton(controlBoxRight, 11);
-  // private final JoystickButton coralTrough = new JoystickButton(controlBoxRight, 10);
-  // private final JoystickButton coralL1 = new JoystickButton(controlBoxRight, 9);
-  // private final JoystickButton coralL2 = new JoystickButton(controlBoxRight, 8);
-  // private final JoystickButton coralL3 = new JoystickButton(controlBoxRight, 7);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -124,7 +104,7 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
     elevatorSub = new ElevatorSub();
-    coralSub = new CoralSub(elevatorSub);
+    coralSub = new CoralSub();
     algaeSub = new AlgaeSub();
     hookSub = new HookSub();
 
@@ -149,6 +129,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    // Configure the button bindings
     new ControllerButtons(controller, drive, coralSub, elevatorSub, hookSub) {
       {
         configureButtonBindings();

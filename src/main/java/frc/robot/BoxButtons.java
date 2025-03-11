@@ -5,6 +5,7 @@ import frc.robot.commands.MoveAlgae;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
+import frc.robot.commands.RawWrist;
 import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
@@ -76,5 +77,16 @@ public class BoxButtons {
 
     // Setpoints
 
+    // Raw Wrist Control
+    // Up
+    boxLeft.button(7).onTrue(new RawWrist(() -> 10, coralSub));
+    // Down
+    boxLeft.button(5).onTrue(new RawWrist(() -> -10, coralSub));
+
+    // Raw Elevator Control
+    // Up
+    boxLeft.button(6).onTrue(new MoveElevator(() -> 10, elevatorSub));
+    // Down
+    boxLeft.button(8).onTrue(new MoveElevator(() -> -10, elevatorSub));
   }
 }

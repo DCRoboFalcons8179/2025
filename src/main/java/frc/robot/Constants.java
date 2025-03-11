@@ -107,6 +107,7 @@ public class Constants {
     }
   }
 
+  /** Values for configuring the Elevator */
   public class Elevator {
     public static final int driverID = 12;
     /** It doesn't really follow the driver... */
@@ -124,37 +125,33 @@ public class Constants {
     public static final int currentLimit = 40;
 
     // PID Values
+    /** kP for the elevator */
     public static final double kP = 0.00125;
+    /** kI for the elevator */
     public static final double kI = 0;
+    /** kD for the elevator */
     public static final double kD = kP / 4;
-
-    // Encoder Values
-    // public static final int encoderSetPointError = 10;
   }
 
+  /** Values for configuring the Hook */
   public class HookInfo {
+    /** ID for the Hook Motor */
     public static final int HookID = 17;
 
+    /** PID Values for the Hook Motor */
     public class HookPID {
+      /** kP for the Hook Motor */
       public static final double kP = 5;
+      /** kI for the Hook Motor */
       public static final double kI = 0.1;
+      /** kD for the Hook Motor */
       public static final double kD = 0;
     }
-
-    public static final double hookDown = 0.5;
-    public static final double hookUp = -0.5;
-    public static final double hookStop = 0;
   }
 
-  public class AlgaeInfo {
+  /** Values for configuring the Algae */
+  public class Algae {
+    /** ID for the Algae Motor */
     public static final int AlgaeID = 0;
-
-    public class AlgaePID {
-      // Configure PID needed
-      public static final double kP = 0;
-      public static final double kI = 0;
-      public static final double kD = 0;
-      public static final double kF = 0;
-    }
   }
 }
