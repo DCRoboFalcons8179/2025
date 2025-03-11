@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 RoboFalcons 2025 Code
-=======
+
 # 2025
 
 chat gpt robot name ideas (we can vote on this later)

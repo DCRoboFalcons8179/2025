@@ -14,7 +14,6 @@
 package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 
@@ -109,22 +108,22 @@ public class Constants {
 
   public class Elevator {
     public static final int driverID = 12;
-    /**It doesn't really follow the driver... */
+    /** It doesn't really follow the driver... */
     public static final int followerMotorID = 7;
 
-    /**Default Idle Mode */
+    /** Default Idle Mode */
     public static final IdleMode defaultIdleMode = IdleMode.kBrake;
 
     // Soft Limits
-    /**Maximum height of the elevator */
+    /** Maximum height of the elevator */
     public static final int maxHeight = 9000;
-    /**Height of the elevator when the wrist's minimum position is changed */
+    /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
-    /**Max current from the motors */
+    /** Max current from the motors */
     public static final int currentLimit = 10;
 
     // PID Values
-    public static final double kP = 0.0005 / 10;
+    public static final double kP = 0.005;
     public static final double kI = 0;
     public static final double kD = 0;
 
