@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -36,7 +35,7 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 
-    elevatorConfig.inverted(false).idleMode(IdleMode.kBrake);
+    elevatorConfig.inverted(false).idleMode(IdleMode.kCoast);
 
     elevatorConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
     elevatorConfig
@@ -55,16 +54,16 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig followerConfig = new SparkMaxConfig();
 
-    followerConfig.inverted(false).idleMode(IdleMode.kBrake);
+    followerConfig.inverted(false).idleMode(IdleMode.kCoast);
 
     followerConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
 
-    followerConfig.follow(Constants.Elevator.driverID);
+    // followerConfig.follow(Constants.Elevator.driverID);
 
-    // followerConfig
-    //     .closedLoop
-    //     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-    //     .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+    followerConfig
+        .closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+        .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     // followerConfig.smartCurrentLimit(Constants.Elevator.currentLimit);
 
@@ -103,8 +102,13 @@ public class ElevatorSub extends SubsystemBase {
 
     SmartDashboard.putNumber("Desired Elevator Position", limitedPose);
 
-    elevatorSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
-    followerSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
+    // Percent output
+    elevatorMotor.set(0.75);
+    followerMotor.set(0.75);
+
+    // Position PID
+    // elevatorSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
+    // followerSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
   }
 
   public void goToPose(double position) {
