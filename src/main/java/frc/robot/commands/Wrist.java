@@ -12,6 +12,7 @@ public class Wrist extends InstantCommand {
     this.wristPosition = wristPosition;
     this.coralSub = coralSub;
     // Use addRequirements() here to declare subsystem dependencies.
+    System.out.println("new wrust");
     addRequirements(coralSub);
   }
 
@@ -19,5 +20,6 @@ public class Wrist extends InstantCommand {
   @Override
   public void initialize() {
     coralSub.moveWrist(wristPosition.getAsDouble());
+    System.out.println("initalize wrist");
   }
 }

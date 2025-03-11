@@ -28,6 +28,7 @@ public class MoveCoral extends Command {
   @Override
   public void execute() {
     coralSub.moveCoral(velocity.getAsDouble());
+    System.out.println("coral wheel " + velocity);
   }
 
   // Called once the command ends or is interrupted.

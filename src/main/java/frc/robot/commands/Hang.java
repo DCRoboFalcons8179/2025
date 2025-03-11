@@ -29,6 +29,7 @@ public class Hang extends Command {
   @Override
   public void execute() {
     hookSub.hang(power.getAsDouble());
+    System.out.println("hang motion" + power);
   }
 
   // Called once the command ends or is interrupted.

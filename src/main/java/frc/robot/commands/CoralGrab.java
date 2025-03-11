@@ -11,12 +11,13 @@ public class CoralGrab extends Command {
   public CoralGrab(DoubleSupplier power, CoralSub coralSub) {
     this.power = power;
     this.coralSub = coralSub;
-
+    System.out.println("coral grab create new");
     addRequirements(coralSub);
   }
 
   @Override
   public void execute() {
     coralSub.moveCoral(power.getAsDouble());
+    System.out.println("excetue coralgrab" + power);
   }
 }

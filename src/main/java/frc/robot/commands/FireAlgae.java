@@ -4,32 +4,32 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.AlgaeSub;
 import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class FireAlgae extends Command {
+public class FireAlgae extends InstantCommand {
 
   private DoubleSupplier algaePower;
   private AlgaeSub algaeSub;
 
   /** Creates a new FireAlgea. */
-  public FireAlgae(DoubleSupplier algeaPower, AlgaeSub algaeSub) {
-    this.algaePower = algeaPower;
+  public FireAlgae(DoubleSupplier algaePower, AlgaeSub algaeSub) {
+    this.algaePower = algaePower;
     this.algaeSub = algaeSub;
-
     addRequirements(algaeSub);
   }
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    algaeSub.driveAlgea(algaePower.getAsDouble());
+    System.out.println("take algae" + algaePower);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    algaeSub.driveAlgea(algaePower.getAsDouble());
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

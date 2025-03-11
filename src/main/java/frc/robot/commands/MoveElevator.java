@@ -14,10 +14,12 @@ public class MoveElevator extends InstantCommand {
   public MoveElevator(DoubleSupplier sup, ElevatorSub elevatorSub) {
     this.elevatorPosition = sup;
     this.elevatorSub = elevatorSub;
+    System.out.println("new move leleveatr");
   }
 
   @Override
   public void initialize() {
     elevatorSub.setPosition(elevatorPosition.getAsDouble());
+    System.out.println("initalize elevaetor" + elevatorPosition);
   }
 }
