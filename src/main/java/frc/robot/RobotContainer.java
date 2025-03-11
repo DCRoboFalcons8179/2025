@@ -137,7 +137,7 @@ public class RobotContainer {
       }
     };
 
-    new BoxButtons(elevatorSub, coralSub, algaeSub, boxLeft, boxRight) {
+    new BoxButtons(elevatorSub, coralSub, algaeSub, hookSub, boxLeft, boxRight) {
       {
         configureButtonBindings();
       }

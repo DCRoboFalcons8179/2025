@@ -4,16 +4,19 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.commands.MoveAlgae;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
+import frc.robot.commands.MoveHook;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.RawWrist;
 import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
+import frc.robot.subsystems.HookSub;
 
 public class BoxButtons {
   private final ElevatorSub elevatorSub;
   private final CoralSub coralSub;
   private final AlgaeSub algaeSub;
+  private final HookSub hookSub;
   private final CommandJoystick boxLeft;
   private final CommandJoystick boxRight;
 
@@ -21,11 +24,13 @@ public class BoxButtons {
       ElevatorSub elevatorSub,
       CoralSub coralSub,
       AlgaeSub algaeSub,
+      HookSub hookSub,
       CommandJoystick boxLeft,
       CommandJoystick boxRight) {
     this.elevatorSub = elevatorSub;
     this.coralSub = coralSub;
     this.algaeSub = algaeSub;
+    this.hookSub = hookSub;
     this.boxLeft = boxLeft;
     this.boxRight = boxRight;
   }
@@ -88,5 +93,17 @@ public class BoxButtons {
     boxLeft.button(6).onTrue(new MoveElevator(() -> 10, elevatorSub));
     // Down
     boxLeft.button(8).onTrue(new MoveElevator(() -> -10, elevatorSub));
+
+    // Hook Control
+    // Up
+    boxLeft
+        .button(11)
+        .onTrue(new MoveHook(() -> 1, hookSub))
+        .onFalse(new MoveHook(() -> 0, hookSub));
+    // Down
+    boxLeft
+        .button(12)
+        .onTrue(new MoveHook(() -> -1, hookSub))
+        .onFalse(new MoveHook(() -> 0, hookSub));
   }
 }

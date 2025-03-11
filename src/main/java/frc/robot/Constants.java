@@ -131,6 +131,9 @@ public class Constants {
     public static final double kI = 0;
     /** kD for the elevator */
     public static final double kD = kP / 4;
+
+    /** Slew Rate Limiter */
+    public static final double slewRateLimit = 4000;
   }
 
   /** Values for configuring the Hook */

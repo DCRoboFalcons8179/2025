@@ -120,4 +120,9 @@ public class CoralSub extends SubsystemBase {
   public void rawTilt(double increment) {
     desiredPos += increment;
   }
+
+  /** Moves the wrist to break the velcro */
+  public void freeWrist() {
+    wristMotor.set(0.1);
+  }
 }
