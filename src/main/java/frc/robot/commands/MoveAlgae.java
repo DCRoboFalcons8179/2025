@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.AlgaeSub;
 import java.util.function.DoubleSupplier;
@@ -25,6 +24,6 @@ public class MoveAlgae extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    algaeSub.driveAlgea(algaePower.getAsDouble());
+    algaeSub.driveAlgae(algaePower.getAsDouble());
   }
 }

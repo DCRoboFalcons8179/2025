@@ -32,7 +32,13 @@ public class ElevatorSub extends SubsystemBase {
 
   private double desiredPos = 0;
 
-  // config for the elevator encoder
+  /**
+   *
+   *
+   * <h3>Constructor
+   *
+   * <p>Creates the elevator subsystem
+   */
   public ElevatorSub() {
 
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
@@ -78,6 +84,15 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   @Override
+  /**
+   *
+   *
+   * <h3>Periodic
+   *
+   * <p>Called every cycle
+   *
+   * <p>Updates the SmartDashboard with motor data
+   */
   public void periodic() {
     // SmartDashboard.putNumber(getName(), elevatorSparkBase.get());
     SmartDashboard.putNumber("Elevator Driver Position", elevatorEncoder.getPosition());
@@ -91,10 +106,28 @@ public class ElevatorSub extends SubsystemBase {
     SmartDashboard.putBoolean("Follower Command", followerMotor.isFollower());
   }
 
+  /**
+   *
+   *
+   * <h3>Get the current position of the elevator
+   *
+   * @return The current position of the elevator
+   */
   public double getPose() {
     return elevatorEncoder.getPosition();
   }
 
+  /**
+   *
+   *
+   * <h3>Move the elevator motor
+   *
+   * <p>Uses PID to move the elevator motor
+   *
+   * <p>If the desired pose is below the current gravity will bring it down
+   *
+   * @param power The power to move the elevator motor
+   */
   public void updatePosition() {
     double limitedPose = Filter.cutoffFilter(desiredPos, Constants.Elevator.maxHeight, 0);
 
@@ -118,10 +151,27 @@ public class ElevatorSub extends SubsystemBase {
     }
   }
 
+  /**
+   *
+   *
+   * <h3>Move the elevator to a specific position
+   *
+   * @param position The position to move the elevator to
+   */
   public void goToPose(double position) {
-    desiredPos = Filter.cutoffFilter(position, Constants.Elevator.maxHeight, 0);
+    desiredPos = position;
   }
 
+  /**
+   * Move the elevator to a specific position
+   *
+   * @param position The position to increment the elevator by
+   */
+  public void rawMove(double position) {
+    desiredPos += position;
+  }
+
+  /** Reset the elevator encoders */
   public void resetPose() {
     elevatorEncoder.setPosition(0);
     followerEncoder.setPosition(0);
