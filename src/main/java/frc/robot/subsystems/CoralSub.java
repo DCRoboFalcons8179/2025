@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -26,8 +27,6 @@ public class CoralSub extends SubsystemBase {
   RelativeEncoder wristEncoder = wristMotor.getEncoder();
   ElevatorSub elevatorSub;
 
-  private int minPosition;
-
   public CoralSub(ElevatorSub elevatorSub) {
     SparkMaxConfig wristConfig = new SparkMaxConfig();
 
@@ -50,6 +49,8 @@ public class CoralSub extends SubsystemBase {
     wristEncoder.setPosition(0);
 
     wristSparkClosedLoopController = wristMotor.getClosedLoopController();
+
+    coralMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   // Move the coral motor with percent power
@@ -68,17 +69,11 @@ public class CoralSub extends SubsystemBase {
 
   public void moveWrist(double position) {
     SmartDashboard.putNumber("No Filter Pose", wristEncoder.getPosition() + position);
-    desiredPos = Filter.cutoffFilter(desiredPos + position, 1750, 0);
-
-    wristSparkClosedLoopController.setReference(desiredPos, ControlType.kPosition);
+    desiredPos = Filter.cutoffFilter(position, 1750, 0);
   }
 
   public void updatePosition() {
-    double limitedPose =
-        Filter.cutoffFilter(
-            desiredPos,
-            1750,
-            elevatorSub.getPose() >= Constants.Elevator.avoidanceHeight ? 250 : 0);
+    double limitedPose = Filter.cutoffFilter(desiredPos, 1750, 0);
 
     SmartDashboard.putNumber("Desired Position", limitedPose);
 
@@ -87,9 +82,5 @@ public class CoralSub extends SubsystemBase {
 
   public void goToPose(double position) {
     desiredPos = position;
-  }
-
-  public void avoidCollision() {
-    minPosition = 250;
   }
 }

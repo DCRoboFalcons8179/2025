@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -35,15 +37,13 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 
-    elevatorConfig.inverted(false).idleMode(IdleMode.kCoast);
+    elevatorConfig.inverted(false).idleMode(IdleMode.kBrake);
 
     elevatorConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
     elevatorConfig
         .closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
-
-    // elevatorConfig.closedLoop.velocityFF(50);
 
     // elevatorConfig.smartCurrentLimit(Constants.Elevator.currentLimit);
 
@@ -54,7 +54,7 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig followerConfig = new SparkMaxConfig();
 
-    followerConfig.inverted(false).idleMode(IdleMode.kCoast);
+    followerConfig.inverted(false).idleMode(IdleMode.kBrake);
 
     followerConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
 
@@ -67,9 +67,7 @@ public class ElevatorSub extends SubsystemBase {
 
     // followerConfig.smartCurrentLimit(Constants.Elevator.currentLimit);
 
-    // followerConfig.closedLoop.velocityFF(50);
-
-    followerSparkClosedLoopController = elevatorMotor.getClosedLoopController();
+    followerSparkClosedLoopController = followerMotor.getClosedLoopController();
 
     followerMotor.configure(
         followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -98,20 +96,34 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   public void updatePosition() {
-    double limitedPose = Filter.cutoffFilter(desiredPos, 9000, 0);
+    double limitedPose = Filter.cutoffFilter(desiredPos, Constants.Elevator.maxHeight, 0);
 
     SmartDashboard.putNumber("Desired Elevator Position", limitedPose);
 
-    // Percent output
-    elevatorMotor.set(0.75);
-    followerMotor.set(0.75);
+    // Calculate the direction of movement
+    double currentPose = elevatorEncoder.getPosition();
+    double direction = Math.signum(limitedPose - currentPose);
 
-    // Position PID
-    // elevatorSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
-    // followerSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
+    // Apply feedforward based on direction
+    double feedforward = 0;
+    if (direction > 0) {
+      // Position PID with feedforward
+      elevatorSparkClosedLoopController.setReference(
+          limitedPose, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedforward);
+      followerSparkClosedLoopController.setReference(
+          limitedPose, ControlType.kPosition, ClosedLoopSlot.kSlot0, feedforward);
+    } else if (direction < 0) {
+      elevatorMotor.set(0);
+      followerMotor.set(0);
+    }
   }
 
   public void goToPose(double position) {
-    desiredPos = Filter.cutoffFilter(desiredPos + position, 9000, 0);
+    desiredPos = Filter.cutoffFilter(position, Constants.Elevator.maxHeight, 0);
+  }
+
+  public void resetPose() {
+    elevatorEncoder.setPosition(0);
+    followerEncoder.setPosition(0);
   }
 }
