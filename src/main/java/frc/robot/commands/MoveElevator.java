@@ -18,6 +18,6 @@ public class MoveElevator extends InstantCommand {
 
   @Override
   public void initialize() {
-    elevatorSub.setPosition(elevatorPosition.getAsDouble());
+    elevatorSub.goToPose(elevatorPosition.getAsDouble());
   }
 }

@@ -91,7 +91,7 @@ public class Constants {
   public class CoralValues {
     public class Wrist {
       public static final int wristID = 14;
-      public static final double kP = 0.0008;
+      public static final double kP = 0.00016;
       public static final double kI = 0;
       public static final double kD = kP / 1000 * 2;
       public static final double kF = 0.1;
@@ -119,16 +119,16 @@ public class Constants {
     public static final int maxHeight = 9000;
     /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
-    /** Max current from the motors */
-    public static final int currentLimit = 10;
+    /** Max current for the motors */
+    public static final int currentLimit = 40;
 
     // PID Values
-    public static final double kP = 0.0005 / 10;
+    public static final double kP = 500;
     public static final double kI = 0;
     public static final double kD = 0;
 
     // Encoder Values
-    public static final int encoderSetPointError = 10;
+    // public static final int encoderSetPointError = 10;
   }
 
   public class HookInfo {
