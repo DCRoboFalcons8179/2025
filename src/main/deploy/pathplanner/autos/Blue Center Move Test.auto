@@ -7,17 +7,8 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Cage Move Test"
+            "pathName": "Blue Center Move Test"
           }
-<<<<<<< HEAD
-=======
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lift Elevator"
-          }
->>>>>>> c8d476f93c9310f8d7789b14ba811eb67d2cfddf
         }
       ]
     }

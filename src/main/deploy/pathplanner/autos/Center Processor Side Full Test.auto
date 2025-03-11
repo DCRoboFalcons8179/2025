@@ -7,17 +7,20 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Blue Cage Move Test"
+            "pathName": "Center Processor Side to Algae"
           }
-<<<<<<< HEAD
-=======
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Lift Elevator"
+            "pathName": "Algae to Processor"
           }
->>>>>>> c8d476f93c9310f8d7789b14ba811eb67d2cfddf
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to Bottom Human"
+          }
         }
       ]
     }
