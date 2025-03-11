@@ -137,6 +137,9 @@ public class RobotContainer {
 
     SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
     SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
+
+    SmartDashboard.putNumber("Binary To Int", BinaryToInt.getInt(boxRight, boxLeft));
+    // System.out.println(BinaryToInt.getInt(boxRight, boxLeft));
   }
 
   /**

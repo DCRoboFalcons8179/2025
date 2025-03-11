@@ -21,8 +21,7 @@ public class BoxButtons {
       CoralSub coralSub,
       AlgaeSub algaeSub,
       CommandJoystick boxLeft,
-      CommandJoystick boxRight
-      ) {
+      CommandJoystick boxRight) {
     this.elevatorSub = elevatorSub;
     this.coralSub = coralSub;
     this.algaeSub = algaeSub;
@@ -52,17 +51,28 @@ public class BoxButtons {
     // Coral
     // Movement
     // In
-    boxLeft.button(9).onTrue(new MoveCoral(() -> 1, coralSub)).onFalse(new MoveCoral(() -> 0, coralSub));
+    boxLeft
+        .button(9)
+        .onTrue(new MoveCoral(() -> 1, coralSub))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
     // Out
-    boxRight.button(10).onTrue(new MoveCoral(() -> -1, coralSub)).onFalse(new MoveCoral(() -> 0, coralSub));
+    boxRight
+        .button(10)
+        .onTrue(new MoveCoral(() -> -1, coralSub))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Setpoints
 
     // Algae
     // Movements
-    boxLeft.button(1).onTrue(new MoveAlgae(() -> 1, algaeSub)).onFalse(new MoveAlgae(() -> -1, algaeSub));
-    boxLeft.button(2).onTrue(new MoveAlgae(() -> -1, algaeSub)).onFalse(new MoveAlgae(() -> 0, algaeSub));
-
+    boxLeft
+        .button(1)
+        .onTrue(new MoveAlgae(() -> 1, algaeSub))
+        .onFalse(new MoveAlgae(() -> -1, algaeSub));
+    boxLeft
+        .button(2)
+        .onTrue(new MoveAlgae(() -> -1, algaeSub))
+        .onFalse(new MoveAlgae(() -> 0, algaeSub));
 
     // Setpoints
 
