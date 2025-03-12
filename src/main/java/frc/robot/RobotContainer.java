@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.MoveCoral;
 import frc.robot.commands.UpdateElevatorPose;
 import frc.robot.commands.UpdateWristPose;
 import frc.robot.generated.TunerConstants;
@@ -112,10 +113,9 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    buttonCommands();
 
-    NamedCommands.registerCommand("coralIn", new MoveCoral(coralSub, () -> 1));
-    NamedCommands.registerCommand("coralOut", new MoveCoral(coralSub, () -> -1));
+    NamedCommands.registerCommand("coralIn", new MoveCoral(() -> 1, coralSub));
+    NamedCommands.registerCommand("coralOut", new MoveCoral(() -> -1, coralSub));
     // NamedCommands.registerCommand("Lift Elevator", new MoveElevator(() -> 8000, elevatorSub));
   }
 
