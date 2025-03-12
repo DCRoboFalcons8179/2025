@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
@@ -8,6 +7,7 @@ import frc.robot.commands.Hang;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
+import frc.robot.commands.ResetElevator;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
@@ -60,7 +60,6 @@ public class ControllerButtons {
     // () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
-    commandXboxController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
     // Pushing
     commandXboxController.rightTrigger().whileTrue(new MoveCoral(() -> -0.5, coralSub));
@@ -81,20 +80,15 @@ public class ControllerButtons {
         .onFalse(new Hang(() -> 0, hookSub));
 
     // Elevator
-    commandXboxController
-        .leftBumper()
-        .onTrue(
-            new MoveElevator(() -> 650, elevatorSub)
-                .withTimeout(0.1)
-                .andThen(new MoveElevator(() -> 1300, elevatorSub)));
+    commandXboxController.leftBumper().onTrue(new ResetElevator(elevatorSub));
+
     // Home
     commandXboxController
         .rightBumper()
         .onTrue(
             new MoveElevator(() -> 0, elevatorSub)
                 .andThen(new MoveWrist(() -> 0, coralSub))
-                .withTimeout(5)
-                .andThen(new InstantCommand(() -> elevatorSub.resetPose())));
+                .withTimeout(5));
 
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));

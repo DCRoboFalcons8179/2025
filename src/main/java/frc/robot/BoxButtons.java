@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.commands.MoveAlgae;
 import frc.robot.commands.MoveCoral;
@@ -37,6 +36,12 @@ public class BoxButtons {
   }
 
   public void configureButtonBindings() {
+    // Human Player
+    boxRight
+        .button(8)
+        .onTrue(new MoveElevator(() -> 1800, elevatorSub))
+        .onFalse(new MoveElevator(() -> 200, elevatorSub));
+
     // Reef Setpoints
     // Trough
     boxRight.button(9).onTrue(new MoveWrist(() -> 730, coralSub));

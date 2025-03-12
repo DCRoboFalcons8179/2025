@@ -14,12 +14,14 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.MoveCoral;
 import frc.robot.commands.UpdateElevatorPose;
 import frc.robot.commands.UpdateWristPose;
 import frc.robot.generated.TunerConstants;
@@ -44,6 +46,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // Subsystems
   public final Drive drive;
   private Music music;
@@ -110,6 +113,10 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+
+    NamedCommands.registerCommand("coralIn", new MoveCoral(() -> 1, coralSub));
+    NamedCommands.registerCommand("coralOut", new MoveCoral(() -> -1, coralSub));
+    // NamedCommands.registerCommand("Lift Elevator", new MoveElevator(() -> 8000, elevatorSub));
   }
 
   public void periodic() {
@@ -149,10 +156,10 @@ public class RobotContainer {
 
   private void configMusicButtonBindings() {
     // if (!Constants.comp) {
-    // controller.povUp().onTrue(new InstantCommand(() -> music.play()));
-    // controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-    // controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
-    // controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
+    //   controller.povUp().onTrue(new InstantCommand(() -> music.play()));
+    //   controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
+    //   controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+    //   controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
     // }
   }
 
@@ -164,8 +171,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     drive.zeroYaw();
     // return new PathPlannerAuto("Reef");
-    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () ->
-    // 0).withTimeout(1);
+    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
     return autoChooser.get();
   }
 }

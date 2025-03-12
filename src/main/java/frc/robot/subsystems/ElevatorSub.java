@@ -43,6 +43,9 @@ public class ElevatorSub extends SubsystemBase {
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
+    elevatorConfig.closedLoop.maxOutput(0.1);
+    elevatorConfig.closedLoop.minOutput(0);
+
     elevatorMotor.configure(
         elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -57,6 +60,10 @@ public class ElevatorSub extends SubsystemBase {
         .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     followerSparkClosedLoopController = followerMotor.getClosedLoopController();
+
+    elevatorConfig.closedLoop.maxOutput(0.1);
+    elevatorConfig.closedLoop.minOutput(0);
+
     followerMotor.configure(
         followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -68,7 +75,8 @@ public class ElevatorSub extends SubsystemBase {
   @Override
   public void periodic() {
     // Apply slew rate limiting to the desired position
-    limitedDesiredPos = slewRateLimiter.calculate(desiredPos);
+    // limitedDesiredPos = slewRateLimiter.calculate(desiredPos);
+    // limitedDesiredPos = desiredPos;
 
     // Update the SmartDashboard with motor data
     SmartDashboard.putNumber("Elevator Driver Position", elevatorEncoder.getPosition());
@@ -89,7 +97,7 @@ public class ElevatorSub extends SubsystemBase {
 
   public void updatePosition() {
     // Use the slew-rate-limited desired position for upward motion
-    double limitedPose = Filter.cutoffFilter(limitedDesiredPos, Constants.Elevator.maxHeight, 0);
+    double limitedPose = Filter.cutoffFilter(desiredPos, Constants.Elevator.maxHeight, 0);
 
     // Calculate the direction of movement
     double currentPose = elevatorEncoder.getPosition();

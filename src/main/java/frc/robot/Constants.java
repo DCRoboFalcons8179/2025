@@ -124,6 +124,8 @@ public class Constants {
     /** Max current for the motors */
     public static final int currentLimit = 40;
 
+    public static final double encoderLimit = 3;
+
     // PID Values
     /** kP for the elevator */
     public static final double kP = 0.00125;
@@ -133,7 +135,7 @@ public class Constants {
     public static final double kD = kP / 4;
 
     /** Slew Rate Limiter */
-    public static final double slewRateLimit = 4000;
+    public static final double slewRateLimit = 2000;
   }
 
   /** Values for configuring the Hook */
