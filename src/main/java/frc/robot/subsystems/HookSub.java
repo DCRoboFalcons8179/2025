@@ -35,14 +35,17 @@ public class HookSub extends SubsystemBase {
 
   @Override
   public void periodic() {
+    //displays the hooks current position to smart dashboard
     SmartDashboard.putNumber("Hook Position", hook.getPosition().getValueAsDouble());
   }
 
   public void setPosition(double position) {
+    //moves the hook from its current position and adds/subtracts what is commanded
     hook.setControl(new PositionVoltage(hook.getPosition().getValueAsDouble() + position));
   }
 
   public void hang(double power) {
+    //applies the commanded power to the hook motor for hanging
     hook.set(power);
   }
 }
