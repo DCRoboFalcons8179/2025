@@ -28,6 +28,7 @@ public class Hang extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // output power to the hang motor
     hookSub.hang(power.getAsDouble());
   }
 

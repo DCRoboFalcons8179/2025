@@ -73,6 +73,7 @@ public class HookSub extends SubsystemBase {
    * @param power The power to apply to the hook motor (between -1.0 and 1.0).
    */
   public void hang(double power) {
+    // applies the commanded power to the hook motor for hanging
     hook.set(power);
     hung = true;
   }

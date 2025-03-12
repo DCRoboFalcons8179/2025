@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.commands.MoveAlgae;
 import frc.robot.commands.MoveCoral;
@@ -62,14 +63,14 @@ public class BoxButtons {
         .onTrue(new MoveCoral(() -> 1, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
     // Out
-    boxRight
+    boxLeft
         .button(10)
         .onTrue(new MoveCoral(() -> -1, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Setpoints
 
-    // Algae
+    // Algae - Coral for now
     // Movements
     boxLeft
         .button(1)

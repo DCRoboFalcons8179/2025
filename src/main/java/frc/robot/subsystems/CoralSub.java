@@ -123,6 +123,6 @@ public class CoralSub extends SubsystemBase {
 
   /** Moves the wrist to break the velcro */
   public void freeWrist() {
-    wristMotor.set(0.1);
+    wristMotor.set(0.2);
   }
 }
