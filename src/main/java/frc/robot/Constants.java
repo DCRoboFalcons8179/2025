@@ -144,7 +144,7 @@ public class Constants {
     /** PID Values for the Hook Motor */
     public class HookPID {
       /** kP for the Hook Motor */
-      public static final double kP = 5;
+      public static final double kP = 1;
       /** kI for the Hook Motor */
       public static final double kI = 0.1;
       /** kD for the Hook Motor */

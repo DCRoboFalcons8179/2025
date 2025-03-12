@@ -19,6 +19,12 @@ public class HookSub extends SubsystemBase {
   /** PositionVoltage control for closed-loop position control */
   private final PositionVoltage positionControl = new PositionVoltage(0);
 
+  /** Desired position for the hook */
+  private double desiredPosition = 0;
+
+  /** State to track if the hook is in hanging mode */
+  private boolean hung = false;
+
   public HookSub() {
     // Configure the TalonFX motor controller
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
@@ -34,16 +40,17 @@ public class HookSub extends SubsystemBase {
     // Set the motor to brake mode
     hook.setNeutralMode(NeutralModeValue.Brake);
 
-    // Reset the encoder position to 0 (if needed)
+    // Reset the encoder position to 0
     hook.setPosition(0);
   }
 
   @Override
   public void periodic() {
     // Update SmartDashboard with hook position and other data
-    SmartDashboard.putNumber("Hook Position", hook.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Hook Position", getCurrentPosition());
     SmartDashboard.putNumber("Hook Velocity", hook.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Hook Current", hook.getStatorCurrent().getValueAsDouble());
+    SmartDashboard.putBoolean("Hook Hung", hung);
   }
 
   /**
@@ -52,8 +59,12 @@ public class HookSub extends SubsystemBase {
    * @param position The desired position in encoder units.
    */
   public void setPosition(double position) {
+    if (!hung) {
+      desiredPosition = position;
+    }
+    hung = false;
     // Use PositionVoltage control to move to the desired position
-    hook.setControl(positionControl.withPosition(hook.getPosition().getValueAsDouble() + position));
+    hook.setControl(positionControl.withPosition(desiredPosition));
   }
 
   /**
@@ -63,5 +74,20 @@ public class HookSub extends SubsystemBase {
    */
   public void hang(double power) {
     hook.set(power);
+    hung = true;
+  }
+
+  /**
+   * Get the current position of the hook.
+   *
+   * @return The current position in encoder units.
+   */
+  public double getCurrentPosition() {
+    return hook.getPosition().getValueAsDouble();
+  }
+
+  /** Reset the hung state. */
+  public void resetHung() {
+    hung = false;
   }
 }

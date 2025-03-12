@@ -48,7 +48,7 @@ public class RobotContainer {
   public final Drive drive;
   private Music music;
   private final VisionSub visionSub = new VisionSub();
-  private final HookSub hookSub;
+  public final HookSub hookSub;
   private final ElevatorSub elevatorSub;
   private final CoralSub coralSub;
   private final AlgaeSub algaeSub;
