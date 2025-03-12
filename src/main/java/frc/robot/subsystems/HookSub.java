@@ -8,44 +8,87 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class HookSub extends SubsystemBase {
-  /** Insert Id later */
-  TalonFX hook = new TalonFX(Constants.HookInfo.HookID);
+  /** TalonFX motor controller for the hook */
+  private final TalonFX hook = new TalonFX(Constants.HookInfo.HookID);
 
-  Encoder hookEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k2X);
+  /** PositionVoltage control for closed-loop position control */
+  private final PositionVoltage positionControl = new PositionVoltage(0);
+
+  /** Desired position for the hook */
+  private double desiredPosition = 0;
+
+  /** State to track if the hook is in hanging mode */
+  private boolean hung = false;
 
   public HookSub() {
+    // Configure the TalonFX motor controller
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
-    // Hook PID
+
+    // Set PID values
     hookConfiguration.Slot0.kP = Constants.HookInfo.HookPID.kP;
     hookConfiguration.Slot0.kI = Constants.HookInfo.HookPID.kI;
     hookConfiguration.Slot0.kD = Constants.HookInfo.HookPID.kD;
 
-    hook.getConfigurator().apply(new TalonFXConfiguration());
+    // Apply the configuration
+    hook.getConfigurator().apply(hookConfiguration);
 
-    hook.getConfigurator().apply(hookConfiguration.Slot0);
-
+    // Set the motor to brake mode
     hook.setNeutralMode(NeutralModeValue.Brake);
+
+    // Reset the encoder position to 0
+    hook.setPosition(0);
   }
 
   @Override
   public void periodic() {
-    //displays the hooks current position to smart dashboard
-    SmartDashboard.putNumber("Hook Position", hook.getPosition().getValueAsDouble());
+    // Update SmartDashboard with hook position and other data
+    SmartDashboard.putNumber("Hook Position", getCurrentPosition());
+    SmartDashboard.putNumber("Hook Velocity", hook.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Hook Current", hook.getStatorCurrent().getValueAsDouble());
+    SmartDashboard.putBoolean("Hook Hung", hung);
   }
 
+  /**
+   * Set the hook to a specific position using closed-loop control.
+   *
+   * @param position The desired position in encoder units.
+   */
   public void setPosition(double position) {
-    //moves the hook from its current position and adds/subtracts what is commanded
-    hook.setControl(new PositionVoltage(hook.getPosition().getValueAsDouble() + position));
+    if (!hung) {
+      desiredPosition = position;
+    }
+    hung = false;
+    // Use PositionVoltage control to move to the desired position
+    hook.setControl(positionControl.withPosition(desiredPosition));
   }
 
+  /**
+   * Manually control the hook using open-loop power.
+   *
+   * @param power The power to apply to the hook motor (between -1.0 and 1.0).
+   */
   public void hang(double power) {
     //applies the commanded power to the hook motor for hanging
     hook.set(power);
+    hung = true;
+  }
+
+  /**
+   * Get the current position of the hook.
+   *
+   * @return The current position in encoder units.
+   */
+  public double getCurrentPosition() {
+    return hook.getPosition().getValueAsDouble();
+  }
+
+  /** Reset the hung state. */
+  public void resetHung() {
+    hung = false;
   }
 }

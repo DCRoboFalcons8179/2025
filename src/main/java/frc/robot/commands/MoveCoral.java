@@ -11,12 +11,19 @@ import java.util.function.DoubleSupplier;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class MoveCoral extends Command {
   CoralSub coralSub;
-  DoubleSupplier velocity;
+  DoubleSupplier percentOut;
 
-  /** Creates a new MoveCoral. */
-  public MoveCoral(CoralSub coralSub, DoubleSupplier velocity) {
+  /**
+   * Creates a new MoveCoral.
+   *
+   * <p>Uses PercentOutput to move the coral.
+   *
+   * @param percentOut The speed at which the coral should move
+   * @param coralSub The subsystem used by this command.
+   */
+  public MoveCoral(DoubleSupplier percentOut, CoralSub coralSub) {
+    this.percentOut = percentOut;
     this.coralSub = coralSub;
-    this.velocity = velocity;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,8 +34,7 @@ public class MoveCoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coralSub.moveCoral(velocity.getAsDouble());
-    System.out.println("coral wheel " + velocity);
+    coralSub.moveCoral(percentOut.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

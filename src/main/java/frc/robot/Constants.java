@@ -91,10 +91,11 @@ public class Constants {
   public class CoralValues {
     public class Wrist {
       public static final int wristID = 14;
-      public static final double kP = 0.0008;
+      public static final double kP = 0.00040;
       public static final double kI = 0;
-      public static final double kD = kP / 1000 * 2;
-      public static final double kF = 0.1;
+      public static final double kD = 0;
+      // public static final double kD = kP / 10000 * 2;
+      public static final double kF = 0;
     }
 
     public class Motor {
@@ -106,6 +107,7 @@ public class Constants {
     }
   }
 
+  /** Values for configuring the Elevator */
   public class Elevator {
     public static final int driverID = 12;
     /** It doesn't really follow the driver... */
@@ -116,44 +118,43 @@ public class Constants {
 
     // Soft Limits
     /** Maximum height of the elevator */
-    public static final int maxHeight = 9000;
+    public static final int maxHeight = 17000;
     /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
-    /** Max current from the motors */
-    public static final int currentLimit = 10;
+    /** Max current for the motors */
+    public static final int currentLimit = 40;
 
     // PID Values
-    public static final double kP = 0.005;
+    /** kP for the elevator */
+    public static final double kP = 0.00125;
+    /** kI for the elevator */
     public static final double kI = 0;
-    public static final double kD = 0;
+    /** kD for the elevator */
+    public static final double kD = kP / 4;
 
-    // Encoder Values
-    public static final int encoderSetPointError = 10;
+    /** Slew Rate Limiter */
+    public static final double slewRateLimit = 4000;
   }
 
+  /** Values for configuring the Hook */
   public class HookInfo {
+    /** ID for the Hook Motor */
     public static final int HookID = 17;
 
+    /** PID Values for the Hook Motor */
     public class HookPID {
-      public static final double kP = 5;
+      /** kP for the Hook Motor */
+      public static final double kP = 1;
+      /** kI for the Hook Motor */
       public static final double kI = 0.1;
+      /** kD for the Hook Motor */
       public static final double kD = 0;
     }
-
-    public static final double hookDown = 0.5;
-    public static final double hookUp = -0.5;
-    public static final double hookStop = 0;
   }
 
-  public class AlgaeInfo {
+  /** Values for configuring the Algae */
+  public class Algae {
+    /** ID for the Algae Motor */
     public static final int AlgaeID = 0;
-
-    public class AlgaePID {
-      // Configue PID needed
-      public static final double kP = 0;
-      public static final double kI = 0;
-      public static final double kD = 0;
-      public static final double kF = 0;
-    }
   }
 }

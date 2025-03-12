@@ -11,11 +11,11 @@ import java.util.function.DoubleSupplier;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class GoToPose extends InstantCommand {
+public class MoveWrist extends InstantCommand {
   DoubleSupplier pose;
   CoralSub coralSub;
 
-  public GoToPose(DoubleSupplier pose, CoralSub coralSub) {
+  public MoveWrist(DoubleSupplier pose, CoralSub coralSub) {
     this.pose = pose;
     this.coralSub = coralSub;
     addRequirements(coralSub);
