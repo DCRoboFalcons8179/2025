@@ -79,7 +79,7 @@ public class CoralSub extends SubsystemBase {
 
   public void moveWrist(double position) {
     SmartDashboard.putNumber("No Filter Pose", wristEncoder.getPosition() + position);
-    desiredPos = Filter.cutoffFilter(position, 1750, 0);
+    desiredPos = Filter.cutoffFilter(position, 1750, -50);
   }
 
   /**

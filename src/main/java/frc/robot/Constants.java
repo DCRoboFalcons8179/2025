@@ -118,7 +118,7 @@ public class Constants {
 
     // Soft Limits
     /** Maximum height of the elevator */
-    public static final int maxHeight = 17000;
+    public static final int maxHeight = 17250;
     /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
     /** Max current for the motors */

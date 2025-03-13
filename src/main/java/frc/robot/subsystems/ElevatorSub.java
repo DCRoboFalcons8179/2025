@@ -123,13 +123,13 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   public void rawMove(double position) {
-    if (getPose() < 1000) {
-      desiredPos += position;
-    }
+    desiredPos += position;
   }
 
   public void resetPose() {
-    elevatorEncoder.setPosition(0);
-    followerEncoder.setPosition(0);
+    if (getPose() < 1000) {
+      elevatorEncoder.setPosition(0);
+      followerEncoder.setPosition(0);
+    }
   }
 }

@@ -37,7 +37,7 @@ public class BoxButtons {
 
   public void configureButtonBindings() {
     // Human Player
-    boxRight.button(8).onTrue(new MoveElevator(() -> 1750, elevatorSub));
+    boxRight.button(8).onTrue(new MoveElevator(() -> 2300, elevatorSub));
 
     // Reef Setpoints
     // Trough
@@ -58,7 +58,10 @@ public class BoxButtons {
             new MoveElevator(() -> 9330, elevatorSub).andThen(new MoveWrist(() -> 930, coralSub)));
 
     // L4
-    boxRight.button(12);
+    boxRight
+        .button(12)
+        .onTrue(
+            new MoveElevator(() -> 17000, elevatorSub).andThen(new MoveWrist(() -> 900, coralSub)));
 
     // Coral
     // Movement
@@ -90,9 +93,9 @@ public class BoxButtons {
 
     // Raw Wrist Control
     // Up
-    boxLeft.button(7).onTrue(new RawWrist(() -> 10, coralSub));
+    boxLeft.button(7).onTrue(new RawWrist(() -> 50, coralSub));
     // Down
-    boxLeft.button(5).onTrue(new RawWrist(() -> -10, coralSub));
+    boxLeft.button(5).onTrue(new RawWrist(() -> -50, coralSub));
 
     // Raw Elevator Control
     // Up
