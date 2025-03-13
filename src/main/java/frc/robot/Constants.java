@@ -91,7 +91,7 @@ public class Constants {
   public class CoralValues {
     public class Wrist {
       public static final int wristID = 14;
-      public static final double kP = 0.00040;
+      public static final double kP = 0.00075;
       public static final double kI = 0;
       public static final double kD = 0;
       // public static final double kD = kP / 10000 * 2;
@@ -128,11 +128,11 @@ public class Constants {
 
     // PID Values
     /** kP for the elevator */
-    public static final double kP = 0.00125;
+    public static final double kP = 0.00185;
     /** kI for the elevator */
     public static final double kI = 0;
     /** kD for the elevator */
-    public static final double kD = kP / 4;
+    public static final double kD = 0;
 
     /** Slew Rate Limiter */
     public static final double slewRateLimit = 2000;

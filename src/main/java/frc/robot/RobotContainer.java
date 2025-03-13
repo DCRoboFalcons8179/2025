@@ -30,7 +30,6 @@ import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
-import frc.robot.subsystems.VisionSub;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -50,7 +49,7 @@ public class RobotContainer {
   // Subsystems
   public final Drive drive;
   private Music music;
-  private final VisionSub visionSub = new VisionSub();
+  // private final VisionSub visionSub = new VisionSub();
   public final HookSub hookSub;
   private final ElevatorSub elevatorSub;
   private final CoralSub coralSub;
@@ -122,8 +121,8 @@ public class RobotContainer {
   public void periodic() {
     drive.getVelocity();
 
-    SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
-    SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
+    // SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
+    // SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
 
     SmartDashboard.putNumber("Binary To Int", BinaryToInt.getInt(boxRight, boxLeft));
     // System.out.println(BinaryToInt.getInt(boxRight, boxLeft));

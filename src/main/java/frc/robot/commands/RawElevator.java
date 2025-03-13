@@ -24,6 +24,6 @@ public class RawElevator extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // elevatorSub.rawMove(increment.getAsDouble());
+    elevatorSub.rawMove(increment.getAsDouble());
   }
 }

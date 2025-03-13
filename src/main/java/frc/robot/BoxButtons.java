@@ -1,11 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import frc.robot.commands.MoveAlgae;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveHook;
 import frc.robot.commands.MoveWrist;
+import frc.robot.commands.RawElevator;
 import frc.robot.commands.RawWrist;
 import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
@@ -37,10 +37,7 @@ public class BoxButtons {
 
   public void configureButtonBindings() {
     // Human Player
-    boxRight
-        .button(8)
-        .onTrue(new MoveElevator(() -> 1800, elevatorSub))
-        .onFalse(new MoveElevator(() -> 200, elevatorSub));
+    boxRight.button(8).onTrue(new MoveElevator(() -> 1750, elevatorSub));
 
     // Reef Setpoints
     // Trough
@@ -52,10 +49,13 @@ public class BoxButtons {
     boxRight
         .button(10)
         .onTrue(
-            new MoveElevator(() -> 5300, elevatorSub).andThen(new MoveWrist(() -> 780, coralSub)));
+            new MoveElevator(() -> 4900, elevatorSub).andThen(new MoveWrist(() -> 1120, coralSub)));
 
     // L3
-    boxRight.button(11);
+    boxRight
+        .button(11)
+        .onTrue(
+            new MoveElevator(() -> 9330, elevatorSub).andThen(new MoveWrist(() -> 930, coralSub)));
 
     // L4
     boxRight.button(12);
@@ -65,26 +65,26 @@ public class BoxButtons {
     // In
     boxLeft
         .button(9)
-        .onTrue(new MoveCoral(() -> 1, coralSub))
+        .onTrue(new MoveCoral(() -> 0.5, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
     // Out
     boxLeft
         .button(10)
-        .onTrue(new MoveCoral(() -> -1, coralSub))
+        .onTrue(new MoveCoral(() -> -0.5, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Setpoints
 
-    // Algae - Coral for now
+    // Algae
     // Movements
-    boxLeft
-        .button(1)
-        .onTrue(new MoveAlgae(() -> 1, algaeSub))
-        .onFalse(new MoveAlgae(() -> -1, algaeSub));
-    boxLeft
-        .button(2)
-        .onTrue(new MoveAlgae(() -> -1, algaeSub))
-        .onFalse(new MoveAlgae(() -> 0, algaeSub));
+    // boxLeft
+    //     .button(1)
+    //     .onTrue(new MoveAlgae(() -> 0.5, algaeSub))
+    //     .onFalse(new MoveAlgae(() -> 0, algaeSub));
+    // boxLeft
+    //     .button(2)
+    //     .onTrue(new MoveAlgae(() -> -0.5, algaeSub))
+    //     .onFalse(new MoveAlgae(() -> 0, algaeSub));
 
     // Setpoints
 
@@ -96,9 +96,9 @@ public class BoxButtons {
 
     // Raw Elevator Control
     // Up
-    boxLeft.button(6).onTrue(new MoveElevator(() -> 10, elevatorSub));
+    boxLeft.button(6).onTrue(new RawElevator(() -> -100, elevatorSub));
     // Down
-    boxLeft.button(8).onTrue(new MoveElevator(() -> -10, elevatorSub));
+    boxLeft.button(8).onTrue(new RawElevator(() -> 100, elevatorSub));
 
     // Hook Control
     // Up

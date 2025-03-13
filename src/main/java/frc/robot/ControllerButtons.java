@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Hang;
-import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.ResetElevator;
@@ -62,13 +61,13 @@ public class ControllerButtons {
     // Switch to X pattern when X button is pressed
 
     // Pushing
-    commandXboxController.rightTrigger().whileTrue(new MoveCoral(() -> -0.5, coralSub));
-    commandXboxController.rightTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
+    // commandXboxController.rightTrigger().onTrue(new MoveCoral(() -> -0.5, coralSub));
+    // commandXboxController.rightTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
     // commandXboxController.rightTrigger().whileFalse(new MoveCoral(coralSub, () -> 0));
 
     // Pulling
-    commandXboxController.leftTrigger().whileTrue(new MoveCoral(() -> 0.5, coralSub));
-    commandXboxController.leftTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
+    // commandXboxController.leftTrigger().onTrue(new MoveCoral(() -> 0.5, coralSub));
+    // commandXboxController.leftTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Reset gyro to 0
     commandXboxController.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));

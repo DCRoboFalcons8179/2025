@@ -97,7 +97,7 @@ public class ElevatorSub extends SubsystemBase {
 
   public void updatePosition() {
     // Use the slew-rate-limited desired position for upward motion
-    double limitedPose = Filter.cutoffFilter(desiredPos, Constants.Elevator.maxHeight, 0);
+    double limitedPose = Filter.cutoffFilter(desiredPos, Constants.Elevator.maxHeight, -200);
 
     // Calculate the direction of movement
     double currentPose = elevatorEncoder.getPosition();
@@ -123,7 +123,9 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   public void rawMove(double position) {
-    desiredPos += position;
+    if (getPose() < 1000) {
+      desiredPos += position;
+    }
   }
 
   public void resetPose() {
