@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6562499999999996,
-        "y": 5.5259868421052625
+        "x": 7.6,
+        "y": 6.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1366776315789475,
-        "y": 5.92047697368421
+        "x": 6.6151922469877915,
+        "y": 6.52635182233307
       },
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "StartCage"
     },
     {
       "anchor": {
-        "x": 2.318832236842105,
-        "y": 4.09235197368421
+        "x": 5.234210526315789,
+        "y": 5.323930921052631
       },
       "prevControl": {
-        "x": 2.2129934210526314,
-        "y": 5.189226973684211
+        "x": 5.484210526315789,
+        "y": 5.756943622944851
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefCageBarge"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.07595464722735
+    "rotation": -119.99999999999999
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -62.19854122006586
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

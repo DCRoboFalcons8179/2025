@@ -70,12 +70,10 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
     elevatorSub = new ElevatorSub();
     coralSub = new CoralSub();
     algaeSub = new AlgaeSub();
     hookSub = new HookSub();
-
 
     switch (Constants.currentMode) {
       case REAL:
@@ -89,7 +87,8 @@ public class RobotContainer {
         configMusicButtonBindings();
 
         // Real robot, instantiate hardware IO implementations
-        drive = new Drive(new GyroIOPigeon2(), frontLeft, frontRight, backLeft, backRight, elevatorSub);
+        drive =
+            new Drive(new GyroIOPigeon2(), frontLeft, frontRight, backLeft, backRight, elevatorSub);
         break;
 
       case SIM:
@@ -117,13 +116,13 @@ public class RobotContainer {
         break;
     }
 
-
     // Add the autoChooser dropdown to Shuffleboard
     // ShuffleboardTab tab = Shuffleboard.getTab("Autonomous");
     // tab.add("Auto Path", autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 
     // Configure the button bindings
     configureButtonBindings();
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     NamedCommands.registerCommand(
         "ResetAll",

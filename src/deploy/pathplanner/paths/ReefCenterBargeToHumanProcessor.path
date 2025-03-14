@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.338075657894737,
-        "y": 4.034621710526316
+        "x": 5.9750822368421055,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9339638157894736,
-        "y": 1.4078947368421053
+        "x": 6.4750822368421055,
+        "y": 4.0
+      },
+      "isLocked": true,
+      "linkedName": "ReefCenterBarge"
+    },
+    {
+      "anchor": {
+        "x": 5.9750822368421055,
+        "y": 2.793421052631579
+      },
+      "prevControl": {
+        "x": 6.841107640626544,
+        "y": 3.2934210526315786
+      },
+      "nextControl": {
+        "x": 5.109056833057667,
+        "y": 2.2934210526315795
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.9750822368421055,
-        "y": 1.0518914473684209
+        "x": 1.1738486842090345,
+        "y": 1.1096217105252004
       },
       "prevControl": {
-        "x": 1.837746710526316,
-        "y": 0.6285361842105253
+        "x": 1.7474251205600804,
+        "y": 1.928773754814192
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "HumanProcessor"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +49,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,10 +58,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -91.00508600525431
+    "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": null,
+  "folder": "GameDay",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

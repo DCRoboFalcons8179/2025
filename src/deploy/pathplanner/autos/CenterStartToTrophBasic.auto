@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "blue.2.1"
+            "pathName": "StartCenterToReefCenter"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "blue.2.2"
+            "name": "ScoreTroph"
           }
         }
       ]
