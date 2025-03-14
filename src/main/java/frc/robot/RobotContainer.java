@@ -202,7 +202,8 @@ public class RobotContainer {
     // return new PathPlannerAuto("Reef");
     // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
     // return autoChooser.get();
-    return new InstantCommand(() -> DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0))
-        .withTimeout(2);
+    // return new InstantCommand(() -> DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0))
+    //     .withTimeout(2);
+    return GetAuton.getAuton(BinaryToInt.getInt(boxRight, boxLeft));
   }
 }
