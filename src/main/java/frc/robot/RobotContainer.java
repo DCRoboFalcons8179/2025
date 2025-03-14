@@ -20,8 +20,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.AutoCoral;
+import frc.robot.commands.AutoElevator;
+import frc.robot.commands.AutoWrist;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
@@ -146,15 +150,13 @@ public class RobotContainer {
                 .andThen(new MoveCoral(() -> 1, coralSub)));
     new EventTrigger("ScoreL4")
         .onTrue(
-            new MoveCoral(() -> 1, coralSub)
-                .andThen(new MoveElevator(() -> 17000, elevatorSub))
-                .onlyWhile(() -> elevatorSub.atHeight())
-                .andThen(
-                    new MoveWrist(() -> 1000, coralSub).andThen(new MoveCoral(() -> -1, coralSub)))
-                .withTimeout(3)
-                .andThen(new MoveElevator(() -> 0, elevatorSub))
-                .withTimeout(2)
-                .andThen(new InstantCommand(() -> elevatorSub.resetPose())));
+            new SequentialCommandGroup(
+                new MoveCoral(() -> 1, coralSub),
+                new AutoElevator(() -> 17000, elevatorSub),
+                new AutoWrist(() -> 1000, coralSub).withTimeout(1.5),
+                new AutoCoral(() -> -1, coralSub).withTimeout(0.5),
+                new AutoElevator(() -> 0, elevatorSub).withTimeout(1.2),
+                new InstantCommand(() -> elevatorSub.resetPose())));
   }
 
   public void periodic() {

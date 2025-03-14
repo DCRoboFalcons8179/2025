@@ -18,7 +18,6 @@ public class MoveWrist extends InstantCommand {
   public MoveWrist(DoubleSupplier pose, CoralSub coralSub) {
     this.pose = pose;
     this.coralSub = coralSub;
-    addRequirements(coralSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
