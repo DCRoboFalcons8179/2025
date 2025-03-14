@@ -15,6 +15,12 @@
           "data": {
             "name": "ScoreTroph"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
         }
       ]
     }

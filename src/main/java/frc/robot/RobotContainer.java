@@ -15,11 +15,11 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.MoveCoral;
@@ -134,21 +134,15 @@ public class RobotContainer {
             .andThen(new MoveCoral(() -> 0, coralSub)));
     NamedCommands.registerCommand(
         "ScoreTroph",
-        new MoveElevator(() -> 0, elevatorSub)
-            .andThen(new MoveWrist(() -> 730, coralSub))
-            .andThen(new MoveCoral(() -> -1, coralSub)));
+        new InstantCommand(() -> SmartDashboard.putBoolean("AUTON CALLED", true))
+            .andThen(new MoveElevator(() -> 0, elevatorSub))
+            .alongWith(new MoveWrist(() -> 730, coralSub))
+            .alongWith(new MoveCoral(() -> -1, coralSub)));
     NamedCommands.registerCommand(
         "HumanCoral",
         new MoveElevator(() -> 2300, elevatorSub)
             .andThen(new MoveWrist(() -> 0, coralSub))
             .andThen(new MoveCoral(() -> 1, coralSub)));
-    // NamedCommands.registerCommand("ScoreLevel2", new MoveElevator(() -> 5300,
-    // elevatorSub).andThen(new MoveWrist(() -> 780, coralSub))).andThen(new MoveCoral(() -> 1,
-    // coralSub)));
-    // NamedCommands.registerCommand("ScoreLevel2", new MoveElevator(() -> 8000,
-    // elevatorSub).andThen(new MoveWrist(() -> 780, coralSub))).andThen(new MoveCoral(() -> 1,
-    // coralSub)));
-    // NamedCommands.registerCommand("Lift Elevator", new MoveElevator(() -> 8000, elevatorSub));
   }
 
   public void periodic() {
@@ -203,7 +197,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     drive.zeroYaw();
-    return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
+    return autoChooser.get();
+    // return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
   }
 
   public ArrayList<String> autonList =

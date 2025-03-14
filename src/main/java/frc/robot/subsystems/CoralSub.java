@@ -96,7 +96,7 @@ public class CoralSub extends SubsystemBase {
   public void updatePosition() {
     double limitedPose = Filter.cutoffFilter(desiredPos, 1750, 0);
 
-    SmartDashboard.putNumber("Desired Position", limitedPose);
+    SmartDashboard.putNumber("Wrist Desired Position", limitedPose);
 
     wristSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
   }
