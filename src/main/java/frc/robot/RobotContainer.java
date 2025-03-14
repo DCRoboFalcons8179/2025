@@ -38,6 +38,7 @@ import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
+import frc.robot.subsystems.VisionSub;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -59,7 +60,6 @@ public class RobotContainer {
   // Subsystems
   public final Drive drive;
   private Music music;
-  // private final VisionSub visionSub = new VisionSub();
   public final HookSub hookSub;
   private final ElevatorSub elevatorSub;
   private final CoralSub coralSub;
@@ -134,6 +134,8 @@ public class RobotContainer {
     configureButtonBindings();
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
+    VisionSub visionSub = new VisionSub();
+
     new EventTrigger("ResetAll")
         .onTrue(
             new MoveElevator(() -> 0, elevatorSub)
@@ -152,6 +154,7 @@ public class RobotContainer {
     new EventTrigger("ScoreL4")
         .onTrue(
             new SequentialCommandGroup(
+                // new MaintainAll(drive, visionSub),
                 new MoveCoral(() -> 1, coralSub),
                 new AutoElevator(() -> 17000, elevatorSub),
                 new AutoWrist(() -> 1000, coralSub).withTimeout(1.5),

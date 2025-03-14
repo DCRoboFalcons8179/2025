@@ -75,7 +75,7 @@ public class Constants {
     public static final double errorThreshHoldStrafeMeters = 0.05;
     public static final double errorThreshHoldRadians = 0.0174532925199;
     public static final int tagFindingTries = 15;
-    public static final double desiredXTagDistanceMeters = 1;
+    public static final double desiredXTagDistanceMeters = 0.1;
 
     public class FrontCameraValues {
       public static final String cameraName = "HD_Web_Camera";
