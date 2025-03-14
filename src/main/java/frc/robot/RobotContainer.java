@@ -157,7 +157,7 @@ public class RobotContainer {
                 // new MaintainAll(drive, visionSub),
                 new MoveCoral(() -> 1, coralSub),
                 new AutoElevator(() -> 17000, elevatorSub),
-                new AutoWrist(() -> 1000, coralSub).withTimeout(1.5),
+                new AutoWrist(() -> 950, coralSub).withTimeout(1.5),
                 new AutoCoral(() -> -1, coralSub).withTimeout(0.5),
                 new AutoElevator(() -> 0, elevatorSub).withTimeout(1.2),
                 new InstantCommand(() -> elevatorSub.resetPose()),
