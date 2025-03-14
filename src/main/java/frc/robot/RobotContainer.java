@@ -15,6 +15,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,6 +39,8 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -58,9 +61,11 @@ public class RobotContainer {
   private final AlgaeSub algaeSub;
 
   // Controllers
-  private final CommandXboxController controller = new CommandXboxController(0);
+  private final CommandXboxController commandXboxController = new CommandXboxController(0);
   private final CommandJoystick boxLeft = new CommandJoystick(1);
   private final CommandJoystick boxRight = new CommandJoystick(2);
+
+  // private final CommandXboxController musicCommandXboxController = new CommandXboxController(5);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -155,7 +160,7 @@ public class RobotContainer {
     int autonID = BinaryToInt.getInt(boxRight, boxLeft);
 
     SmartDashboard.putNumber("Binary To Int", autonID);
-    SmartDashboard.putString("Auton Name", GetAuton.getAutonName(autonID));
+    SmartDashboard.putString("Auton Name", getAutonName(autonID));
     // System.out.println(BinaryToInt.getInt(boxRight, boxLeft));
   }
 
@@ -168,7 +173,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Configure the button bindings
-    new ControllerButtons(controller, drive, coralSub, elevatorSub, hookSub) {
+    new ControllerButtons(commandXboxController, drive, coralSub, elevatorSub, hookSub) {
       {
         configureButtonBindings();
       }
@@ -185,12 +190,10 @@ public class RobotContainer {
   }
 
   private void configMusicButtonBindings() {
-    // if (!Constants.comp) {
-    //   controller.povUp().onTrue(new InstantCommand(() -> music.play()));
-    //   controller.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-    //   controller.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
-    //   controller.povDown().onTrue(new InstantCommand(() -> music.stop()));
-    // }
+    // musicCommandXboxController.povUp().onTrue(new InstantCommand(() -> music.play()));
+    // musicCommandXboxController.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
+    // musicCommandXboxController.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
+    // musicCommandXboxController.povDown().onTrue(new InstantCommand(() -> music.stop()));
   }
 
   /**
@@ -200,12 +203,25 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     drive.zeroYaw();
-    // return new PathPlannerAuto("Reef");
-    // return DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () -> 0).withTimeout(1);
-    // return autoChooser.get();
-    // return new InstantCommand(() -> DriveCommands.joystickDrive(drive, () -> 0.5, () -> 0, () ->
-    // 0))
-    //     .withTimeout(2);
-    return GetAuton.getAuton(BinaryToInt.getInt(boxRight, boxLeft));
+    return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
+  }
+
+  public ArrayList<String> autonList =
+      new ArrayList<>(
+          Arrays.asList(
+              "DoNothing.auto",
+              "StartProcessorToTrophBasic.auto",
+              "CenterStartToTrophBasic.auto",
+              "StartCageToTrophBasic.auto",
+              "CenterStartToProcessorSideComplex.auto",
+              "ProcessorStartToProcessorSideComplex.auto",
+              "CenterStartToCageSideComplex.auto",
+              "CageStartToCageSideComplex.auto",
+              "CommandTestResetAll.auto",
+              "CommandTestScoreTroph.auto",
+              "CommandTestHumanCoral.auto"));
+
+  public String getAutonName(int index) {
+    return index > autonList.size() - 1 ? "DoNothing.auto" : autonList.get(index);
   }
 }
