@@ -107,12 +107,12 @@ public class BoxButtons {
     // Up
     boxLeft
         .button(11)
-        .onTrue(new MoveHook(() -> 1, hookSub))
+        .onTrue(new MoveHook(() -> 5, hookSub))
         .onFalse(new MoveHook(() -> 0, hookSub));
     // Down
     boxLeft
         .button(12)
-        .onTrue(new MoveHook(() -> -1, hookSub))
+        .onTrue(new MoveHook(() -> -5, hookSub))
         .onFalse(new MoveHook(() -> 0, hookSub));
   }
 }

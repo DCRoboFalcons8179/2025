@@ -75,7 +75,7 @@ public class ControllerButtons {
     // Reset gyro to 0° when B button is pressed
     commandXboxController
         .b()
-        .onTrue(new Hang(() -> -1, hookSub))
+        .onTrue(new Hang(() -> -0.2, hookSub))
         .onFalse(new Hang(() -> 0, hookSub));
 
     // Elevator
