@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.events.EventTrigger;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -215,25 +216,24 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     drive.zeroYaw();
-    return autoChooser.get();
-    // return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight,
-    // boxLeft)));
+    // return autoChooser.get();
+    return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
   }
 
   public ArrayList<String> autonList =
       new ArrayList<>(
           Arrays.asList(
-              "DoNothing.auto",
-              "StartProcessorToTrophBasic.auto",
-              "CenterStartToTrophBasic.auto",
-              "StartCageToTrophBasic.auto",
-              "CenterStartToProcessorSideComplex.auto",
-              "ProcessorStartToProcessorSideComplex.auto",
-              "CenterStartToCageSideComplex.auto",
-              "CageStartToCageSideComplex.auto",
-              "CommandTestResetAll.auto",
-              "CommandTestScoreTroph.auto",
-              "CommandTestHumanCoral.auto"));
+              "DoNothing",
+              "StartProcessorToTrophBasic",
+              "CenterStartToTrophBasic",
+              "StartCageToTrophBasic",
+              "CenterStartToProcessorSideComplex",
+              "ProcessorStartToProcessorSideComplex",
+              "CenterStartToCageSideComplex",
+              "CageStartToCageSideComplex",
+              "CenterStartToL4Basic",
+              "CommandTestScoreTroph",
+              "CommandTestHumanCoral"));
 
   public String getAutonName(int index) {
     return index > autonList.size() - 1 ? "DoNothing.auto" : autonList.get(index);
