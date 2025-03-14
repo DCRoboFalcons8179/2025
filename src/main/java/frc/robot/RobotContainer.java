@@ -14,7 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.events.EventTrigger;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,7 +65,8 @@ public class RobotContainer {
   private final CommandJoystick boxLeft = new CommandJoystick(1);
   private final CommandJoystick boxRight = new CommandJoystick(2);
 
-  // private final CommandXboxController musicCommandXboxController = new CommandXboxController(5);
+  // private final CommandXboxController musicCommandXboxController = new
+  // CommandXboxController(5);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -121,28 +122,39 @@ public class RobotContainer {
 
     // Add the autoChooser dropdown to Shuffleboard
     // ShuffleboardTab tab = Shuffleboard.getTab("Autonomous");
-    // tab.add("Auto Path", autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
+    // tab.add("Auto Path",
+    // autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 
     // Configure the button bindings
     configureButtonBindings();
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    NamedCommands.registerCommand(
-        "ResetAll",
-        new MoveElevator(() -> 0, elevatorSub)
-            .andThen(new MoveWrist(() -> 0, coralSub))
-            .andThen(new MoveCoral(() -> 0, coralSub)));
-    NamedCommands.registerCommand(
-        "ScoreTroph",
-        new InstantCommand(() -> SmartDashboard.putBoolean("AUTON CALLED", true))
-            .andThen(new MoveElevator(() -> 0, elevatorSub))
-            .alongWith(new MoveWrist(() -> 730, coralSub))
-            .alongWith(new MoveCoral(() -> -1, coralSub)));
-    NamedCommands.registerCommand(
-        "HumanCoral",
-        new MoveElevator(() -> 2300, elevatorSub)
-            .andThen(new MoveWrist(() -> 0, coralSub))
-            .andThen(new MoveCoral(() -> 1, coralSub)));
+    new EventTrigger("ResetAll")
+        .onTrue(
+            new MoveElevator(() -> 0, elevatorSub)
+                .andThen(new MoveWrist(() -> 0, coralSub))
+                .andThen(new MoveCoral(() -> 0, coralSub)));
+
+    new EventTrigger("ScoreTroph").onTrue(new MoveElevator(() -> 0, elevatorSub));
+    // .andThen(new MoveWrist(() -> 900, coralSub))
+    // .andThen(new MoveCoral(() -> -1, coralSub)));
+
+    new EventTrigger("HumanCoral")
+        .onTrue(
+            new MoveElevator(() -> 2300, elevatorSub)
+                .andThen(new MoveWrist(() -> 0, coralSub))
+                .andThen(new MoveCoral(() -> 1, coralSub)));
+    new EventTrigger("ScoreL4")
+        .onTrue(
+            new MoveCoral(() -> 1, coralSub)
+                .andThen(new MoveElevator(() -> 17000, elevatorSub))
+                .onlyWhile(() -> elevatorSub.atHeight())
+                .andThen(
+                    new MoveWrist(() -> 1000, coralSub).andThen(new MoveCoral(() -> -1, coralSub)))
+                .withTimeout(3)
+                .andThen(new MoveElevator(() -> 0, elevatorSub))
+                .withTimeout(2)
+                .andThen(new InstantCommand(() -> elevatorSub.resetPose())));
   }
 
   public void periodic() {
@@ -184,10 +196,14 @@ public class RobotContainer {
   }
 
   private void configMusicButtonBindings() {
-    // musicCommandXboxController.povUp().onTrue(new InstantCommand(() -> music.play()));
-    // musicCommandXboxController.povLeft().onTrue(new InstantCommand(() -> music.backTrack()));
-    // musicCommandXboxController.povRight().onTrue(new InstantCommand(() -> music.nextTrack()));
-    // musicCommandXboxController.povDown().onTrue(new InstantCommand(() -> music.stop()));
+    // musicCommandXboxController.povUp().onTrue(new InstantCommand(() ->
+    // music.play()));
+    // musicCommandXboxController.povLeft().onTrue(new InstantCommand(() ->
+    // music.backTrack()));
+    // musicCommandXboxController.povRight().onTrue(new InstantCommand(() ->
+    // music.nextTrack()));
+    // musicCommandXboxController.povDown().onTrue(new InstantCommand(() ->
+    // music.stop()));
   }
 
   /**
@@ -198,7 +214,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     drive.zeroYaw();
     return autoChooser.get();
-    // return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
+    // return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight,
+    // boxLeft)));
   }
 
   public ArrayList<String> autonList =

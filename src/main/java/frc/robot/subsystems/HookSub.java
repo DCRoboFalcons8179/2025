@@ -50,7 +50,7 @@ public class HookSub extends SubsystemBase {
     SmartDashboard.putNumber("Hook Position", getCurrentPosition());
     SmartDashboard.putNumber("Hook Velocity", hook.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Hook Current", hook.getStatorCurrent().getValueAsDouble());
-    SmartDashboard.putBoolean("Hook Hung", hung);
+    SmartDashboard.putNumber("Hook Temperature", hook.getDeviceTemp().getValueAsDouble());
   }
 
   /**
@@ -60,11 +60,16 @@ public class HookSub extends SubsystemBase {
    */
   public void setPosition(double position) {
     if (!hung) {
-      desiredPosition = position;
+      // desiredPosition += position;
     }
     hung = false;
     // Use PositionVoltage control to move to the desired position
-    hook.setControl(positionControl.withPosition(desiredPosition));
+    if (hook.getPosition().getValueAsDouble() + position < 0) {
+      hook.setControl(
+          positionControl.withPosition(hook.getPosition().getValueAsDouble() + position));
+    } else {
+      hook.setControl(positionControl.withPosition(0));
+    }
   }
 
   /**

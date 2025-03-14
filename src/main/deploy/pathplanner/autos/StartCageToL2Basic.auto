@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartCenterToReefCenter"
+            "pathName": "StartCageToReefCage"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ScoreTroph"
+            "name": "ScoreL2"
           }
         }
       ]

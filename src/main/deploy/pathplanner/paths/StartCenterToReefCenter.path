@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.1,
-        "y": 4.0
+        "x": 7.33823174716852,
+        "y": 3.998785119873194
       },
       "isLocked": true,
       "linkedName": "StartCenter"
@@ -20,8 +20,8 @@
         "y": 4.0
       },
       "prevControl": {
-        "x": 6.325,
-        "y": 4.0
+        "x": 6.384964431691044,
+        "y": 3.9997727275302055
       },
       "nextControl": null,
       "isLocked": true,
@@ -31,7 +31,14 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "ScoreL4",
+      "waypointRelativePos": 0.9457627118644081,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,

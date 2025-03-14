@@ -61,7 +61,8 @@ public class BoxButtons {
     boxRight
         .button(12)
         .onTrue(
-            new MoveElevator(() -> 17000, elevatorSub).andThen(new MoveWrist(() -> 900, coralSub)));
+            new MoveElevator(() -> 17000, elevatorSub)
+                .andThen(new MoveWrist(() -> 1000, coralSub)));
 
     // Coral
     // Movement
@@ -107,12 +108,12 @@ public class BoxButtons {
     // Up
     boxLeft
         .button(11)
-        .onTrue(new MoveHook(() -> 5, hookSub))
+        .onTrue(new MoveHook(() -> 1.5, hookSub))
         .onFalse(new MoveHook(() -> 0, hookSub));
     // Down
     boxLeft
         .button(12)
-        .onTrue(new MoveHook(() -> -5, hookSub))
+        .onTrue(new MoveHook(() -> -1.5, hookSub))
         .onFalse(new MoveHook(() -> 0, hookSub));
   }
 }

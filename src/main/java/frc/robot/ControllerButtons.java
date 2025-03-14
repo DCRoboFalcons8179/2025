@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.Hang;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.ResetElevator;
@@ -36,46 +37,19 @@ public class ControllerButtons {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
+            elevatorSub,
             () -> -commandXboxController.getLeftY(),
             () -> -commandXboxController.getLeftX(),
             () -> -commandXboxController.getRightX()));
 
-    // drive.setDefaultCommand(
-    // DriveCommands.joystickDrive(
-    // drive,
-    // () -> -flightStick.getY(),
-    // () -> -flightStick.getX(),
-    // () -> -flightStick.getTwist()));
-
-    // Lock to 0° when A button is held
-    // commandXboxController
-    // .a()
-    // .whileTrue(
-    // DriveCommands.joystickDriveAtAngle(
-    // drive,
-    // () -> -commandXboxController.getLeftY(),
-    // () -> -commandXboxController.getLeftX(),
-    // () -> new Rotation2d()));
-
-    // Switch to X pattern when X button is pressed
-
-    // Pushing
-    // commandXboxController.rightTrigger().onTrue(new MoveCoral(() -> -0.5, coralSub));
-    // commandXboxController.rightTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
-    // commandXboxController.rightTrigger().whileFalse(new MoveCoral(coralSub, () -> 0));
-
-    // Pulling
-    // commandXboxController.leftTrigger().onTrue(new MoveCoral(() -> 0.5, coralSub));
-    // commandXboxController.leftTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
-
     // Reset gyro to 0
     commandXboxController.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));
 
-    // Reset gyro to 0° when B button is pressed
-    // commandXboxController
-    //     .b()
-    //     .onTrue(new Hang(() -> -0.2, hookSub))
-    //     .onFalse(new Hang(() -> 0, hookSub));
+    // Hang
+    commandXboxController
+        .b()
+        .onTrue(new Hang(() -> -0.3, hookSub))
+        .onFalse(new Hang(() -> 0, hookSub));
 
     // Elevator
     commandXboxController.leftBumper().onTrue(new ResetElevator(elevatorSub));

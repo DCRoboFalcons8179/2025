@@ -126,6 +126,9 @@ public class Constants {
 
     public static final double encoderLimit = 3;
 
+    public static final double maxElevatorSpeedPercentOut = 0.3;
+    public static final double minElevatorSpeedPercentOut = -0.20;
+
     // PID Values
     /** kP for the elevator */
     public static final double kP = 0.00185;

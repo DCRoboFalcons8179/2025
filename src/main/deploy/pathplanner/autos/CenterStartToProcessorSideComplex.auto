@@ -5,6 +5,18 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ScoreTroph"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "HumanCoral"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "StartCenterToReefCenter"
@@ -17,15 +29,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "HumanProcessorToReefProcessorHuman"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ReefProcessorHumanToHumanProcessor"
+            "waitTime": 2.0
           }
         },
         {
@@ -38,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "GameDay",
+  "folder": null,
   "choreoAuto": false
 }
