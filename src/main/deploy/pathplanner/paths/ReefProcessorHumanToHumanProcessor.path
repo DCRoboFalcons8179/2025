@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.733223684210526,
-        "y": 2.716447368421052
+        "x": 3.846575342465753,
+        "y": 2.837970890410959
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2332236842105266,
-        "y": 1.8504219646366136
+        "x": 3.3465753424657536,
+        "y": 1.9719454866265207
       },
       "isLocked": false,
       "linkedName": "ReefProcessorHuman"
@@ -45,7 +45,7 @@
     "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": "GameDay",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 59.99999999999999

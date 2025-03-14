@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Hang;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.ResetElevator;
@@ -73,10 +72,10 @@ public class ControllerButtons {
     commandXboxController.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));
 
     // Reset gyro to 0° when B button is pressed
-    commandXboxController
-        .b()
-        .onTrue(new Hang(() -> -0.2, hookSub))
-        .onFalse(new Hang(() -> 0, hookSub));
+    // commandXboxController
+    //     .b()
+    //     .onTrue(new Hang(() -> -0.2, hookSub))
+    //     .onFalse(new Hang(() -> 0, hookSub));
 
     // Elevator
     commandXboxController.leftBumper().onTrue(new ResetElevator(elevatorSub));
@@ -96,11 +95,6 @@ public class ControllerButtons {
     //     .onFalse(new Hang(() -> 0, hookSub))
     //     .and(() -> !commandXboxController.povDown().getAsBoolean())
     //     .and(() -> !commandXboxController.rightTrigger().getAsBoolean());
-
-    commandXboxController.povUp().onTrue(new MoveWrist(() -> 10, coralSub));
-    commandXboxController.povRight().onTrue(new MoveWrist(() -> 150, coralSub));
-    commandXboxController.povLeft().onTrue(new MoveWrist(() -> 940, coralSub));
-    commandXboxController.povDown().onTrue(new MoveWrist(() -> 300, coralSub));
 
     // commandXboxController.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
 

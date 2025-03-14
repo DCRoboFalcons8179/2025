@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.234210526315789,
-        "y": 5.323930921052631
+        "x": 5.168835616438356,
+        "y": 5.1970034246575345
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.734210526315789,
-        "y": 6.18995632483707
+        "x": 5.668835616438356,
+        "y": 6.063028828441973
       },
       "isLocked": false,
       "linkedName": "ReefCageBarge"
@@ -45,7 +45,7 @@
     "rotation": 125.00000000000001
   },
   "reversed": false,
-  "folder": "GameDay",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -119.99999999999999

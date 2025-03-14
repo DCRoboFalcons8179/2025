@@ -1,7 +1,9 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.PathPlannerAutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj2.command.Command;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 // BINARY SWITCH LAYOUT
 // Bit0: If 0 then CenterStart,   else if 1 then either ProcessorStart or CageStart
@@ -11,17 +13,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 // Bit4: Unused
 //
 //     43210
-//  0: 00000 DoNothing.auto
-//  1: 00001 StartProcessorToTrophBasic.auto
-//  2: 00010 CenterStartToTrophBasic.auto (duplicate)
-//  3: 00011 StartCageToTrophBasic.auto
-//  4: 00100 CenterStartToProcessorSideComplex.auto
-//  5: 00101 ProcessorStartToProcessorSideComplex.auto
-//  6: 00110 CenterStartToCageSideComplex.auto
-//  7: 00111 CageStartToCageSideComplex.auto
-//  8: 01000 CommandTestResetAll.auto
-//  9: 01001 CommandTestScoreTroph.auto
-// 10: 01010 CommandTestHumanCoral.auto
+//  0: 00000 DoNothing
+//  1: 00001 StartProcessorToTrophBasic
+//  2: 00010 CenterStartToTrophBasic (duplicate)
+//  3: 00011 StartCageToTrophBasic
+//  4: 00100 CenterStartToProcessorSideComplex
+//  5: 00101 ProcessorStartToProcessorSideComplex
+//  6: 00110 CenterStartToCageSideComplex
+//  7: 00111 CageStartToCageSideComplex
+//  8: 01000 CommandTestResetAll
+//  9: 01001 CommandTestScoreTroph
+// 10: 01010 CommandTestHumanCoral
 // 11: 01011
 // 12: 01100
 // 13: 01101
@@ -45,33 +47,70 @@ import edu.wpi.first.wpilibj2.command.Command;
 // 31: 11111
 
 public class GetAuton {
-  public static Command getAuton(int autonID) {
 
-    switch (autonID) {
-      case 0:
-        return PathPlannerAutoBuilder.buildAuto("DoNothing.auto");
-      case 1:
-        return PathPlannerAutoBuilder.buildAuto("StartProcessorToTrophBasic.auto");
-      case 2:
-        return PathPlannerAutoBuilder.buildAuto("CenterStartToTrophBasic.auto");
-      case 3:
-        return PathPlannerAutoBuilder.buildAuto("StartCageToTrophBasic.auto");
-      case 4:
-        return PathPlannerAutoBuilder.buildAuto("CenterStartToProcessorSideComplex.auto");
-      case 5:
-        return PathPlannerAutoBuilder.buildAuto("ProcessorStartToProcessorSideComplex.auto");
-      case 6:
-        return PathPlannerAutoBuilder.buildAuto("CenterStartToCageSideComplex.auto");
-      case 7:
-        return PathPlannerAutoBuilder.buildAuto("CageStartToCageSideComplex.auto");
-      case 8:
-        return PathPlannerAutoBuilder.buildAuto("CommandTestResetAll.auto");
-      case 9:
-        return PathPlannerAutoBuilder.buildAuto("CommandTestScoreTroph.auto");
-      case 10:
-        return PathPlannerAutoBuilder.buildAuto("CommandTestHumanCoral.auto");
-      default:
-        return null;
-    }
+  public static ArrayList<String> autonList =
+      new ArrayList<>(
+          Arrays.asList(
+              "DoNothing",
+              "StartProcessorToTrophBasic",
+              "CenterStartToTrophBasic",
+              "StartCageToTrophBasic",
+              "CenterStartToProcessorSideComplex",
+              "ProcessorStartToProcessorSideComplex",
+              "CenterStartToCageSideComplex",
+              "CageStartToCageSideComplex",
+              "CommandTestResetAll",
+              "CommandTestScoreTroph",
+              "CommandTestHumanCoral"));
+
+  //   {
+  //     {
+  //       set(0, "DoNothing");
+  //       set(1, "StartProcessorToTrophBasic");
+  //       set(2, "CenterStartToTrophBasic");
+  //       set(3, "StartCageToTrophBasic");
+  //       set(4, "CenterStartToProcessorSideComplex");
+  //       set(5, "ProcessorStartToProcessorSideComplex");
+  //       set(6, "CenterStartToCageSideComplex");
+  //       set(7, "CageStartToCageSideComplex");
+  //       set(8, "CommandTestResetAll");
+  //       set(9, "CommandTestScoreTroph");
+  //       set(10, "CommandTestHumanCoral");
+  //     }
+  //   };
+
+  public static String getAutonName(int index) {
+    return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);
+  }
+
+  public static Command getAuton(int autonID) {
+    return new PathPlannerAuto(getAuton(autonID));
+
+    // switch (autonID) {
+    //   case 0:
+    //     return new PathPlannerAuto("DoNothing");
+    //   case 1:
+    //     return new PathPlannerAuto("StartProcessorToTrophBasic");
+    //   case 2:
+    //     return new PathPlannerAuto("CenterStartToTrophBasic");
+    //   case 3:
+    //     return new PathPlannerAuto("StartCageToTrophBasic");
+    //   case 4:
+    //     return new PathPlannerAuto("CenterStartToProcessorSideComplex");
+    //   case 5:
+    //     return new PathPlannerAuto("ProcessorStartToProcessorSideComplex");
+    //   case 6:
+    //     return new PathPlannerAuto("CenterStartToCageSideComplex");
+    //   case 7:
+    //     return new PathPlannerAuto("CageStartToCageSideComplex");
+    //   case 8:
+    //     return new PathPlannerAuto("CommandTestResetAll");
+    //   case 9:
+    //     return new PathPlannerAuto("CommandTestScoreTroph");
+    //   case 10:
+    //     return new PathPlannerAuto("CommandTestHumanCoral");
+    //   default:
+    //     return null;
+    // }
   }
 }

@@ -3,15 +3,15 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.234210526314297,
-        "y": 2.7453124999988847
+        "x": 5.168835616438356,
+        "y": 2.868022260273973
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.734210526314297,
-        "y": 1.879287096214446
+        "x": 5.668835616438356,
+        "y": 2.001996856489534
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "ReefProcessorBarge"
     },
     {
@@ -45,7 +45,7 @@
     "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": "GameDay",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999

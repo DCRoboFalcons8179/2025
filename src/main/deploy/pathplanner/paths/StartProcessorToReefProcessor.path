@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.234210526314297,
-        "y": 2.7453124999988847
+        "x": 5.168835616438356,
+        "y": 2.868022260273973
       },
       "prevControl": {
-        "x": 5.484210526314297,
-        "y": 2.312299798106665
+        "x": 5.418835616438356,
+        "y": 2.4350095583817533
       },
       "nextControl": null,
       "isLocked": true,
@@ -45,7 +45,7 @@
     "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "GameDay",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
