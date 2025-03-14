@@ -157,7 +157,9 @@ public class RobotContainer {
                 new AutoWrist(() -> 1000, coralSub).withTimeout(1.5),
                 new AutoCoral(() -> -1, coralSub).withTimeout(0.5),
                 new AutoElevator(() -> 0, elevatorSub).withTimeout(1.2),
-                new InstantCommand(() -> elevatorSub.resetPose())));
+                new InstantCommand(() -> elevatorSub.resetPose()),
+                new AutoCoral(() -> 0, coralSub),
+                new AutoWrist(() -> 0, coralSub)));
   }
 
   public void periodic() {
