@@ -7,37 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sample Path"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
+            "pathName": "StartCenterToReefCenter"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Loop Path"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
+            "pathName": "ReefCenterBargeToHumanProcessor"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Reef to Human"
+            "pathName": "HumanProcessorToReefProcessorHuman"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefProcessorHumanToHumanProcessor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanProcessorToReefProcessorHuman"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "GameDay",
   "choreoAuto": false
 }

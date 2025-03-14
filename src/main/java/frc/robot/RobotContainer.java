@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.MoveCoral;
+import frc.robot.commands.MoveElevator;
+import frc.robot.commands.MoveWrist;
 import frc.robot.commands.UpdateElevatorPose;
 import frc.robot.commands.UpdateWristPose;
 import frc.robot.generated.TunerConstants;
@@ -110,11 +112,34 @@ public class RobotContainer {
     algaeSub = new AlgaeSub();
     hookSub = new HookSub();
 
+    // Add the autoChooser dropdown to Shuffleboard
+    // ShuffleboardTab tab = Shuffleboard.getTab("Autonomous");
+    // tab.add("Auto Path", autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
+
     // Configure the button bindings
     configureButtonBindings();
 
-    NamedCommands.registerCommand("coralIn", new MoveCoral(() -> 1, coralSub));
-    NamedCommands.registerCommand("coralOut", new MoveCoral(() -> -1, coralSub));
+    NamedCommands.registerCommand(
+        "ResetAll",
+        new MoveElevator(() -> 0, elevatorSub)
+            .andThen(new MoveWrist(() -> 0, coralSub))
+            .andThen(new MoveCoral(() -> 0, coralSub)));
+    NamedCommands.registerCommand(
+        "ScoreTroph",
+        new MoveElevator(() -> 0, elevatorSub)
+            .andThen(new MoveWrist(() -> 0, coralSub))
+            .andThen(new MoveCoral(() -> -1, coralSub)));
+    NamedCommands.registerCommand(
+        "HumanCoral",
+        new MoveElevator(() -> 2300, elevatorSub)
+            .andThen(new MoveWrist(() -> 0, coralSub))
+            .andThen(new MoveCoral(() -> 1, coralSub)));
+    // NamedCommands.registerCommand("ScoreLevel2", new MoveElevator(() -> 5300,
+    // elevatorSub).andThen(new MoveWrist(() -> 780, coralSub))).andThen(new MoveCoral(() -> 1,
+    // coralSub)));
+    // NamedCommands.registerCommand("ScoreLevel2", new MoveElevator(() -> 8000,
+    // elevatorSub).andThen(new MoveWrist(() -> 780, coralSub))).andThen(new MoveCoral(() -> 1,
+    // coralSub)));
     // NamedCommands.registerCommand("Lift Elevator", new MoveElevator(() -> 8000, elevatorSub));
   }
 

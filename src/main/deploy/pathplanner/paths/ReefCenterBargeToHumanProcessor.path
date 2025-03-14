@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 5.9750822368421055,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.013282910175676,
-        "y": 6.5274984191074985
+        "x": 6.4750822368421055,
+        "y": 4.0
       },
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "ReefCenterBarge"
     },
     {
       "anchor": {
-        "x": 4.1911513283270985,
-        "y": 6.523387940648556
+        "x": 5.9750822368421055,
+        "y": 2.793421052631579
       },
       "prevControl": {
-        "x": 4.222923387158679,
-        "y": 7.937244558653931
+        "x": 6.841107640626544,
+        "y": 3.2934210526315786
       },
       "nextControl": {
-        "x": 4.162591523519168,
-        "y": 5.252476626695634
+        "x": 5.109056833057667,
+        "y": 2.2934210526315795
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.7048209831474335,
-        "y": 6.366309014204936
+        "x": 1.1738486842090345,
+        "y": 1.1096217105252004
       },
       "prevControl": {
-        "x": 5.4548209831474335,
-        "y": 7.866309014204926
+        "x": 1.7474251205600804,
+        "y": 1.928773754814192
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "HumanProcessor"
     }
   ],
   "rotationTargets": [],
@@ -49,7 +49,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -58,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -1.3019526725788404
+    "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": null,
+  "folder": "GameDay",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

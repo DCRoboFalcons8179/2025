@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8567499999999995,
-        "y": 4.0055
+        "x": 7.6,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0379098360655736,
-        "y": 3.5814549180327875
+        "x": 7.1,
+        "y": 4.0
       },
-      "isLocked": false,
-      "linkedName": "ReefCenterLeft"
+      "isLocked": true,
+      "linkedName": "StartCenter"
     },
     {
       "anchor": {
-        "x": 1.25775,
-        "y": 1.060999999999999
+        "x": 5.9750822368421055,
+        "y": 4.0
       },
       "prevControl": {
-        "x": 2.3855532786885245,
-        "y": 1.8792008196721315
+        "x": 6.4750822368421055,
+        "y": 4.0
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": "HumanPlayerBottom"
+      "isLocked": true,
+      "linkedName": "ReefCenterBarge"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -127.53480914387862
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "GameDay",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
