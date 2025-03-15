@@ -67,13 +67,13 @@ public class ControllerButtons {
     // In
     commandXboxController
         .leftTrigger()
-        .onTrue(new MoveCoral(() -> 1, coralSub))
+        .onTrue(new MoveCoral(() -> 0.5, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Out
     commandXboxController
         .rightTrigger()
-        .onTrue(new MoveCoral(() -> -1, coralSub))
+        .onTrue(new MoveCoral(() -> -0.5, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // // Coral Tilting
