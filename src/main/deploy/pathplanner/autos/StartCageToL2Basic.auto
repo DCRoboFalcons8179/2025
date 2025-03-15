@@ -9,12 +9,6 @@
           "data": {
             "pathName": "StartCageToReefCage"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreL2"
-          }
         }
       ]
     }

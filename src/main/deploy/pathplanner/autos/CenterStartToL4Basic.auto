@@ -9,18 +9,6 @@
           "data": {
             "pathName": "StartCenterToReefCenter"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreL4"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
         }
       ]
     }

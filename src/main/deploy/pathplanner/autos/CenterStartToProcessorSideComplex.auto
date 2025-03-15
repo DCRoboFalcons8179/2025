@@ -11,18 +11,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "HumanCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "StartCenterToReefCenter"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "ReefCenterBargeToHumanProcessor"

@@ -218,7 +218,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     drive.zeroYaw();
+    // return DriveCommands.joystickDrive(drive, elevatorSub, () -> 0.6, () -> 0, () -> 0)
+    // .withTimeout(2);
     // return autoChooser.get();
+    // return null;
     return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
   }
 
@@ -233,11 +236,9 @@ public class RobotContainer {
               "ProcessorStartToProcessorSideComplex",
               "CenterStartToCageSideComplex",
               "CageStartToCageSideComplex",
-              "CenterStartToL4Basic",
-              "CommandTestScoreTroph",
-              "CommandTestHumanCoral"));
+              "CenterStartToL4Basic"));
 
   public String getAutonName(int index) {
-    return index > autonList.size() - 1 ? "DoNothing.auto" : autonList.get(index);
+    return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);
   }
 }

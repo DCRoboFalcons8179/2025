@@ -5,33 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "ResetAll"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "StartProcessorToReefProcessor"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreTroph"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ResetAll"
           }
         },
         {
@@ -41,45 +17,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "HumanCoral"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ResetAll"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "HumanProcessorToReefProcessorHuman"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreTroph"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ResetAll"
           }
         },
         {
@@ -89,39 +29,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "HumanCoral"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ResetAll"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "HumanProcessorToReefProcessorHuman"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreTroph"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
           }
         }
       ]
