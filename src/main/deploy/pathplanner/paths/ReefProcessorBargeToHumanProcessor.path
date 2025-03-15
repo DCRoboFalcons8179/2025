@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.168835616438356,
-        "y": 2.868022260273973
+        "x": 5.3,
+        "y": 2.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.668835616438356,
-        "y": 2.001996856489534
+        "x": 5.8,
+        "y": 1.8339745962155614
       },
       "isLocked": false,
       "linkedName": "ReefProcessorBarge"

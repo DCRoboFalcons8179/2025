@@ -236,7 +236,8 @@ public class RobotContainer {
               "ProcessorStartToProcessorSideComplex",
               "CenterStartToCageSideComplex",
               "CageStartToCageSideComplex",
-              "CenterStartToL4Basic"));
+              "CenterStartToL4Basic",
+              "Belleville Playoffs Auto"));
 
   public String getAutonName(int index) {
     return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);
