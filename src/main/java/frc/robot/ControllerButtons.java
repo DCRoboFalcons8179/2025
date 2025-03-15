@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Hang;
+import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
 import frc.robot.commands.ResetElevator;
@@ -61,6 +62,19 @@ public class ControllerButtons {
             new MoveElevator(() -> 0, elevatorSub)
                 .andThen(new MoveWrist(() -> 0, coralSub))
                 .withTimeout(5));
+
+    // Coral
+    // In
+    commandXboxController
+        .leftTrigger()
+        .onTrue(new MoveCoral(() -> 1, coralSub))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
+
+    // Out
+    commandXboxController
+        .rightTrigger()
+        .onTrue(new MoveCoral(() -> -1, coralSub))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
