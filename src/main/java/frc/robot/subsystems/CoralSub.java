@@ -20,7 +20,7 @@ import frc.robot.Constants;
 
 public class CoralSub extends SubsystemBase {
   // Motors
-  /** Motor for manipulating the coral */
+  /** Motor for manipulating the c0oral */
   TalonSRX coralMotor = new TalonSRX(Constants.CoralValues.Motor.coralMotorID);
 
   /** Motor for manipulating the wrist */

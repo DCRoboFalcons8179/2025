@@ -38,7 +38,6 @@ import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
-import frc.robot.subsystems.VisionSub;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -133,8 +132,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-
-    VisionSub visionSub = new VisionSub();
 
     new EventTrigger("ResetAll")
         .onTrue(
