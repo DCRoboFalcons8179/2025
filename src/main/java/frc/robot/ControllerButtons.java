@@ -67,7 +67,7 @@ public class ControllerButtons {
     // In
     commandXboxController
         .leftTrigger()
-        .onTrue(new MoveCoral(() -> 0.5, coralSub))
+        .onTrue(new MoveCoral(() -> 0.8, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Out

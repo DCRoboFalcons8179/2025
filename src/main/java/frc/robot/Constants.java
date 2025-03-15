@@ -68,7 +68,7 @@ public class Constants {
   /** Is the robot at a comp? */
   public static boolean comp = false;
 
-  public static double maxSpeed = 0.5;
+  public static double maxSpeed = 0.6;
 
   public class Vision {
     public static final double errorThreshHoldMeters = 0.05;
