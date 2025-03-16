@@ -15,7 +15,7 @@ public class AlgaeSub extends SubsystemBase {
   VictorSPX algae;
   /** Creates a new AlgaeSub. */
   public AlgaeSub() {
-    algae = new VictorSPX(Constants.Algae.AlgaeID);
+    algae = new VictorSPX(Constants.AlgaeConstants.AlgaeID);
     algae.setNeutralMode(NeutralMode.Brake);
   }
 

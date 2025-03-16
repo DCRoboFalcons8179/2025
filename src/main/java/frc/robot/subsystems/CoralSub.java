@@ -21,10 +21,10 @@ import frc.robot.Constants;
 public class CoralSub extends SubsystemBase {
   // Motors
   /** Motor for manipulating the c0oral */
-  TalonSRX coralMotor = new TalonSRX(Constants.CoralValues.Motor.coralMotorID);
+  TalonSRX coralMotor = new TalonSRX(Constants.CoralConstants.Motor.coralMotorID);
 
   /** Motor for manipulating the wrist */
-  SparkMax wristMotor = new SparkMax(Constants.CoralValues.Wrist.wristID, MotorType.kBrushless);
+  SparkMax wristMotor = new SparkMax(Constants.CoralConstants.Wrist.wristID, MotorType.kBrushless);
   /** Closed loop controller for the wrist motor */
   SparkClosedLoopController wristSparkClosedLoopController;
   /** Encoder for the wrist motor */
@@ -40,9 +40,9 @@ public class CoralSub extends SubsystemBase {
         .closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(
-            Constants.CoralValues.Wrist.kP,
-            Constants.CoralValues.Wrist.kI,
-            Constants.CoralValues.Wrist.kD);
+            Constants.CoralConstants.Wrist.kP,
+            Constants.CoralConstants.Wrist.kI,
+            Constants.CoralConstants.Wrist.kD);
 
     wristMotor.configure(
         wristConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

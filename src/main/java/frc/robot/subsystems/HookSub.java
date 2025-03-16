@@ -14,7 +14,7 @@ import frc.robot.Constants;
 
 public class HookSub extends SubsystemBase {
   /** TalonFX motor controller for the hook */
-  private final TalonFX hook = new TalonFX(Constants.HookInfo.HookID);
+  private final TalonFX hook = new TalonFX(Constants.HookConstants.HookID);
 
   /** PositionVoltage control for closed-loop position control */
   private final PositionVoltage positionControl = new PositionVoltage(0);
@@ -30,9 +30,9 @@ public class HookSub extends SubsystemBase {
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
 
     // Set PID values
-    hookConfiguration.Slot0.kP = Constants.HookInfo.HookPID.kP;
-    hookConfiguration.Slot0.kI = Constants.HookInfo.HookPID.kI;
-    hookConfiguration.Slot0.kD = Constants.HookInfo.HookPID.kD;
+    hookConfiguration.Slot0.kP = Constants.HookConstants.HookPID.kP;
+    hookConfiguration.Slot0.kI = Constants.HookConstants.HookPID.kI;
+    hookConfiguration.Slot0.kD = Constants.HookConstants.HookPID.kD;
 
     // Apply the configuration
     hook.getConfigurator().apply(hookConfiguration);

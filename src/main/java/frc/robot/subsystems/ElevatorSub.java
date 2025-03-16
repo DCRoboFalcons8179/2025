@@ -17,9 +17,10 @@ import frc.lib.math.Filter;
 import frc.robot.Constants;
 
 public class ElevatorSub extends SubsystemBase {
-  private SparkMax elevatorMotor = new SparkMax(Constants.Elevator.driverID, MotorType.kBrushless);
+  private SparkMax elevatorMotor =
+      new SparkMax(Constants.ElevatorConstants.driverID, MotorType.kBrushless);
   private SparkMax followerMotor =
-      new SparkMax(Constants.Elevator.followerMotorID, MotorType.kBrushless);
+      new SparkMax(Constants.ElevatorConstants.followerMotorID, MotorType.kBrushless);
 
   private SparkClosedLoopController elevatorSparkClosedLoopController;
   private SparkClosedLoopController followerSparkClosedLoopController;
@@ -37,10 +38,13 @@ public class ElevatorSub extends SubsystemBase {
     elevatorConfig
         .closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-        .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+        .pid(
+            Constants.ElevatorConstants.kP,
+            Constants.ElevatorConstants.kI,
+            Constants.ElevatorConstants.kD);
 
-    elevatorConfig.closedLoop.maxOutput(Constants.Elevator.maxElevatorSpeedPercentOut);
-    elevatorConfig.closedLoop.minOutput(Constants.Elevator.minElevatorSpeedPercentOut);
+    elevatorConfig.closedLoop.maxOutput(Constants.ElevatorConstants.maxElevatorSpeedPercentOut);
+    elevatorConfig.closedLoop.minOutput(Constants.ElevatorConstants.minElevatorSpeedPercentOut);
 
     elevatorMotor.configure(
         elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -53,12 +57,15 @@ public class ElevatorSub extends SubsystemBase {
     followerConfig
         .closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-        .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+        .pid(
+            Constants.ElevatorConstants.kP,
+            Constants.ElevatorConstants.kI,
+            Constants.ElevatorConstants.kD);
 
     followerSparkClosedLoopController = followerMotor.getClosedLoopController();
 
-    elevatorConfig.closedLoop.maxOutput(Constants.Elevator.maxElevatorSpeedPercentOut);
-    elevatorConfig.closedLoop.minOutput(Constants.Elevator.minElevatorSpeedPercentOut);
+    elevatorConfig.closedLoop.maxOutput(Constants.ElevatorConstants.maxElevatorSpeedPercentOut);
+    elevatorConfig.closedLoop.minOutput(Constants.ElevatorConstants.minElevatorSpeedPercentOut);
 
     followerMotor.configure(
         followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -93,7 +100,8 @@ public class ElevatorSub extends SubsystemBase {
 
   public void updatePosition() {
     // Use the slew-rate-limited desired position for upward motion
-    double limitedPose = Filter.cutoffFilter(desiredPose, Constants.Elevator.maxHeight, -200);
+    double limitedPose =
+        Filter.cutoffFilter(desiredPose, Constants.ElevatorConstants.maxHeight, -200);
 
     // Calculate the direction of movement
     double currentPose = elevatorEncoder.getPosition();

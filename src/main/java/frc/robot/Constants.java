@@ -14,6 +14,8 @@
 package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 
@@ -70,7 +72,7 @@ public class Constants {
 
   public static double maxSpeed = 0.6;
 
-  public class Vision {
+  public class VisionConstants {
     public static final double errorThreshHoldMeters = 0.05;
     public static final double errorThreshHoldStrafeMeters = 0.05;
     public static final double errorThreshHoldRadians = 0.0174532925199;
@@ -78,9 +80,20 @@ public class Constants {
     public static final double desiredXTagDistanceMeters = 0.1;
 
     public class FrontCameraValues {
+      /** Name of the Camera */
       public static final String cameraName = "HD_Web_Camera";
-      public static final double cameraHeightMeters = Units.inchesToMeters(4);
-      public static final double cameraAngleRadians = Units.degreesToRadians(25);
+      /** Position of the Camera Relative to the Robot */
+      public static final Transform3d cameraToRobot =
+          new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+    }
+
+    public class BackCameraValues {
+      /** Name of the Camera */
+      public static final String cameraName = "USB_Camera";
+
+      /** Camera Position Relative to the Robot */
+      public static final Transform3d cameraToRobot =
+          new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
     }
 
     public class AprilTags {
@@ -88,7 +101,7 @@ public class Constants {
     }
   }
 
-  public class CoralValues {
+  public class CoralConstants {
     public class Wrist {
       public static final int wristID = 14;
       public static final double kP = 0.00075;
@@ -108,7 +121,7 @@ public class Constants {
   }
 
   /** Values for configuring the Elevator */
-  public class Elevator {
+  public class ElevatorConstants {
     public static final int driverID = 12;
     /** It doesn't really follow the driver... */
     public static final int followerMotorID = 7;
@@ -142,7 +155,7 @@ public class Constants {
   }
 
   /** Values for configuring the Hook */
-  public class HookInfo {
+  public class HookConstants {
     /** ID for the Hook Motor */
     public static final int HookID = 17;
 
@@ -158,7 +171,7 @@ public class Constants {
   }
 
   /** Values for configuring the Algae */
-  public class Algae {
+  public class AlgaeConstants {
     /** ID for the Algae Motor */
     public static final int AlgaeID = 0;
   }
