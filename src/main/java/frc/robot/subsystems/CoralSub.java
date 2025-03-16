@@ -20,7 +20,7 @@ import frc.robot.Constants;
 
 public class CoralSub extends SubsystemBase {
   // Motors
-  /** Motor for manipulating the coral */
+  /** Motor for manipulating the c0oral */
   TalonSRX coralMotor = new TalonSRX(Constants.CoralValues.Motor.coralMotorID);
 
   /** Motor for manipulating the wrist */
@@ -79,7 +79,7 @@ public class CoralSub extends SubsystemBase {
 
   public void moveWrist(double position) {
     SmartDashboard.putNumber("No Filter Pose", wristEncoder.getPosition() + position);
-    desiredPos = Filter.cutoffFilter(position, 1750, 0);
+    desiredPos = Filter.cutoffFilter(position, 1750, -50);
   }
 
   /**
@@ -96,7 +96,7 @@ public class CoralSub extends SubsystemBase {
   public void updatePosition() {
     double limitedPose = Filter.cutoffFilter(desiredPos, 1750, 0);
 
-    SmartDashboard.putNumber("Desired Position", limitedPose);
+    SmartDashboard.putNumber("Wrist Desired Position", limitedPose);
 
     wristSparkClosedLoopController.setReference(limitedPose, ControlType.kPosition);
   }
@@ -123,6 +123,6 @@ public class CoralSub extends SubsystemBase {
 
   /** Moves the wrist to break the velcro */
   public void freeWrist() {
-    wristMotor.set(0.1);
+    wristMotor.set(0.2);
   }
 }

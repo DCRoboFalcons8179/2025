@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
@@ -8,6 +7,7 @@ import frc.robot.commands.Hang;
 import frc.robot.commands.MoveCoral;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveWrist;
+import frc.robot.commands.ResetElevator;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
@@ -38,63 +38,43 @@ public class ControllerButtons {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
+            elevatorSub,
             () -> -commandXboxController.getLeftY(),
             () -> -commandXboxController.getLeftX(),
             () -> -commandXboxController.getRightX()));
 
-    // drive.setDefaultCommand(
-    // DriveCommands.joystickDrive(
-    // drive,
-    // () -> -flightStick.getY(),
-    // () -> -flightStick.getX(),
-    // () -> -flightStick.getTwist()));
-
-    // Lock to 0° when A button is held
-    // commandXboxController
-    // .a()
-    // .whileTrue(
-    // DriveCommands.joystickDriveAtAngle(
-    // drive,
-    // () -> -commandXboxController.getLeftY(),
-    // () -> -commandXboxController.getLeftX(),
-    // () -> new Rotation2d()));
-
-    // Switch to X pattern when X button is pressed
-    commandXboxController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-    // Pushing
-    commandXboxController.rightTrigger().whileTrue(new MoveCoral(() -> -0.5, coralSub));
-    commandXboxController.rightTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
-    // commandXboxController.rightTrigger().whileFalse(new MoveCoral(coralSub, () -> 0));
-
-    // Pulling
-    commandXboxController.leftTrigger().whileTrue(new MoveCoral(() -> 0.5, coralSub));
-    commandXboxController.leftTrigger().onFalse(new MoveCoral(() -> 0, coralSub));
-
     // Reset gyro to 0
     commandXboxController.y().onTrue(new InstantCommand(() -> drive.zeroYaw()));
 
-    // Reset gyro to 0° when B button is pressed
+    // Hang
     commandXboxController
         .b()
-        .onTrue(new Hang(() -> -1, hookSub))
+        .onTrue(new Hang(() -> -0.3, hookSub))
         .onFalse(new Hang(() -> 0, hookSub));
 
     // Elevator
-    commandXboxController
-        .leftBumper()
-        .onTrue(
-            new MoveElevator(() -> 650, elevatorSub)
-                .withTimeout(0.1)
-                .andThen(new MoveElevator(() -> 1300, elevatorSub)));
+    commandXboxController.leftBumper().onTrue(new ResetElevator(elevatorSub));
+
     // Home
     commandXboxController
         .rightBumper()
         .onTrue(
             new MoveElevator(() -> 0, elevatorSub)
                 .andThen(new MoveWrist(() -> 0, coralSub))
-                .withTimeout(5)
-                .andThen(new InstantCommand(() -> elevatorSub.resetPose())));
+                .withTimeout(5));
+
+    // Coral
+    // In
+    commandXboxController
+        .leftTrigger()
+        .onTrue(new MoveCoral(() -> 0.8, coralSub))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
+
+    // Out
+    commandXboxController
+        .rightTrigger()
+        .onTrue(new MoveCoral(() -> -0.5, coralSub))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
@@ -103,11 +83,6 @@ public class ControllerButtons {
     //     .onFalse(new Hang(() -> 0, hookSub))
     //     .and(() -> !commandXboxController.povDown().getAsBoolean())
     //     .and(() -> !commandXboxController.rightTrigger().getAsBoolean());
-
-    commandXboxController.povUp().onTrue(new MoveWrist(() -> 10, coralSub));
-    commandXboxController.povRight().onTrue(new MoveWrist(() -> 150, coralSub));
-    commandXboxController.povLeft().onTrue(new MoveWrist(() -> 940, coralSub));
-    commandXboxController.povDown().onTrue(new MoveWrist(() -> 300, coralSub));
 
     // commandXboxController.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
 

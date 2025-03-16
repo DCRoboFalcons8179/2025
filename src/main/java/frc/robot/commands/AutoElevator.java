@@ -5,19 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.HookSub;
+import frc.robot.subsystems.ElevatorSub;
 import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Hang extends Command {
-  DoubleSupplier power;
-  HookSub hookSub;
-
-  /** Creates a new Hang. */
-  public Hang(DoubleSupplier power, HookSub hookSub) {
-    this.power = power;
-    this.hookSub = hookSub;
-    addRequirements(hookSub);
+public class AutoElevator extends Command {
+  ElevatorSub elevatorSub;
+  DoubleSupplier doubleSupplier;
+  /** Creates a new AutoElevator. */
+  public AutoElevator(DoubleSupplier doubleSupplier, ElevatorSub elevatorSub) {
+    this.doubleSupplier = doubleSupplier;
+    this.elevatorSub = elevatorSub;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,9 +26,7 @@ public class Hang extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // output power to the hang motor
-    hookSub.hang(power.getAsDouble());
-    System.out.println("hang motion" + power);
+    elevatorSub.goToPose(doubleSupplier.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +36,6 @@ public class Hang extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return elevatorSub.atHeight();
   }
 }

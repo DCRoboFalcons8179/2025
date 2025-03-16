@@ -187,3 +187,5 @@ compile_commands.json
 src/main/java/frc/robot/BuildConstants.java
 
 BuildConstants.java
+
+.vscode

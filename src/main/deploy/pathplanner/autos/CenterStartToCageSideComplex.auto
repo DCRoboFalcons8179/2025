@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartCenterToReefCenterScoreL4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefCenterBargeToHumanCage"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanCageToReefCageHuman"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefCageHumanToHumanCage"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanCageToReefCageHuman"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

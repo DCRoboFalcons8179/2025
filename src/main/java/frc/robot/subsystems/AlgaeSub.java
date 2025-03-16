@@ -22,7 +22,7 @@ public class AlgaeSub extends SubsystemBase {
   /**
    *
    *
-   * <h3>
+   * <h3>Moves the Algae with percent output
    *
    * @param AlgaePower
    */

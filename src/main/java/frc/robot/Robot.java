@@ -125,7 +125,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void disabledInit() {
     // Maintain the hook's position when disabled
-    robotContainer.hookSub.setPosition(robotContainer.hookSub.getCurrentPosition());
   }
 
   /** This function is called periodically when disabled. */

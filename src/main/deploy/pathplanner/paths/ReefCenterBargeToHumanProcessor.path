@@ -1,0 +1,77 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.85,
+        "y": 4.0
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.35,
+        "y": 4.0
+      },
+      "isLocked": true,
+      "linkedName": "ReefCenterBarge"
+    },
+    {
+      "anchor": {
+        "x": 5.9750822368421055,
+        "y": 2.793421052631579
+      },
+      "prevControl": {
+        "x": 6.841107640626544,
+        "y": 3.2934210526315786
+      },
+      "nextControl": {
+        "x": 5.109056833057667,
+        "y": 2.2934210526315795
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.1738486842090345,
+        "y": 1.1096217105252004
+      },
+      "prevControl": {
+        "x": 1.7474251205600804,
+        "y": 1.928773754814192
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "HumanProcessor"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "HumanCoral",
+      "waypointRelativePos": 1.6271186440677976,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -125.00000000000001
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

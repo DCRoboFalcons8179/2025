@@ -11,7 +11,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.math.Filter;
@@ -28,11 +27,8 @@ public class ElevatorSub extends SubsystemBase {
   private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
   private RelativeEncoder followerEncoder = followerMotor.getEncoder();
 
-  private double desiredPos = 0;
+  private double desiredPose = 0;
   private double limitedDesiredPos = 0; // The slew-rate-limited desired position
-
-  // Slew rate limiter to limit how quickly the desired position can change
-  private SlewRateLimiter slewRateLimiter = new SlewRateLimiter(Constants.Elevator.slewRateLimit);
 
   public ElevatorSub() {
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
@@ -42,6 +38,9 @@ public class ElevatorSub extends SubsystemBase {
         .closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+
+    elevatorConfig.closedLoop.maxOutput(Constants.Elevator.maxElevatorSpeedPercentOut);
+    elevatorConfig.closedLoop.minOutput(Constants.Elevator.minElevatorSpeedPercentOut);
 
     elevatorMotor.configure(
         elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -57,6 +56,10 @@ public class ElevatorSub extends SubsystemBase {
         .pid(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     followerSparkClosedLoopController = followerMotor.getClosedLoopController();
+
+    elevatorConfig.closedLoop.maxOutput(Constants.Elevator.maxElevatorSpeedPercentOut);
+    elevatorConfig.closedLoop.minOutput(Constants.Elevator.minElevatorSpeedPercentOut);
+
     followerMotor.configure(
         followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -68,7 +71,8 @@ public class ElevatorSub extends SubsystemBase {
   @Override
   public void periodic() {
     // Apply slew rate limiting to the desired position
-    limitedDesiredPos = slewRateLimiter.calculate(desiredPos);
+    // limitedDesiredPos = slewRateLimiter.calculate(desiredPos);
+    // limitedDesiredPos = desiredPos;
 
     // Update the SmartDashboard with motor data
     SmartDashboard.putNumber("Elevator Driver Position", elevatorEncoder.getPosition());
@@ -80,7 +84,7 @@ public class ElevatorSub extends SubsystemBase {
     SmartDashboard.putNumber("Elevator Follower Amps", followerMotor.getOutputCurrent());
     SmartDashboard.putNumber("Elevator Follower Position", followerEncoder.getPosition());
     SmartDashboard.putNumber("Limited Desired Position", limitedDesiredPos);
-    SmartDashboard.putNumber("Desired Elevator Position", desiredPos);
+    SmartDashboard.putNumber("Desired Elevator Position", desiredPose);
   }
 
   public double getPose() {
@@ -89,7 +93,7 @@ public class ElevatorSub extends SubsystemBase {
 
   public void updatePosition() {
     // Use the slew-rate-limited desired position for upward motion
-    double limitedPose = Filter.cutoffFilter(limitedDesiredPos, Constants.Elevator.maxHeight, 0);
+    double limitedPose = Filter.cutoffFilter(desiredPose, Constants.Elevator.maxHeight, -200);
 
     // Calculate the direction of movement
     double currentPose = elevatorEncoder.getPosition();
@@ -104,22 +108,33 @@ public class ElevatorSub extends SubsystemBase {
       followerSparkClosedLoopController.setReference(
           limitedPose, ControlType.kPosition, ClosedLoopSlot.kSlot0, 0);
     } else if (direction < 0) {
-      // Moving downward: disable motors and let gravity pull the elevator down
-      elevatorMotor.set(0);
-      followerMotor.set(0);
+      if (getPose() > 5000) {
+        elevatorMotor.set(-0.20);
+        followerMotor.set(-0.20);
+      } else {
+        // Moving downward: disable motors and let gravity pull the elevator down
+        elevatorMotor.set(0);
+        followerMotor.set(0);
+      }
     }
   }
 
   public void goToPose(double position) {
-    desiredPos = position;
+    desiredPose = position;
   }
 
   public void rawMove(double position) {
-    desiredPos += position;
+    desiredPose += position;
   }
 
   public void resetPose() {
-    elevatorEncoder.setPosition(0);
-    followerEncoder.setPosition(0);
+    if (getPose() < 1000) {
+      elevatorEncoder.setPosition(0);
+      followerEncoder.setPosition(0);
+    }
+  }
+
+  public boolean atHeight() {
+    return Math.abs(desiredPose - getPose()) < 500;
   }
 }

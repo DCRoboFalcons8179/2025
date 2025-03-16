@@ -50,7 +50,7 @@ public class HookSub extends SubsystemBase {
     SmartDashboard.putNumber("Hook Position", getCurrentPosition());
     SmartDashboard.putNumber("Hook Velocity", hook.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Hook Current", hook.getStatorCurrent().getValueAsDouble());
-    SmartDashboard.putBoolean("Hook Hung", hung);
+    SmartDashboard.putNumber("Hook Temperature", hook.getDeviceTemp().getValueAsDouble());
   }
 
   /**
@@ -60,11 +60,16 @@ public class HookSub extends SubsystemBase {
    */
   public void setPosition(double position) {
     if (!hung) {
-      desiredPosition = position;
+      // desiredPosition += position;
     }
     hung = false;
     // Use PositionVoltage control to move to the desired position
-    hook.setControl(positionControl.withPosition(desiredPosition));
+    if (hook.getPosition().getValueAsDouble() + position < 0) {
+      hook.setControl(
+          positionControl.withPosition(hook.getPosition().getValueAsDouble() + position));
+    } else {
+      hook.setControl(positionControl.withPosition(0));
+    }
   }
 
   /**
@@ -73,7 +78,7 @@ public class HookSub extends SubsystemBase {
    * @param power The power to apply to the hook motor (between -1.0 and 1.0).
    */
   public void hang(double power) {
-    //applies the commanded power to the hook motor for hanging
+    // applies the commanded power to the hook motor for hanging
     hook.set(power);
     hung = true;
   }

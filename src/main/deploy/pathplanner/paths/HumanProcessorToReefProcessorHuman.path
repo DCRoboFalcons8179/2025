@@ -3,35 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0470462328767125,
-        "y": 6.0
+        "x": 1.1738486842090345,
+        "y": 1.1096217105252004
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.294381042225389,
-        "y": 5.963592691881247
+        "x": 1.7474251205600795,
+        "y": 1.9287737548141906
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HumanProcessor"
     },
     {
       "anchor": {
-        "x": 7.0470462328767125,
-        "y": 6.0
+        "x": 3.846575342465753,
+        "y": 2.837970890410959
       },
       "prevControl": {
-        "x": 6.0470462328767125,
-        "y": 6.0
+        "x": 3.346575342465753,
+        "y": 1.9719454866265207
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefProcessorHuman"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "ScoreTroph",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
@@ -41,14 +48,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.0,
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }

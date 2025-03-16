@@ -68,14 +68,14 @@ public class Constants {
   /** Is the robot at a comp? */
   public static boolean comp = false;
 
-  public static double maxSpeed = 0.5;
+  public static double maxSpeed = 0.6;
 
   public class Vision {
     public static final double errorThreshHoldMeters = 0.05;
     public static final double errorThreshHoldStrafeMeters = 0.05;
     public static final double errorThreshHoldRadians = 0.0174532925199;
     public static final int tagFindingTries = 15;
-    public static final double desiredXTagDistanceMeters = 1;
+    public static final double desiredXTagDistanceMeters = 0.1;
 
     public class FrontCameraValues {
       public static final String cameraName = "HD_Web_Camera";
@@ -91,7 +91,7 @@ public class Constants {
   public class CoralValues {
     public class Wrist {
       public static final int wristID = 14;
-      public static final double kP = 0.00040;
+      public static final double kP = 0.00075;
       public static final double kI = 0;
       public static final double kD = 0;
       // public static final double kD = kP / 10000 * 2;
@@ -118,22 +118,27 @@ public class Constants {
 
     // Soft Limits
     /** Maximum height of the elevator */
-    public static final int maxHeight = 17000;
+    public static final int maxHeight = 17250;
     /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
     /** Max current for the motors */
     public static final int currentLimit = 40;
 
+    public static final double encoderLimit = 3;
+
+    public static final double maxElevatorSpeedPercentOut = 0.3;
+    public static final double minElevatorSpeedPercentOut = -0.20;
+
     // PID Values
     /** kP for the elevator */
-    public static final double kP = 0.00125;
+    public static final double kP = 0.00185;
     /** kI for the elevator */
     public static final double kI = 0;
     /** kD for the elevator */
-    public static final double kD = kP / 4;
+    public static final double kD = 0;
 
     /** Slew Rate Limiter */
-    public static final double slewRateLimit = 4000;
+    public static final double slewRateLimit = 2000;
   }
 
   /** Values for configuring the Hook */
