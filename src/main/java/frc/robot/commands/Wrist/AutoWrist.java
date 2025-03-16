@@ -2,34 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Wrist;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.HookSub;
-import java.util.function.BooleanSupplier;
+import frc.robot.subsystems.CoralSub;
 import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class MoveHook extends Command {
-
-  private DoubleSupplier hookPower;
-  private HookSub hookSub;
-
-  // This hopefully works for the control box but idk if it will
-  BooleanSupplier switch1Pressed;
-  BooleanSupplier switch2Pressed;
-
-  public void HookControl(BooleanSupplier switch1Pressed, BooleanSupplier switch2Pressed) {
-    this.switch1Pressed = switch1Pressed;
-    this.switch2Pressed = switch2Pressed;
-  }
-
-  /** Creates a new MoveHook. */
-  public MoveHook(DoubleSupplier hookPower, HookSub hookSub) {
-    this.hookPower = hookPower;
-    this.hookSub = hookSub;
-
-    addRequirements(hookSub);
+public class AutoWrist extends Command {
+  DoubleSupplier doubleSupplier;
+  CoralSub coralSub;
+  /** Creates a new AutoWrist. */
+  public AutoWrist(DoubleSupplier doubleSupplier, CoralSub coralSub) {
+    this.doubleSupplier = doubleSupplier;
+    this.coralSub = coralSub;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -39,8 +26,7 @@ public class MoveHook extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Moves the Hook
-    hookSub.setPosition(hookPower.getAsDouble());
+    coralSub.goToPose(doubleSupplier.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

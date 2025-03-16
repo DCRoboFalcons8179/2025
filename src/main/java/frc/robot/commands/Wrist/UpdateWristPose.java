@@ -2,20 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Wrist;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ElevatorSub;
-import java.util.function.DoubleSupplier;
+import frc.robot.subsystems.CoralSub;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AutoElevator extends Command {
-  ElevatorSub elevatorSub;
-  DoubleSupplier doubleSupplier;
-  /** Creates a new AutoElevator. */
-  public AutoElevator(DoubleSupplier doubleSupplier, ElevatorSub elevatorSub) {
-    this.doubleSupplier = doubleSupplier;
-    this.elevatorSub = elevatorSub;
+public class UpdateWristPose extends Command {
+  CoralSub coralSub;
+  /** Creates a new UpdatePose. */
+  public UpdateWristPose(CoralSub coralSub) {
+    this.coralSub = coralSub;
+    addRequirements(coralSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,7 +24,7 @@ public class AutoElevator extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSub.goToPose(doubleSupplier.getAsDouble());
+    coralSub.updatePosition();
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +34,6 @@ public class AutoElevator extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevatorSub.atHeight();
+    return false;
   }
 }

@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 // BINARY SWITCH LAYOUT
 // Bit0: If 0 then CenterStart,   else if 1 then either ProcessorStart or CageStart
 // Bit1: If 0 then ProcessorSide, else if 1 then CageSide
@@ -41,4 +44,22 @@ package frc.robot;
 // 30: 11110
 // 31: 11111
 
-public class GetAuton {}
+public class GetAuton {
+  public static ArrayList<String> autonList =
+      new ArrayList<>(
+          Arrays.asList(
+              "DoNothing",
+              "StartProcessorToTrophBasic",
+              "CenterStartToTrophBasic",
+              "StartCageToTrophBasic",
+              "CenterStartToProcessorSideComplex",
+              "ProcessorStartToProcessorSideComplex",
+              "CenterStartToCageSideComplex",
+              "CageStartToCageSideComplex",
+              "CenterStartToL4Basic",
+              "Belleville Playoffs Auto"));
+
+  public static String getAutonName(int index) {
+    return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);
+  }
+}

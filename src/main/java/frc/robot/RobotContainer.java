@@ -13,7 +13,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.events.EventTrigger;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -24,14 +23,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.AutoCoral;
-import frc.robot.commands.AutoElevator;
-import frc.robot.commands.AutoWrist;
-import frc.robot.commands.MoveCoral;
-import frc.robot.commands.MoveElevator;
-import frc.robot.commands.MoveWrist;
-import frc.robot.commands.UpdateElevatorPose;
-import frc.robot.commands.UpdateWristPose;
+import frc.robot.commands.Coral.AutoCoral;
+import frc.robot.commands.Coral.MoveCoral;
+import frc.robot.commands.Elevator.AutoElevator;
+import frc.robot.commands.Elevator.MoveElevator;
+import frc.robot.commands.Elevator.UpdateElevatorPose;
+import frc.robot.commands.Wrist.AutoWrist;
+import frc.robot.commands.Wrist.MoveWrist;
+import frc.robot.commands.Wrist.UpdateWristPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
@@ -44,9 +43,6 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import java.util.ArrayList;
-import java.util.Arrays;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -73,7 +69,7 @@ public class RobotContainer {
   // CommandXboxController(5);
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
+  // private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -131,7 +127,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    // autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     new EventTrigger("ResetAll")
         .onTrue(
@@ -165,14 +161,10 @@ public class RobotContainer {
   public void periodic() {
     drive.getVelocity();
 
-    // SmartDashboard.putNumber("Tag Distance", visionSub.getDistanceX());
-    // SmartDashboard.putNumber("Tag Yaw", visionSub.getYaw());
-
     int autonID = BinaryToInt.getInt(boxRight, boxLeft);
 
     SmartDashboard.putNumber("Binary To Int", autonID);
-    SmartDashboard.putString("Auton Name", getAutonName(autonID));
-    // System.out.println(BinaryToInt.getInt(boxRight, boxLeft));
+    SmartDashboard.putString("Auton Name", GetAuton.getAutonName(autonID));
   }
 
   /**
@@ -184,17 +176,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Configure the button bindings
-    new ControllerButtons(commandXboxController, drive, coralSub, elevatorSub, hookSub) {
-      {
-        configureButtonBindings();
-      }
-    };
+    ControllerButtons.configureButtonBindings(
+        commandXboxController, drive, coralSub, elevatorSub, hookSub);
 
-    new BoxButtons(elevatorSub, coralSub, algaeSub, hookSub, boxLeft, boxRight) {
-      {
-        configureButtonBindings();
-      }
-    };
+    BoxButtons.configureButtonBindings(elevatorSub, coralSub, algaeSub, hookSub, boxLeft, boxRight);
 
     coralSub.setDefaultCommand(new UpdateWristPose(coralSub));
     elevatorSub.setDefaultCommand(new UpdateElevatorPose(elevatorSub));
@@ -218,28 +203,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     drive.zeroYaw();
-    // return DriveCommands.joystickDrive(drive, elevatorSub, () -> 0.6, () -> 0, () -> 0)
-    // .withTimeout(2);
-    // return autoChooser.get();
-    // return null;
-    return new PathPlannerAuto(getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
-  }
-
-  public ArrayList<String> autonList =
-      new ArrayList<>(
-          Arrays.asList(
-              "DoNothing",
-              "StartProcessorToTrophBasic",
-              "CenterStartToTrophBasic",
-              "StartCageToTrophBasic",
-              "CenterStartToProcessorSideComplex",
-              "ProcessorStartToProcessorSideComplex",
-              "CenterStartToCageSideComplex",
-              "CageStartToCageSideComplex",
-              "CenterStartToL4Basic",
-              "Belleville Playoffs Auto"));
-
-  public String getAutonName(int index) {
-    return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);
+    return new PathPlannerAuto(GetAuton.getAutonName(BinaryToInt.getInt(boxRight, boxLeft)));
   }
 }

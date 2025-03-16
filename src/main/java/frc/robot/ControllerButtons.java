@@ -2,38 +2,24 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.Coral.MoveCoral;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Hang;
-import frc.robot.commands.MoveCoral;
-import frc.robot.commands.MoveElevator;
-import frc.robot.commands.MoveWrist;
-import frc.robot.commands.ResetElevator;
+import frc.robot.commands.Elevator.MoveElevator;
+import frc.robot.commands.Elevator.ResetElevator;
+import frc.robot.commands.Hang.Hang;
+import frc.robot.commands.Wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.drive.Drive;
 
 public class ControllerButtons {
-  CommandXboxController commandXboxController;
-  Drive drive;
-  CoralSub coralSub;
-  ElevatorSub elevatorSub;
-  HookSub hookSub;
-
-  public ControllerButtons(
+  public static void configureButtonBindings(
       CommandXboxController commandXboxController,
       Drive drive,
       CoralSub coralSub,
       ElevatorSub elevatorSub,
       HookSub hookSub) {
-    this.commandXboxController = commandXboxController;
-    this.drive = drive;
-    this.coralSub = coralSub;
-    this.elevatorSub = elevatorSub;
-    this.hookSub = hookSub;
-  }
-
-  public void configureButtonBindings() {
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
@@ -79,14 +65,15 @@ public class ControllerButtons {
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
     // commandXboxController
-    //     .povUp()
-    //     .onFalse(new Hang(() -> 0, hookSub))
-    //     .and(() -> !commandXboxController.povDown().getAsBoolean())
-    //     .and(() -> !commandXboxController.rightTrigger().getAsBoolean());
+    // .povUp()
+    // .onFalse(new Hang(() -> 0, hookSub))
+    // .and(() -> !commandXboxController.povDown().getAsBoolean())
+    // .and(() -> !commandXboxController.rightTrigger().getAsBoolean());
 
     // commandXboxController.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
 
     // Hang
-    // commandXboxController.rightTrigger().whileTrue(new Hang(() -> -0.6, hookSub));
+    // commandXboxController.rightTrigger().whileTrue(new Hang(() -> -0.6,
+    // hookSub));
   }
 }
