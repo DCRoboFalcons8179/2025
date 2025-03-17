@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.calcVelocities.DistanceX;
 import frc.robot.calcVelocities.DistanceY;
@@ -16,6 +17,7 @@ public class MaintainAll extends Command {
   // Subsystems
   Drive drive;
   NewVision visionSub;
+  CommandXboxController commandXboxController;
 
   // Velocities
   double translationVelocity;
@@ -27,9 +29,10 @@ public class MaintainAll extends Command {
   DistanceY distanceY;
 
   /** Creates a new MaintainAll. */
-  public MaintainAll(Drive drive, NewVision visionSub) {
+  public MaintainAll(Drive drive, NewVision visionSub, CommandXboxController commandXboxController) {
     this.drive = drive;
     this.visionSub = visionSub;
+    this.commandXboxController = commandXboxController;
 
     // Sets the distance objects to use the visionSub with the correct pointer
     distanceX = new DistanceX(visionSub);

@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Coral.MoveCoral;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.MaintainAll;
 import frc.robot.commands.Elevator.MoveElevator;
 import frc.robot.commands.Elevator.ResetElevator;
 import frc.robot.commands.Hang.Hang;
-import frc.robot.commands.Vision.Aim;
 import frc.robot.commands.Wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
+import frc.robot.subsystems.NewVision;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.vision.Vision;
 
 public class ControllerButtons {
   public static void configureButtonBindings(
@@ -22,7 +22,7 @@ public class ControllerButtons {
       CoralSub coralSub,
       ElevatorSub elevatorSub,
       HookSub hookSub,
-      Vision vision) {
+      NewVision vision) {
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
@@ -68,7 +68,7 @@ public class ControllerButtons {
     // Vision
     commandXboxController
         .rightTrigger(0.5)
-        .whileTrue(new Aim(vision, drive, elevatorSub, commandXboxController));
+        .whileTrue(new MaintainAll(drive, vision,commandXboxController));
 
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
