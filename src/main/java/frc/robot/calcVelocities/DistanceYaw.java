@@ -1,6 +1,7 @@
 package frc.robot.calcVelocities;
 
 import frc.robot.subsystems.NewVision;
+
 public class DistanceYaw implements Distance {
   NewVision visionSub;
 

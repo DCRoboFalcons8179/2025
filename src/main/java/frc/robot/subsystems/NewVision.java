@@ -4,26 +4,26 @@
 
 package frc.robot.subsystems;
 
-import org.photonvision.PhotonCamera;
-
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import org.photonvision.PhotonCamera;
 
 public class NewVision extends SubsystemBase {
-  /**Front Camera Object */
-  private PhotonCamera frontCamera = new PhotonCamera(Constants.VisionConstants.FrontCameraValues.cameraName);
-  /**Does the Front Camera have a Target */
+  /** Front Camera Object */
+  private PhotonCamera frontCamera =
+      new PhotonCamera(Constants.VisionConstants.FrontCameraValues.cameraName);
+  /** Does the Front Camera have a Target */
   private boolean frontHasTarget;
-  /**ID of the Best Tag from the Front Camera */
+  /** ID of the Best Tag from the Front Camera */
   private int frontTargetID;
-  /**Distance from the Best Tag to the Front Camera */
+  /** Distance from the Best Tag to the Front Camera */
   private Transform3d frontTransform3To3dTarget;
-  /**Yaw from the tag to the Front Camera */
+  /** Yaw from the tag to the Front Camera */
   private double frontCameraYaw;
-  /**Distance from the Front Camera X */
+  /** Distance from the Front Camera X */
   private double frontDistanceX;
-  /**Distance from the Front Camera Y */
+  /** Distance from the Front Camera Y */
   private double frontDistanceY;
 
   /** Creates a new NewVision. */
@@ -40,7 +40,7 @@ public class NewVision extends SubsystemBase {
         // Front Camera
         frontHasTarget = true;
         frontTargetID = result.getBestTarget().fiducialId;
-        frontTransform3To3dTarget = result.getBestTarget().getBestCameraToTarget(); 
+        frontTransform3To3dTarget = result.getBestTarget().getBestCameraToTarget();
 
         // Yaw
         frontCameraYaw = frontTransform3To3dTarget.getRotation().getZ();
@@ -48,7 +48,7 @@ public class NewVision extends SubsystemBase {
 
         // X
         frontDistanceX = frontTransform3To3dTarget.getX();
-        
+
         // Y
         frontDistanceY = frontTransform3To3dTarget.getY();
       }
@@ -60,22 +60,22 @@ public class NewVision extends SubsystemBase {
   }
 
   public int getFrontTargetID() {
-      return frontTargetID;
+    return frontTargetID;
   }
 
   public Transform3d getFrontTransform3To3dTarget() {
-      return frontTransform3To3dTarget;
+    return frontTransform3To3dTarget;
   }
 
   public double getFrontDistanceX() {
-      return frontDistanceX;
+    return frontDistanceX;
   }
 
   public double getFrontDistanceY() {
-      return frontDistanceY;
+    return frontDistanceY;
   }
 
   public double getFrontCameraYaw() {
-      return frontCameraYaw;
+    return frontCameraYaw;
   }
 }

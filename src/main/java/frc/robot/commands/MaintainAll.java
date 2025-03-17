@@ -29,7 +29,8 @@ public class MaintainAll extends Command {
   DistanceY distanceY;
 
   /** Creates a new MaintainAll. */
-  public MaintainAll(Drive drive, NewVision visionSub, CommandXboxController commandXboxController) {
+  public MaintainAll(
+      Drive drive, NewVision visionSub, CommandXboxController commandXboxController) {
     this.drive = drive;
     this.visionSub = visionSub;
     this.commandXboxController = commandXboxController;
