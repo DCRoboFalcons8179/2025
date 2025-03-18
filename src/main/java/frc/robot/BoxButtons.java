@@ -45,7 +45,8 @@ public class BoxButtons {
     boxRight
         .button(12)
         .onTrue(
-            new MoveElevator(() -> 17000, elevatorSub).andThen(new MoveWrist(() -> 900, coralSub)));
+            new MoveElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
+                .andThen(new MoveWrist(() -> Constants.SetPoints.L4.wristPose, coralSub)));
 
     // Coral
     // Movement

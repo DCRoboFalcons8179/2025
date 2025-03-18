@@ -13,6 +13,7 @@ public class DistanceY implements Distance {
   NewVision visionSub;
   double tagMisses = 0;
   double strafeSpeed = 0;
+  double desiredYTagDistanceMeters;
 
   // PID for the strafe speed loop
   final double STRAFE_P_GAIN = 1.75;
@@ -20,8 +21,9 @@ public class DistanceY implements Distance {
   final double STRAFE_D_GAIN = 0.25;
   PIDController strafeController = new PIDController(STRAFE_P_GAIN, STRAFE_I_GAIN, STRAFE_D_GAIN);
 
-  public DistanceY(NewVision visionSub) {
+  public DistanceY(NewVision visionSub, double desiredYTagDistanceMeters) {
     this.visionSub = visionSub;
+    this.desiredYTagDistanceMeters = desiredYTagDistanceMeters;
   }
 
   public double getVelocity() {
@@ -32,7 +34,7 @@ public class DistanceY implements Distance {
     tagMisses += distanceY != -1 ? 0 : 1;
 
     if (distanceY != -1) {
-      strafeSpeed = strafeController.calculate(distanceY, 0);
+      strafeSpeed = strafeController.calculate(distanceY, desiredYTagDistanceMeters);
       tagMisses = 0;
     } else if (tagMisses >= Constants.VisionConstants.tagFindingTries) {
       strafeSpeed = 0;

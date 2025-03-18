@@ -77,7 +77,7 @@ public class Constants {
     public static final double errorThreshHoldStrafeMeters = 0.05;
     public static final double errorThreshHoldRadians = 0.0349065850399;
     public static final int tagFindingTries = 15;
-    public static final double desiredXTagDistanceMeters = 0.35;
+    public static final double desiredXTagDistanceMeters = 0.65;
 
     public class FrontCameraValues {
       /** Name of the Camera */
@@ -131,7 +131,7 @@ public class Constants {
 
     // Soft Limits
     /** Maximum height of the elevator */
-    public static final int maxHeight = 17250;
+    public static final int maxHeight = 17700;
     /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
     /** Max current for the motors */
@@ -174,5 +174,14 @@ public class Constants {
   public class AlgaeConstants {
     /** ID for the Algae Motor */
     public static final int AlgaeID = 0;
+  }
+
+  public class SetPoints {
+    public class L4 {
+      public static final double elevatorPose = 17500;
+      public static final double wristPose = 10;
+      public static final double desiredXTagDistanceMeters = 0.65;
+      public static final double leftDesiredYTagDistanceMeters = 0.04;
+    }
   }
 }

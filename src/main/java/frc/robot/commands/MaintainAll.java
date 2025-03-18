@@ -29,16 +29,26 @@ public class MaintainAll extends Command {
   DistanceX distanceX;
   DistanceY distanceY;
 
+  // Desired Positions
+  double desiredXTagDistanceMeters;
+  double desiredYTagDistanceMeters;
+
   /** Creates a new MaintainAll. */
   public MaintainAll(
-      Drive drive, NewVision visionSub, CommandXboxController commandXboxController) {
+      Drive drive,
+      NewVision visionSub,
+      CommandXboxController commandXboxController,
+      double desiredXTagDistanceMeters,
+      double desiredYTagDistanceMeters) {
     this.drive = drive;
     this.visionSub = visionSub;
     this.commandXboxController = commandXboxController;
+    this.desiredXTagDistanceMeters = desiredXTagDistanceMeters;
+    this.desiredYTagDistanceMeters = desiredYTagDistanceMeters;
 
     // Sets the distance objects to use the visionSub with the correct pointer
-    distanceX = new DistanceX(visionSub);
-    distanceY = new DistanceY(visionSub);
+    distanceX = new DistanceX(visionSub, desiredXTagDistanceMeters);
+    distanceY = new DistanceY(visionSub, desiredYTagDistanceMeters);
 
     addRequirements(drive, visionSub);
   }

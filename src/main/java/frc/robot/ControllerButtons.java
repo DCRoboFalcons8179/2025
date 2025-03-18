@@ -71,10 +71,15 @@ public class ControllerButtons {
     commandXboxController
         .rightTrigger(0.5)
         .whileTrue(
-            new MaintainAll(drive, newVision, commandXboxController)
+            new MaintainAll(
+                    drive,
+                    newVision,
+                    commandXboxController,
+                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
                 .andThen(
-                    new MoveElevator(() -> 17000, elevatorSub)
-                        .andThen(new MoveWrist(() -> 900, coralSub))));
+                    new MoveElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
+                        .andThen(new MoveWrist(() -> Constants.SetPoints.L4.wristPose, coralSub))));
     // commandXboxController
     //     .leftTrigger(0.5)
     //     .whileTrue(new Aim(vision, drive, elevatorSub, commandXboxController));
