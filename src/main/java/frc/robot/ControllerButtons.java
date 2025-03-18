@@ -7,6 +7,8 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Elevator.MoveElevator;
 import frc.robot.commands.Elevator.ResetElevator;
 import frc.robot.commands.Hang.Hang;
+import frc.robot.commands.SetPoints.Home;
+import frc.robot.commands.SetPoints.L4;
 import frc.robot.commands.MaintainAll;
 import frc.robot.commands.Wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
@@ -14,7 +16,6 @@ import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.NewVision;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.vision.Vision;
 
 public class ControllerButtons {
   public static void configureButtonBindings(
@@ -23,8 +24,7 @@ public class ControllerButtons {
       CoralSub coralSub,
       ElevatorSub elevatorSub,
       HookSub hookSub,
-      NewVision newVision,
-      Vision vision) {
+      NewVision newVision) {
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
@@ -49,10 +49,7 @@ public class ControllerButtons {
     // Home
     commandXboxController
         .rightBumper()
-        .onTrue(
-            new MoveElevator(() -> 0, elevatorSub)
-                .andThen(new MoveWrist(() -> 0, coralSub))
-                .withTimeout(5));
+        .onTrue(new Home(elevatorSub, coralSub));
 
     // Coral
     // In
@@ -78,8 +75,7 @@ public class ControllerButtons {
                     Constants.SetPoints.L4.desiredXTagDistanceMeters,
                     Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
                 .andThen(
-                    new MoveElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
-                        .andThen(new MoveWrist(() -> Constants.SetPoints.L4.wristPose, coralSub))));
+                    new L4(elevatorSub, coralSub)));
     // commandXboxController
     //     .leftTrigger(0.5)
     //     .whileTrue(new Aim(vision, drive, elevatorSub, commandXboxController));

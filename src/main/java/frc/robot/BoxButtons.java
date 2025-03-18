@@ -5,6 +5,10 @@ import frc.robot.commands.Coral.MoveCoral;
 import frc.robot.commands.Elevator.MoveElevator;
 import frc.robot.commands.Elevator.RawElevator;
 import frc.robot.commands.Hang.MoveHook;
+import frc.robot.commands.SetPoints.L1;
+import frc.robot.commands.SetPoints.L2;
+import frc.robot.commands.SetPoints.L3;
+import frc.robot.commands.SetPoints.L4;
 import frc.robot.commands.Wrist.MoveWrist;
 import frc.robot.commands.Wrist.RawWrist;
 import frc.robot.subsystems.AlgaeSub;
@@ -24,8 +28,8 @@ public class BoxButtons {
     boxRight.button(8).onTrue(new MoveElevator(() -> 2300, elevatorSub));
 
     // Reef Setpoints
-    // Trough
-    boxRight.button(9).onTrue(new MoveWrist(() -> 730, coralSub));
+    // L1
+    boxRight.button(9).onTrue(new L1(coralSub));
 
     boxRight.button(9).onFalse(new MoveWrist(() -> 0, coralSub));
 
@@ -33,20 +37,19 @@ public class BoxButtons {
     boxRight
         .button(10)
         .onTrue(
-            new MoveElevator(() -> 4900, elevatorSub).andThen(new MoveWrist(() -> 1120, coralSub)));
+            new L2(elevatorSub, coralSub));
 
     // L3
     boxRight
         .button(11)
         .onTrue(
-            new MoveElevator(() -> 9330, elevatorSub).andThen(new MoveWrist(() -> 930, coralSub)));
+            new L3(elevatorSub, coralSub));
 
     // L4
     boxRight
         .button(12)
         .onTrue(
-            new MoveElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
-                .andThen(new MoveWrist(() -> Constants.SetPoints.L4.wristPose, coralSub)));
+            new L4(elevatorSub, coralSub));
 
     // Coral
     // Movement
@@ -61,7 +64,7 @@ public class BoxButtons {
         .onTrue(new MoveCoral(() -> -0.5, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
 
-    // Setpoints
+    // SetPoints
 
     // Algae
     // Movements
@@ -74,7 +77,7 @@ public class BoxButtons {
     //     .onTrue(new MoveAlgae(() -> -0.5, algaeSub))
     //     .onFalse(new MoveAlgae(() -> 0, algaeSub));
 
-    // Setpoints
+    // SetPoints
 
     // Raw Wrist Control
     // Up
