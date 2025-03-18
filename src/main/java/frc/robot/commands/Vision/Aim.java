@@ -5,6 +5,7 @@
 package frc.robot.commands.Vision;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,6 +19,8 @@ public class Aim extends Command {
   private final Drive drive;
   private final ElevatorSub elevatorSub;
   private final CommandXboxController commandXboxController;
+
+  private static Pose2d robotTargetPose;
 
   PIDController aimController = new PIDController(0.2, 0, 0);
   /** Creates a new Aim. */
@@ -37,6 +40,10 @@ public class Aim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
+
+  public void robotTargetPoseToTag() {
+    // robotTargetPose = Vision.
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
