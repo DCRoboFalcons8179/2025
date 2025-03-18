@@ -5,7 +5,6 @@
 package frc.robot.calcVelocities;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.NewVision;
 
@@ -38,8 +37,6 @@ public class DistanceY implements Distance {
     } else if (tagMisses >= Constants.VisionConstants.tagFindingTries) {
       strafeSpeed = 0;
     }
-
-    SmartDashboard.putNumber("Distance Y", distanceY);
 
     return strafeSpeed;
   }

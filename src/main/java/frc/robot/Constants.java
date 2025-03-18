@@ -68,16 +68,16 @@ public class Constants {
   }
 
   /** Is the robot at a comp? */
-  public static boolean comp = false;
+  public static boolean comp = true;
 
   public static double maxSpeed = 0.6;
 
   public class VisionConstants {
     public static final double errorThreshHoldMeters = 0.05;
     public static final double errorThreshHoldStrafeMeters = 0.05;
-    public static final double errorThreshHoldRadians = 0.0174532925199;
+    public static final double errorThreshHoldRadians = 0.0349065850399;
     public static final int tagFindingTries = 15;
-    public static final double desiredXTagDistanceMeters = 0.1;
+    public static final double desiredXTagDistanceMeters = 0.35;
 
     public class FrontCameraValues {
       /** Name of the Camera */

@@ -31,7 +31,8 @@ public class DistanceX implements Distance {
       forwardSpeed = -2;
       tagMisses = 0;
     } else if (distanceX != -1) {
-      forwardSpeed = controller.calculate(distanceX, 1);
+      forwardSpeed =
+          controller.calculate(distanceX, Constants.VisionConstants.desiredXTagDistanceMeters);
       tagMisses = 0;
     } else if (tagMisses >= Constants.VisionConstants.tagFindingTries) {
       forwardSpeed = 0;

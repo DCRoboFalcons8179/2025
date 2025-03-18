@@ -38,6 +38,7 @@ import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
 import frc.robot.subsystems.Music;
+import frc.robot.subsystems.NewVision;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -64,6 +65,7 @@ public class RobotContainer {
   private final ElevatorSub elevatorSub;
   private final CoralSub coralSub;
   private final AlgaeSub algaeSub;
+  private final NewVision newVision = new NewVision();
   private final Vision vision;
 
   // Controllers
@@ -195,6 +197,10 @@ public class RobotContainer {
 
     SmartDashboard.putNumber("Binary To Int", autonID);
     SmartDashboard.putString("Auton Name", GetAuton.getAutonName(autonID));
+
+    SmartDashboard.putNumber("Distance Tag Y", newVision.getFrontDistanceY());
+    SmartDashboard.putNumber("Distance Tag X", newVision.getFrontDistanceX());
+    SmartDashboard.putNumber("Distance Tag Yaw", newVision.getFrontCameraYaw());
   }
 
   /**
@@ -207,7 +213,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     ControllerButtons.configureButtonBindings(
-        commandXboxController, drive, coralSub, elevatorSub, hookSub, vision);
+        commandXboxController, drive, coralSub, elevatorSub, hookSub, newVision, vision);
 
     BoxButtons.configureButtonBindings(elevatorSub, coralSub, algaeSub, hookSub, boxLeft, boxRight);
 

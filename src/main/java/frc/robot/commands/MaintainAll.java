@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
@@ -49,9 +50,18 @@ public class MaintainAll extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    translationVelocity = distanceX.getVelocity();
-    strafeVelocity = distanceY.getVelocity();
+    visionSub.update();
+
+    translationVelocity =
+        distanceX.getVelocity() == 0 ? commandXboxController.getLeftY() : distanceX.getVelocity();
+    strafeVelocity =
+        distanceY.getVelocity() == 0 ? commandXboxController.getLeftX() : distanceY.getVelocity();
     double yaw = visionSub.getFrontCameraYaw();
+
+    SmartDashboard.putBoolean("Has X", distanceX.isDone());
+    SmartDashboard.putBoolean("Has Y", distanceY.isDone());
+    SmartDashboard.putBoolean(
+        "Has Yaw", Math.abs(yaw) < Constants.VisionConstants.errorThreshHoldRadians);
 
     ChassisSpeeds chassisSpeeds =
         new ChassisSpeeds() {
