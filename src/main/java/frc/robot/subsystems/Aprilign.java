@@ -6,36 +6,32 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
-import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
-
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.drive.Drive;
 
 public class Aprilign {
-    
-    private static RobotContainer robotContainer;
 
     private static Pose2d targetRobotPoseBeforeAprilTag;
     private static List<Waypoint> waypoints;
     private static PathConstraints constraints;
     private static PathPlannerPath path;
 
-    public Aprilign(RobotContainer rc) {
-        robotContainer = rc;
-    }
+    public static void setTargetPoseBeforeAprilTag(Drive drive, NewVision newVision, double offsetX, double offsetY) {
+        Transform3d transform3d = newVision.getFrontTransform3To3dTarget();
 
-    public static void setTargetPoseBeforeAprilTag(double offsetX, double offsetY) {
-        Transform3d transform3d = robotContainer.getNewVision().getFrontTransform3To3dTarget();
+        double poseX = drive.getPose().getX();
+        double poseY = drive.getPose().getY();
 
-        double rotatedOffsetX = transform3d.getRotation().getAngle();
+        double angle = transform3d.getRotation().getAngle();
 
-        targetRobotPoseBeforeAprilTag = new Pose2d(transform3d.getX(), transform3d.getY(), transform3d.getRotation().toRotation2d());
+        double targetX = offsetX * Math.cos(angle) - offsetY * Math.sin(angle);
+        double targetY = offsetX * Math.sin(angle) + offsetY * Math.cos(angle);
+
+        targetRobotPoseBeforeAprilTag = new Pose2d(poseX + transform3d.getX() + rotatedOffsetX, poseY + transform3d.getY() + rotatedOffsetY, transform3d.getRotation().toRotation2d());
 
         waypoints = PathPlannerPath.waypointsFromPoses(
-            robotContainer.drive.getPose(),
+            drive.getPose(),
             targetRobotPoseBeforeAprilTag
         );
 
