@@ -45,10 +45,6 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.vision.Vision;
-import frc.robot.subsystems.vision.VisionIO;
-import frc.robot.subsystems.vision.VisionIOPhotonVision;
-import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -66,7 +62,6 @@ public class RobotContainer {
   private final CoralSub coralSub;
   private final AlgaeSub algaeSub;
   private final NewVision newVision = new NewVision();
-  private final Vision vision;
 
   // Controllers
   private final CommandXboxController commandXboxController = new CommandXboxController(0);
@@ -102,16 +97,6 @@ public class RobotContainer {
         drive =
             new Drive(new GyroIOPigeon2(), frontLeft, frontRight, backLeft, backRight, elevatorSub);
 
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                new VisionIOPhotonVision(
-                    Constants.VisionConstants.FrontCameraValues.cameraName,
-                    Constants.VisionConstants.BackCameraValues.cameraToRobot),
-                new VisionIOPhotonVision(
-                    Constants.VisionConstants.BackCameraValues.cameraName,
-                    Constants.VisionConstants.BackCameraValues.cameraToRobot));
-
         break;
 
       case SIM:
@@ -124,17 +109,6 @@ public class RobotContainer {
                 new ModuleIOSim(TunerConstants.BackLeft),
                 new ModuleIOSim(TunerConstants.BackRight),
                 elevatorSub);
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                new VisionIOPhotonVisionSim(
-                    VisionConstants.FrontCameraValues.cameraName,
-                    Constants.VisionConstants.FrontCameraValues.cameraToRobot,
-                    drive::getPose),
-                new VisionIOPhotonVisionSim(
-                    VisionConstants.BackCameraValues.cameraName,
-                    Constants.VisionConstants.BackCameraValues.cameraToRobot,
-                    drive::getPose));
 
         break;
 
@@ -148,7 +122,6 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 elevatorSub);
-        vision = new Vision(drive::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         break;
     }
 
@@ -213,7 +186,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     ControllerButtons.configureButtonBindings(
-        commandXboxController, drive, coralSub, elevatorSub, hookSub, newVision, vision);
+        commandXboxController, drive, coralSub, elevatorSub, hookSub, newVision);
 
     BoxButtons.configureButtonBindings(elevatorSub, coralSub, algaeSub, hookSub, boxLeft, boxRight);
 

@@ -183,5 +183,24 @@ public class Constants {
       public static final double desiredXTagDistanceMeters = 0.65;
       public static final double leftDesiredYTagDistanceMeters = 0.04;
     }
+
+    public class L3 {
+      public static final double elevatorPose = 9330;
+      public static final double wristPose = 930;
+    }
+
+    public class L2 { 
+      public static final double elevatorPose = 4900;
+      public static final double wristPose = 1120;
+    }
+
+    public class L1 {
+      public static final double wristPose = 730;
+    }
+
+    public class Home {
+      public static final double elevatorPose = 0;
+      public static final double wristPose = 0;
+    }
   }
 }
