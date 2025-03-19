@@ -2,11 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.SetPoints;
+package frc.robot.commands.SetPointsw;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.Elevator.MoveElevator;
+import frc.robot.commands.Elevators.MoveElevator;
 import frc.robot.commands.Wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;

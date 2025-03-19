@@ -1,14 +1,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import frc.robot.commands.Coral.MoveCoral;
-import frc.robot.commands.Elevator.MoveElevator;
-import frc.robot.commands.Elevator.RawElevator;
-import frc.robot.commands.Hang.MoveHook;
-import frc.robot.commands.SetPoints.L1;
-import frc.robot.commands.SetPoints.L2;
-import frc.robot.commands.SetPoints.L3;
-import frc.robot.commands.SetPoints.L4;
+import frc.robot.commands.Corals.MoveCoral;
+import frc.robot.commands.Elevators.MoveElevator;
+import frc.robot.commands.Elevators.RawElevator;
+import frc.robot.commands.Hangw.MoveHook;
+import frc.robot.commands.SetPointsw.L1;
+import frc.robot.commands.SetPointsw.L2;
+import frc.robot.commands.SetPointsw.L3;
+import frc.robot.commands.SetPointsw.L4;
 import frc.robot.commands.Wrist.MoveWrist;
 import frc.robot.commands.Wrist.RawWrist;
 import frc.robot.subsystems.AlgaeSub;

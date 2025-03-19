@@ -2,22 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Hang;
+package frc.robot.commands.Elevators;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.HookSub;
-import java.util.function.DoubleSupplier;
+import frc.robot.subsystems.ElevatorSub;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Hang extends Command {
-  DoubleSupplier power;
-  HookSub hookSub;
-
-  /** Creates a new Hang. */
-  public Hang(DoubleSupplier power, HookSub hookSub) {
-    this.power = power;
-    this.hookSub = hookSub;
-    addRequirements(hookSub);
+public class UpdateElevatorPose extends Command {
+  ElevatorSub elevatorSub;
+  /** Creates a new UpdateElevatorPose. */
+  public UpdateElevatorPose(ElevatorSub elevatorSub) {
+    this.elevatorSub = elevatorSub;
+    addRequirements(elevatorSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,9 +24,7 @@ public class Hang extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // output power to the hang motor
-    hookSub.hang(power.getAsDouble());
-    System.out.println("hang motion" + power);
+    elevatorSub.updatePosition();
   }
 
   // Called once the command ends or is interrupted.
