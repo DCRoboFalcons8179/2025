@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.photonvision.PhotonCamera;
 
-public class NewVision extends SubsystemBase {
+public class Vision extends SubsystemBase {
   /** Front Camera Object */
   private PhotonCamera frontCamera =
       new PhotonCamera(Constants.VisionConstants.FrontCameraValues.cameraName);
@@ -27,7 +27,7 @@ public class NewVision extends SubsystemBase {
   private double frontDistanceY;
 
   /** Creates a new NewVision. */
-  public NewVision() {}
+  public Vision() {}
 
   @Override
   public void periodic() {
@@ -51,6 +51,12 @@ public class NewVision extends SubsystemBase {
 
         // Y
         frontDistanceY = frontTransform3To3dTarget.getY();
+      } else {
+        frontHasTarget = false;
+        frontTargetID = -1;
+        frontDistanceX = -1;
+        frontDistanceY = -1;
+        frontCameraYaw = 181;
       }
     }
   }

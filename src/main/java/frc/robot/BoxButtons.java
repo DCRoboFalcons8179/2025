@@ -34,22 +34,13 @@ public class BoxButtons {
     boxRight.button(9).onFalse(new MoveWrist(() -> 0, coralSub));
 
     // L2
-    boxRight
-        .button(10)
-        .onTrue(
-            new L2(elevatorSub, coralSub));
+    boxRight.button(10).onTrue(new L2(elevatorSub, coralSub));
 
     // L3
-    boxRight
-        .button(11)
-        .onTrue(
-            new L3(elevatorSub, coralSub));
+    boxRight.button(11).onTrue(new L3(elevatorSub, coralSub));
 
     // L4
-    boxRight
-        .button(12)
-        .onTrue(
-            new L4(elevatorSub, coralSub));
+    boxRight.button(12).onTrue(new L4(elevatorSub, coralSub));
 
     // Coral
     // Movement

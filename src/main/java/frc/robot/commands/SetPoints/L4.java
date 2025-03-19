@@ -20,8 +20,7 @@ public class L4 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub),
-      new MoveWrist(() -> Constants.SetPoints.L4.wristPose, coralSub)
-    );
+        new MoveElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub),
+        new MoveWrist(() -> Constants.SetPoints.L4.wristPose, coralSub));
   }
 }

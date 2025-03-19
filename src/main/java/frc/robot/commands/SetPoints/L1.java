@@ -17,8 +17,6 @@ public class L1 extends SequentialCommandGroup {
   public L1(CoralSub coralSub) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new MoveWrist(() -> Constants.SetPoints.L1.wristPose, coralSub)
-    );
+    addCommands(new MoveWrist(() -> Constants.SetPoints.L1.wristPose, coralSub));
   }
 }

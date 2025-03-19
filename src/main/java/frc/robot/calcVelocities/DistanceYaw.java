@@ -1,19 +1,19 @@
 package frc.robot.calcVelocities;
 
-import frc.robot.subsystems.NewVision;
+import frc.robot.subsystems.vision.Vision;
 
 public class DistanceYaw implements Distance {
-  NewVision visionSub;
+  Vision visionSub;
 
-  public DistanceYaw(NewVision visionSub) {
+  public DistanceYaw(Vision visionSub) {
     this.visionSub = visionSub;
   }
 
   public double getVelocity() {
-    return visionSub.getFrontCameraYaw() / 10;
+    return visionSub.getCameraYaw() / 10;
   }
 
   public boolean isDone() {
-    return Math.abs(visionSub.getFrontCameraYaw()) < 1;
+    return Math.abs(visionSub.getCameraYaw()) < 1;
   }
 }

@@ -20,8 +20,7 @@ public class Home extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveElevator(() -> Constants.SetPoints.Home.elevatorPose, elevatorSub),
-      new MoveWrist(() -> Constants.SetPoints.Home.wristPose, coralSub)
-    );
+        new MoveElevator(() -> Constants.SetPoints.Home.elevatorPose, elevatorSub),
+        new MoveWrist(() -> Constants.SetPoints.Home.wristPose, coralSub));
   }
 }

@@ -2,10 +2,10 @@ package frc.robot.calcVelocities;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Constants;
-import frc.robot.subsystems.NewVision;
+import frc.robot.subsystems.vision.Vision;
 
 public class DistanceX implements Distance {
-  NewVision visionSub;
+  Vision visionSub;
 
   double forwardSpeed = 0;
   double desiredXTagDistanceMeters;
@@ -18,13 +18,13 @@ public class DistanceX implements Distance {
   final double D_GAIN = 0.25;
   PIDController controller = new PIDController(P_GAIN, I_GAIN, D_GAIN);
 
-  public DistanceX(NewVision visionSub, double desiredXTagDistanceMeters) {
+  public DistanceX(Vision visionSub, double desiredXTagDistanceMeters) {
     this.visionSub = visionSub;
     this.desiredXTagDistanceMeters = desiredXTagDistanceMeters;
   }
 
   public double getVelocity() {
-    double distanceX = visionSub.getFrontDistanceX();
+    double distanceX = visionSub.getDistanceX();
 
     // If the tag is not found, increment the counter by 1
     tagMisses += distanceX != -1 ? 0 : 1;
@@ -43,7 +43,7 @@ public class DistanceX implements Distance {
   }
 
   public boolean isDone() {
-    double distanceX = visionSub.getFrontDistanceX();
+    double distanceX = visionSub.getDistanceX();
     return Math.abs(distanceX - desiredXTagDistanceMeters)
         < Constants.VisionConstants.errorThreshHoldMeters;
   }

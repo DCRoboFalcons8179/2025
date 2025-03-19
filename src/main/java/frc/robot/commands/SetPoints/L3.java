@@ -20,8 +20,7 @@ public class L3 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveElevator(() -> Constants.SetPoints.L3.elevatorPose, elevatorSub),
-      new MoveWrist(() -> Constants.SetPoints.L3.wristPose, coralSub)
-    );
+        new MoveElevator(() -> Constants.SetPoints.L3.elevatorPose, elevatorSub),
+        new MoveWrist(() -> Constants.SetPoints.L3.wristPose, coralSub));
   }
 }

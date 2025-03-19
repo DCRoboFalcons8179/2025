@@ -6,11 +6,11 @@ package frc.robot.calcVelocities;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Constants;
-import frc.robot.subsystems.NewVision;
+import frc.robot.subsystems.vision.Vision;
 
 /** Add your docs here. */
 public class DistanceY implements Distance {
-  NewVision visionSub;
+  Vision visionSub;
   double tagMisses = 0;
   double strafeSpeed = 0;
   double desiredYTagDistanceMeters;
@@ -21,14 +21,14 @@ public class DistanceY implements Distance {
   final double STRAFE_D_GAIN = 0.25;
   PIDController strafeController = new PIDController(STRAFE_P_GAIN, STRAFE_I_GAIN, STRAFE_D_GAIN);
 
-  public DistanceY(NewVision visionSub, double desiredYTagDistanceMeters) {
+  public DistanceY(Vision visionSub, double desiredYTagDistanceMeters) {
     this.visionSub = visionSub;
     this.desiredYTagDistanceMeters = desiredYTagDistanceMeters;
   }
 
   public double getVelocity() {
 
-    double distanceY = visionSub.getFrontDistanceY();
+    double distanceY = visionSub.getDistanceY();
 
     // If the tag is not found, increment the counter by 1
     tagMisses += distanceY != -1 ? 0 : 1;
@@ -44,7 +44,7 @@ public class DistanceY implements Distance {
   }
 
   public boolean isDone() {
-    double distanceY = visionSub.getFrontDistanceY();
+    double distanceY = visionSub.getDistanceY();
     return Math.abs(distanceY) < Constants.VisionConstants.errorThreshHoldStrafeMeters;
   }
 }

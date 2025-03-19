@@ -4,18 +4,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Coral.MoveCoral;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Elevator.MoveElevator;
 import frc.robot.commands.Elevator.ResetElevator;
 import frc.robot.commands.Hang.Hang;
 import frc.robot.commands.SetPoints.Home;
-import frc.robot.commands.SetPoints.L4;
-import frc.robot.commands.MaintainAll;
-import frc.robot.commands.Wrist.MoveWrist;
+import frc.robot.commands.VIsion.AlignToTag;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
-import frc.robot.subsystems.NewVision;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.vision.FrontCamera;
+import frc.robot.subsystems.vision.TopCamera;
 
 public class ControllerButtons {
   public static void configureButtonBindings(
@@ -24,7 +22,8 @@ public class ControllerButtons {
       CoralSub coralSub,
       ElevatorSub elevatorSub,
       HookSub hookSub,
-      NewVision newVision) {
+      FrontCamera frontCamera,
+      TopCamera topCamera) {
     // Default command, normal field-relative drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
@@ -47,9 +46,7 @@ public class ControllerButtons {
     commandXboxController.leftBumper().onTrue(new ResetElevator(elevatorSub));
 
     // Home
-    commandXboxController
-        .rightBumper()
-        .onTrue(new Home(elevatorSub, coralSub));
+    commandXboxController.rightBumper().onTrue(new Home(elevatorSub, coralSub));
 
     // Coral
     // In
@@ -65,17 +62,29 @@ public class ControllerButtons {
     //     .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Vision
+    // Reef
     commandXboxController
-        .rightTrigger(0.5)
+        .povUp()
         .whileTrue(
-            new MaintainAll(
-                    drive,
-                    newVision,
-                    commandXboxController,
-                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
-                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
-                .andThen(
-                    new L4(elevatorSub, coralSub)));
+            new AlignToTag(
+                drive,
+                frontCamera,
+                commandXboxController,
+                Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
+            // .andThen(new L4(elevatorSub, coralSub))
+            );
+    // Human Pickups
+    commandXboxController
+        .povDown()
+        .whileTrue(
+            new AlignToTag(
+                drive,
+                topCamera,
+                commandXboxController,
+                Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
+                Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters));
+
     // commandXboxController
     //     .leftTrigger(0.5)
     //     .whileTrue(new Aim(vision, drive, elevatorSub, commandXboxController));

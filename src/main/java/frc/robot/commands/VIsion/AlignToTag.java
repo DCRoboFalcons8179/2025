@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.VIsion;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.calcVelocities.DistanceX;
 import frc.robot.calcVelocities.DistanceY;
-import frc.robot.subsystems.NewVision;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.vision.Vision;
 
-public class MaintainAll extends Command {
+public class AlignToTag extends Command {
   // Subsystems
   Drive drive;
-  NewVision visionSub;
+  Vision visionSub;
   CommandXboxController commandXboxController;
 
   // Velocities
@@ -34,9 +34,9 @@ public class MaintainAll extends Command {
   double desiredYTagDistanceMeters;
 
   /** Creates a new MaintainAll. */
-  public MaintainAll(
+  public AlignToTag(
       Drive drive,
-      NewVision visionSub,
+      Vision visionSub,
       CommandXboxController commandXboxController,
       double desiredXTagDistanceMeters,
       double desiredYTagDistanceMeters) {
@@ -66,7 +66,10 @@ public class MaintainAll extends Command {
         distanceX.getVelocity() == 0 ? commandXboxController.getLeftY() : distanceX.getVelocity();
     strafeVelocity =
         distanceY.getVelocity() == 0 ? commandXboxController.getLeftX() : distanceY.getVelocity();
-    double yaw = visionSub.getFrontCameraYaw();
+    double yaw = visionSub.getCameraYaw();
+
+    SmartDashboard.putNumber("Distance Tag X", visionSub.getDistanceX());
+    SmartDashboard.putNumber("Distance Tag Y", visionSub.getDistanceY());
 
     SmartDashboard.putBoolean("Has X", distanceX.isDone());
     SmartDashboard.putBoolean("Has Y", distanceY.isDone());
@@ -81,8 +84,8 @@ public class MaintainAll extends Command {
             if (yaw != 181) {
               omegaRadiansPerSecond =
                   yaw > Constants.VisionConstants.errorThreshHoldRadians
-                      ? -0.3
-                      : yaw < Constants.VisionConstants.errorThreshHoldRadians ? 0.3 : 0;
+                      ? -0.15
+                      : yaw < Constants.VisionConstants.errorThreshHoldRadians ? 0.15 : 0;
             } else {
               omegaRadiansPerSecond = 0;
             }
@@ -101,7 +104,7 @@ public class MaintainAll extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double yaw = visionSub.getFrontCameraYaw();
+    double yaw = visionSub.getCameraYaw();
 
     return distanceX.isDone()
         && distanceY.isDone()

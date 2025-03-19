@@ -75,7 +75,7 @@ public class Constants {
   public class VisionConstants {
     public static final double errorThreshHoldMeters = 0.05;
     public static final double errorThreshHoldStrafeMeters = 0.05;
-    public static final double errorThreshHoldRadians = 0.0349065850399;
+    public static final double errorThreshHoldRadians = 0.0349065850399 / 1.5;
     public static final int tagFindingTries = 15;
     public static final double desiredXTagDistanceMeters = 0.65;
 
@@ -94,6 +94,11 @@ public class Constants {
       /** Camera Position Relative to the Robot */
       public static final Transform3d cameraToRobot =
           new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+    }
+
+    public class TopCameraValues {
+      /** Name of the Camera */
+      public static final String cameraName = "Top_Camera";
     }
 
     public class AprilTags {
@@ -189,7 +194,7 @@ public class Constants {
       public static final double wristPose = 930;
     }
 
-    public class L2 { 
+    public class L2 {
       public static final double elevatorPose = 4900;
       public static final double wristPose = 1120;
     }
@@ -201,6 +206,11 @@ public class Constants {
     public class Home {
       public static final double elevatorPose = 0;
       public static final double wristPose = 0;
+    }
+
+    public class HumanPickup {
+      public static final double desiredXTagDistanceMeters = 0.73;
+      public static final double desiredYTagDistanceMeters = 0;
     }
   }
 }
