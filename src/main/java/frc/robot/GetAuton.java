@@ -57,7 +57,8 @@ public class GetAuton {
               "CenterStartToCageSideComplex",
               "CageStartToCageSideComplex",
               "CenterStartToL4Basic",
-              "Belleville Playoffs Auto"));
+              "Belleville Playoffs Auto",
+              "Testing Scoring and Pickup"));
 
   public static String getAutonName(int index) {
     return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);

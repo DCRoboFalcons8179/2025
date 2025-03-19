@@ -28,6 +28,7 @@ import frc.robot.commands.Coral.MoveCoral;
 import frc.robot.commands.Elevator.AutoElevator;
 import frc.robot.commands.Elevator.MoveElevator;
 import frc.robot.commands.Elevator.UpdateElevatorPose;
+import frc.robot.commands.VIsion.AlignToTag;
 import frc.robot.commands.Wrist.AutoWrist;
 import frc.robot.commands.Wrist.MoveWrist;
 import frc.robot.commands.Wrist.UpdateWristPose;
@@ -162,6 +163,24 @@ public class RobotContainer {
                 new InstantCommand(() -> elevatorSub.resetPose()),
                 new AutoCoral(() -> 0, coralSub),
                 new AutoWrist(() -> 0, coralSub)));
+
+    new EventTrigger("AlignToReef")
+        .onTrue(
+            new AlignToTag(
+                drive,
+                frontCamera,
+                commandXboxController,
+                Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
+
+    new EventTrigger("AlignToHumanPickup")
+        .onTrue(
+            new AlignToTag(
+                drive,
+                topCamera,
+                commandXboxController,
+                Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
+                Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters));
   }
 
   public void periodic() {
