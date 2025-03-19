@@ -2,18 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Elevators;
+package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSub;
+import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class UpdateElevatorPose extends Command {
+public class AutoElevator extends Command {
   ElevatorSub elevatorSub;
-  /** Creates a new UpdateElevatorPose. */
-  public UpdateElevatorPose(ElevatorSub elevatorSub) {
+  DoubleSupplier doubleSupplier;
+  /** Creates a new AutoElevator. */
+  public AutoElevator(DoubleSupplier doubleSupplier, ElevatorSub elevatorSub) {
+    this.doubleSupplier = doubleSupplier;
     this.elevatorSub = elevatorSub;
-    addRequirements(elevatorSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -24,7 +26,7 @@ public class UpdateElevatorPose extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSub.updatePosition();
+    elevatorSub.goToPose(doubleSupplier.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +36,6 @@ public class UpdateElevatorPose extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return elevatorSub.atHeight();
   }
 }

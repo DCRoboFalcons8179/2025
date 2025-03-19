@@ -2,20 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Corals;
+package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.CoralSub;
-import java.util.function.DoubleSupplier;
+import frc.robot.subsystems.ElevatorSub;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AutoCoral extends Command {
-  DoubleSupplier doubleSupplier;
-  CoralSub coralSub;
-  /** Creates a new AutoCoral. */
-  public AutoCoral(DoubleSupplier doubleSupplier, CoralSub coralSub) {
-    this.doubleSupplier = doubleSupplier;
-    this.coralSub = coralSub;
+public class UpdateElevatorPose extends Command {
+  ElevatorSub elevatorSub;
+  /** Creates a new UpdateElevatorPose. */
+  public UpdateElevatorPose(ElevatorSub elevatorSub) {
+    this.elevatorSub = elevatorSub;
+    addRequirements(elevatorSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,7 +24,7 @@ public class AutoCoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coralSub.moveCoral(doubleSupplier.getAsDouble());
+    elevatorSub.updatePosition();
   }
 
   // Called once the command ends or is interrupted.

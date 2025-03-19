@@ -2,12 +2,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.Elevators.ResetElevator;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Corals.MoveCoral;
-import frc.robot.commands.Hangw.Hang;
-import frc.robot.commands.SetPointsw.Home;
-import frc.robot.commands.VIsions.AlignToTag;
+import frc.robot.commands.coral.MoveCoral;
+import frc.robot.commands.elevator.ResetElevator;
+import frc.robot.commands.hang.Hang;
+import frc.robot.commands.setpoints.Home;
+import frc.robot.commands.vision.AlignToTag;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
