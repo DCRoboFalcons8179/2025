@@ -29,6 +29,7 @@ import frc.robot.commands.elevator.AutoElevator;
 import frc.robot.commands.elevator.MoveElevator;
 import frc.robot.commands.elevator.UpdateElevatorPose;
 import frc.robot.commands.vision.AlignToTag;
+import frc.robot.commands.vision.HumanPickup;
 import frc.robot.commands.wrist.AutoWrist;
 import frc.robot.commands.wrist.MoveWrist;
 import frc.robot.commands.wrist.UpdateWristPose;
@@ -174,13 +175,7 @@ public class RobotContainer {
                 Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
 
     new EventTrigger("AlignToHumanPickup")
-        .onTrue(
-            new AlignToTag(
-                drive,
-                topCamera,
-                commandXboxController,
-                Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
-                Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters));
+        .onTrue(new HumanPickup(topCamera, drive, commandXboxController));
   }
 
   public void periodic() {

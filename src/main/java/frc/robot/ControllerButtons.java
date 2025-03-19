@@ -8,6 +8,7 @@ import frc.robot.commands.elevator.ResetElevator;
 import frc.robot.commands.hang.Hang;
 import frc.robot.commands.setpoints.Home;
 import frc.robot.commands.vision.AlignToTag;
+import frc.robot.commands.vision.HumanPickup;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
@@ -77,13 +78,7 @@ public class ControllerButtons {
     // Human Pickups
     commandXboxController
         .povDown()
-        .whileTrue(
-            new AlignToTag(
-                drive,
-                topCamera,
-                commandXboxController,
-                Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
-                Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters));
+        .whileTrue(new HumanPickup(topCamera, drive, commandXboxController));
 
     // commandXboxController
     //     .leftTrigger(0.5)

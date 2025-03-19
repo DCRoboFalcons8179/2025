@@ -15,16 +15,16 @@ import frc.robot.subsystems.vision.TopCamera;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class HumanPickup extends SequentialCommandGroup {
   /** Creates a new Human. */
-  public HumanPickup(TopCamera frontCamera, Drive drive, CommandXboxController commandXboxController) {
+  public HumanPickup(
+      TopCamera frontCamera, Drive drive, CommandXboxController commandXboxController) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AlignToTag(
-        drive,
-        frontCamera,
-        commandXboxController,
-        Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
-        Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters)
-    );
+        new AlignToTag(
+            drive,
+            frontCamera,
+            commandXboxController,
+            Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
+            Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters));
   }
 }
