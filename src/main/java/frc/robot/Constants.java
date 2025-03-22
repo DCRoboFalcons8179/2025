@@ -155,7 +155,7 @@ public class Constants {
 
     // PID Values
     /** kP for the elevator */
-    public static final double kP = 0.002125;
+    public static final double kP = 0.0025;
     /** kI for the elevator */
     public static final double kI = 0;
     /** kD for the elevator */
@@ -189,8 +189,8 @@ public class Constants {
 
   public class SetPoints {
     public class L4 {
-      public static final double elevatorPose = 17500;
-      public static final double wristPose = 10;
+      public static final double elevatorPose = 17900;
+      public static final double wristPose = 13200;
       public static final double desiredXTagDistanceMeters = 0.65;
       public static final double leftDesiredYTagDistanceMeters = 0.04;
     }

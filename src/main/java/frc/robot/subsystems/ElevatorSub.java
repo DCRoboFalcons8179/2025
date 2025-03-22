@@ -105,7 +105,12 @@ public class ElevatorSub extends SubsystemBase {
   public void updatePosition() {
     // Use the slew-rate-limited desired position for upward motion
     double limitedPose =
-        Filter.cutoffFilter(desiredPose, Math.max(elevatorMotor.getMotorTemperature(), followerMotor.getMotorTemperature()) > 120 ? 0 : Constants.ElevatorConstants.maxHeight, -200);
+        Filter.cutoffFilter(
+            desiredPose,
+            Math.max(elevatorMotor.getMotorTemperature(), followerMotor.getMotorTemperature()) > 120
+                ? 0
+                : Constants.ElevatorConstants.maxHeight,
+            -200);
 
     // Calculate the direction of movement
     double currentPose = elevatorEncoder.getPosition();
