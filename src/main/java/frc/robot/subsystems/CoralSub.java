@@ -112,7 +112,6 @@ public class CoralSub extends SubsystemBase {
    * @param position The position to move the wrist motor to go to
    */
   public void goToPose(double position) {
-    System.out.println(position);
     desiredPos = position;
   }
 

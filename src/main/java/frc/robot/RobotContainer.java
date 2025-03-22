@@ -160,25 +160,24 @@ public class RobotContainer {
     new EventTrigger("AlignToReef")
         .whileTrue(
             new SequentialCommandGroup(
-                    new AlignToTag(
-                        drive,
-                        frontCamera,
-                        commandXboxController,
-                        Constants.SetPoints.L4.desiredXTagDistanceMeters,
-                        Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
-                    DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
-                        .withTimeout(0.0001),
-                    new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
-                    new AutoWrist(() -> Constants.SetPoints.L4.wristPose, coralSub)
-                        .withTimeout(1.5),
-                    new AutoElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
-                        .withTimeout(0.5),
-                    new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
-                        .withTimeout(0.5),
-                    new MoveElevator(() -> 0, elevatorSub),
-                    new InstantCommand(() -> elevatorSub.resetPose()),
-                    new MoveCoral(() -> 0, coralSub),
-                    new AutoWrist(() -> 0, coralSub)));
+                new AlignToTag(
+                    drive,
+                    frontCamera,
+                    commandXboxController,
+                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
+                DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
+                    .withTimeout(0.0001),
+                new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
+                new AutoElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
+                    .withTimeout(0.5),
+                new AutoWrist(() -> Constants.SetPoints.L4.wristPose, coralSub).withTimeout(1.5),
+                new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
+                    .withTimeout(0.5),
+                new MoveElevator(() -> 0, elevatorSub),
+                new InstantCommand(() -> elevatorSub.resetPose()),
+                new MoveCoral(() -> 0, coralSub),
+                new AutoWrist(() -> 0, coralSub)));
     new EventTrigger("AlignToHumanPickup")
         .onTrue(new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController));
   }
