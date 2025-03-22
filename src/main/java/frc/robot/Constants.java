@@ -114,14 +114,20 @@ public class Constants {
       public static final double kD = 0;
       // public static final double kD = kP / 10000 * 2;
       public static final double kF = 0;
+
+      public static final double minPose = 500;
+      public static final double maxPose = 18530;
     }
 
-    public class Motor {
+    public class Intake {
       public static final int coralMotorID = 15;
       public static final double kP = 0;
       public static final double kI = 0;
       public static final double kD = 0;
       public static final double kV = 0;
+
+      public static final double outputSpeed = 0.5;
+      public static final double inputSpeed = -0.2;
     }
   }
 
@@ -140,7 +146,7 @@ public class Constants {
     /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
     /** Max current for the motors */
-    public static final int currentLimit = 40;
+    public static final int currentLimit = 70;
 
     public static final double encoderLimit = 3;
 
@@ -149,7 +155,7 @@ public class Constants {
 
     // PID Values
     /** kP for the elevator */
-    public static final double kP = 0.00185;
+    public static final double kP = 0.002125;
     /** kI for the elevator */
     public static final double kI = 0;
     /** kD for the elevator */
@@ -190,13 +196,13 @@ public class Constants {
     }
 
     public class L3 {
-      public static final double elevatorPose = 9330;
-      public static final double wristPose = 930;
+      public static final double elevatorPose = 9930;
+      public static final double wristPose = 14530;
     }
 
     public class L2 {
-      public static final double elevatorPose = 4900;
-      public static final double wristPose = 1120;
+      public static final double elevatorPose = 4300;
+      public static final double wristPose = 14200;
     }
 
     public class L1 {
@@ -205,7 +211,7 @@ public class Constants {
 
     public class Home {
       public static final double elevatorPose = 0;
-      public static final double wristPose = 0;
+      public static final double wristPose = 250;
     }
 
     public class HumanPickup {

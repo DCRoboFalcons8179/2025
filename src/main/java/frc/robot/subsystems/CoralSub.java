@@ -21,7 +21,7 @@ import frc.robot.Constants;
 public class CoralSub extends SubsystemBase {
   // Motors
   /** Motor for manipulating the c0oral */
-  TalonSRX coralMotor = new TalonSRX(Constants.CoralConstants.Motor.coralMotorID);
+  TalonSRX coralMotor = new TalonSRX(Constants.CoralConstants.Intake.coralMotorID);
 
   /** Motor for manipulating the wrist */
   SparkMax wristMotor = new SparkMax(Constants.CoralConstants.Wrist.wristID, MotorType.kBrushless);
@@ -30,7 +30,9 @@ public class CoralSub extends SubsystemBase {
   /** Encoder for the wrist motor */
   RelativeEncoder wristEncoder = wristMotor.getEncoder();
 
-  public CoralSub() {
+  private final ElevatorSub elevatorSub;
+
+  public CoralSub(ElevatorSub elevatorSub) {
     SparkMaxConfig wristConfig = new SparkMaxConfig();
 
     wristConfig.inverted(false).idleMode(IdleMode.kBrake);
@@ -53,6 +55,8 @@ public class CoralSub extends SubsystemBase {
 
     // Set the coral motor to brake mode
     coralMotor.setNeutralMode(NeutralMode.Brake);
+
+    this.elevatorSub = elevatorSub;
   }
 
   /**
@@ -78,8 +82,7 @@ public class CoralSub extends SubsystemBase {
   double desiredPos = 0;
 
   public void moveWrist(double position) {
-    SmartDashboard.putNumber("No Filter Pose", wristEncoder.getPosition() + position);
-    desiredPos = Filter.cutoffFilter(position, 1750, -50);
+    desiredPos = position;
   }
 
   /**
@@ -94,7 +97,13 @@ public class CoralSub extends SubsystemBase {
    * <p>Also updates the SmartDashboard with the desired position
    */
   public void updatePosition() {
-    double limitedPose = Filter.cutoffFilter(desiredPos, 1750, 0);
+    double limitedPose =
+        Filter.cutoffFilter(
+            desiredPos,
+            Constants.CoralConstants.Wrist.maxPose,
+            elevatorSub.getPose() > Constants.ElevatorConstants.avoidanceHeight
+                ? 1000
+                : Constants.CoralConstants.Wrist.minPose);
 
     SmartDashboard.putNumber("Wrist Desired Position", limitedPose);
 

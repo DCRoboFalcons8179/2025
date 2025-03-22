@@ -38,8 +38,16 @@ public class Aprilign {
     double distX = newVision.getDistanceX();
     double distY = newVision.getDistanceY();
 
-    double deltaX = -distX * st + distY * ct + (offsetX * cp + offsetY * sp) * ct + (offsetX * cp - offsetY * sp) * st;
-    double deltaY = +distX * ct + distY * st + (offsetX * cp + offsetY * sp) * st + (offsetX * sp - offsetY * cp) * ct;
+    double deltaX =
+        -distX * st
+            + distY * ct
+            + (offsetX * cp + offsetY * sp) * ct
+            + (offsetX * cp - offsetY * sp) * st;
+    double deltaY =
+        +distX * ct
+            + distY * st
+            + (offsetX * cp + offsetY * sp) * st
+            + (offsetX * sp - offsetY * cp) * ct;
 
     double targetX = poseX + deltaX;
     double targetY = poseY + deltaY;
@@ -57,7 +65,10 @@ public class Aprilign {
         new PathPlannerPath(
             waypoints,
             constraints, // null
-            new IdealStartingState(drive.getAverageSpeed(), null), // The ideal starting state, this is only relevant for pre-planned paths, so can
+            new IdealStartingState(
+                drive.getAverageSpeed(),
+                null), // The ideal starting state, this is only relevant for pre-planned paths, so
+            // can
             // be null for on-the-fly paths.
             new GoalEndState(
                 0.0,

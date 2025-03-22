@@ -30,7 +30,9 @@ import frc.robot.commands.elevator.MoveElevator;
 import frc.robot.commands.elevator.UpdateElevatorPose;
 import frc.robot.commands.vision.AlignToTag;
 import frc.robot.commands.vision.HumanPickup;
+import frc.robot.commands.wrist.AutoWrist;
 import frc.robot.commands.wrist.MoveWrist;
+import frc.robot.commands.wrist.UpdateWristPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
@@ -79,7 +81,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Set up auto routines
     elevatorSub = new ElevatorSub();
-    coralSub = new CoralSub();
+    coralSub = new CoralSub(elevatorSub);
     algaeSub = new AlgaeSub();
     hookSub = new HookSub();
 

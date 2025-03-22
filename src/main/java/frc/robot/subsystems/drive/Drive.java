@@ -277,8 +277,9 @@ public class Drive extends SubsystemBase {
       totalVelocity[1] += moduleSpeed * modules[i].getAngle().getSin();
     }
 
-    double averageSpeed = Math.sqrt(Math.pow(totalVelocity[0], 2) + Math.pow(totalVelocity[1], 2)) / 4;
-// average speed -Andrew Celani, March 21, 2025
+    double averageSpeed =
+        Math.sqrt(Math.pow(totalVelocity[0], 2) + Math.pow(totalVelocity[1], 2)) / 4;
+    // average speed -Andrew Celani, March 21, 2025
     SmartDashboard.putNumber("Average Speed/", averageSpeed);
 
     return averageSpeed;

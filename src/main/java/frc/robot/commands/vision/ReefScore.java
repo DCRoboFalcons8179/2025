@@ -18,29 +18,31 @@ import frc.robot.subsystems.vision.FrontCamera;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ReefScore extends SequentialCommandGroup {
   /** Creates a new ReefScore. */
-  public ReefScore(FrontCamera frontCamera, Drive drive, ElevatorSub elevatorSub, CoralSub coralSub, CommandXboxController commandXboxController, String level) {
+  public ReefScore(
+      FrontCamera frontCamera,
+      Drive drive,
+      ElevatorSub elevatorSub,
+      CoralSub coralSub,
+      CommandXboxController commandXboxController,
+      String level) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-      new AlignToTag(
-        drive,
-        frontCamera,
-        commandXboxController,
-        Constants.SetPoints.L4.desiredXTagDistanceMeters,
-        Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
-    );
+        new AlignToTag(
+            drive,
+            frontCamera,
+            commandXboxController,
+            Constants.SetPoints.L4.desiredXTagDistanceMeters,
+            Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
 
     switch (level) {
       case "L4":
-        addCommands(
-          new L4(elevatorSub, coralSub));
+        addCommands(new L4(elevatorSub, coralSub));
         break;
       case "L3":
-
         break;
       case "L2":
-        
         break;
       case "L1":
         break;
@@ -50,4 +52,3 @@ public class ReefScore extends SequentialCommandGroup {
     }
   }
 }
-

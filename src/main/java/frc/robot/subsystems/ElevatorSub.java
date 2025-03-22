@@ -34,6 +34,8 @@ public class ElevatorSub extends SubsystemBase {
   public ElevatorSub() {
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
     elevatorConfig.inverted(false).idleMode(IdleMode.kBrake);
+    elevatorConfig.smartCurrentLimit(Constants.ElevatorConstants.currentLimit);
+
     elevatorConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
     elevatorConfig
         .closedLoop
@@ -53,6 +55,8 @@ public class ElevatorSub extends SubsystemBase {
 
     SparkMaxConfig followerConfig = new SparkMaxConfig();
     followerConfig.inverted(false).idleMode(IdleMode.kBrake);
+    followerConfig.smartCurrentLimit(Constants.ElevatorConstants.currentLimit);
+
     followerConfig.encoder.positionConversionFactor(1000).velocityConversionFactor(1000);
     followerConfig
         .closedLoop
@@ -101,7 +105,7 @@ public class ElevatorSub extends SubsystemBase {
   public void updatePosition() {
     // Use the slew-rate-limited desired position for upward motion
     double limitedPose =
-        Filter.cutoffFilter(desiredPose, Constants.ElevatorConstants.maxHeight, -200);
+        Filter.cutoffFilter(desiredPose, Math.max(elevatorMotor.getMotorTemperature(), followerMotor.getMotorTemperature()) > 120 ? 0 : Constants.ElevatorConstants.maxHeight, -200);
 
     // Calculate the direction of movement
     double currentPose = elevatorEncoder.getPosition();
@@ -116,7 +120,7 @@ public class ElevatorSub extends SubsystemBase {
       followerSparkClosedLoopController.setReference(
           limitedPose, ControlType.kPosition, ClosedLoopSlot.kSlot0, 0);
     } else if (direction < 0) {
-      if (getPose() > 5000) {
+      if (getPose() > 7500) {
         elevatorMotor.set(-0.20);
         followerMotor.set(-0.20);
       } else {

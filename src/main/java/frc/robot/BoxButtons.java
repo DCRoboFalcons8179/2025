@@ -72,9 +72,9 @@ public class BoxButtons {
 
     // Raw Wrist Control
     // Up
-    boxLeft.button(7).onTrue(new RawWrist(() -> 50, coralSub));
+    boxLeft.button(7).onTrue(new RawWrist(() -> -200, coralSub));
     // Down
-    boxLeft.button(5).onTrue(new RawWrist(() -> -50, coralSub));
+    boxLeft.button(5).onTrue(new RawWrist(() -> 200, coralSub));
 
     // Raw Elevator Control
     // Up

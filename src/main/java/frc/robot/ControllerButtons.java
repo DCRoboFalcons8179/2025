@@ -53,14 +53,14 @@ public class ControllerButtons {
     // In
     commandXboxController
         .leftTrigger()
-        .onTrue(new MoveCoral(() -> 0.8, coralSub))
+        .onTrue(new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub))
         .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Out
-    // commandXboxController%
-    //     .rightTrigger()
-    //     .onTrue(new MoveCoral(() -> -0.5, coralSub))
-    //     .onFalse(new MoveCoral(() -> 0, coralSub));
+    commandXboxController
+        .rightTrigger()
+        .onTrue(new MoveCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // Vision
     // Reef
@@ -79,10 +79,6 @@ public class ControllerButtons {
     commandXboxController
         .povDown()
         .whileTrue(new HumanPickup(topCamera, drive, commandXboxController));
-
-    // commandXboxController
-    //     .leftTrigger(0.5)
-    //     .whileTrue(new Aim(vision, drive, elevatorSub, commandXboxController));
 
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
