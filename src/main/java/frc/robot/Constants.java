@@ -73,8 +73,8 @@ public class Constants {
   public static double maxSpeed = 0.6;
 
   public class VisionConstants {
-    public static final double errorThreshHoldMeters = 0.005;
-    public static final double errorThreshHoldStrafeMeters = 0.005;
+    public static final double errorThreshHoldMeters = 0.0075;
+    public static final double errorThreshHoldStrafeMeters = 0.0075;
     public static final double errorThreshHoldRadians = 0.0349065850399 * 1.375;
     public static final int tagFindingTries = 15;
 
