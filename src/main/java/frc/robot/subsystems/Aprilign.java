@@ -28,9 +28,6 @@ public class Aprilign {
 
     double angle = transform3d.getRotation().getAngle();
 
-    // double targetX = offsetX * Math.cos(angle) - offsetY * Math.sin(angle);
-    // double targetY = offsetX * Math.sin(angle) + offsetY * Math.cos(angle);
-
     double theta = drive.getRotation().getRadians();
     double phi = transform3d.getZ();
     double ct = Math.cos(theta);
@@ -51,12 +48,7 @@ public class Aprilign {
 
     waypoints = PathPlannerPath.waypointsFromPoses(drive.getPose(), targetRobotPoseBeforeAprilTag);
 
-    constraints = null;
-        // new PathConstraints(
-        //   3.0, 
-        //   .0,
-          
-        // ); // The constraints for this path.
+    constraints = new PathConstraints(3.0, 2.0, 0.5, 0.5, 12); // The constraints for this path.
     // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also use
     // unlimited constraints, only limited by motor torque and nominal battery voltage
 
