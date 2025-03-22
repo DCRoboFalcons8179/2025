@@ -267,6 +267,23 @@ public class Drive extends SubsystemBase {
     }
   }
 
+  public double getAverageSpeed() {
+    double[] totalVelocity = new double[2];
+
+    for (int i = 0; i < 4; i++) {
+      double moduleSpeed = modules[i].getVelocityMetersPerSec();
+
+      totalVelocity[0] += moduleSpeed * modules[i].getAngle().getCos();
+      totalVelocity[1] += moduleSpeed * modules[i].getAngle().getSin();
+    }
+
+    double averageSpeed = Math.sqrt(Math.pow(totalVelocity[0], 2) + Math.pow(totalVelocity[1], 2)) / 4;
+// average speed -Andrew Celani, March 21, 2025
+    SmartDashboard.putNumber("Average Speed/", averageSpeed);
+
+    return averageSpeed;
+  }
+
   /** Stops the drive. */
   public void stop() {
     runVelocity(new ChassisSpeeds());
