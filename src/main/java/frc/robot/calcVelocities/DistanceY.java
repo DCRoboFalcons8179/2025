@@ -16,7 +16,7 @@ public class DistanceY implements Distance {
   double desiredYTagDistanceMeters;
 
   // PID for the strafe speed loop
-  final double STRAFE_P_GAIN = 2;
+  final double STRAFE_P_GAIN = 2.5;
   final double STRAFE_I_GAIN = 0;
   final double STRAFE_D_GAIN = 0.25;
   PIDController strafeController = new PIDController(STRAFE_P_GAIN, STRAFE_I_GAIN, STRAFE_D_GAIN);

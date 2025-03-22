@@ -73,14 +73,14 @@ public class Constants {
   public static double maxSpeed = 0.6;
 
   public class VisionConstants {
-    public static final double errorThreshHoldMeters = 0.025;
-    public static final double errorThreshHoldStrafeMeters = 0.025;
-    public static final double errorThreshHoldRadians = 0.0349065850399 / 1.5;
+    public static final double errorThreshHoldMeters = 0.01;
+    public static final double errorThreshHoldStrafeMeters = 0.01;
+    public static final double errorThreshHoldRadians = 0.0349065850399 * 1.375;
     public static final int tagFindingTries = 15;
 
     public class FrontCameraValues {
       /** Name of the Camera */
-      public static final String cameraName = "HD_Web_Camera";
+      public static final String cameraName = "Front_Camera";
       /** Position of the Camera Relative to the Robot */
       public static final Transform3d cameraToRobot =
           new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
@@ -88,7 +88,7 @@ public class Constants {
 
     public class BackCameraValues {
       /** Name of the Camera */
-      public static final String cameraName = "USB_Camera";
+      public static final String cameraName = "Back_Camera";
 
       /** Camera Position Relative to the Robot */
       public static final Transform3d cameraToRobot =
@@ -190,13 +190,15 @@ public class Constants {
     public class L4 {
       public static final double elevatorPose = 17900;
       public static final double wristPose = 13200;
-      public static final double desiredXTagDistanceMeters = 0.65;
-      public static final double leftDesiredYTagDistanceMeters = 0.04;
+      public static final double desiredXTagDistanceMeters = 0.55;
+      public static final double leftDesiredYTagDistanceMeters = -0.20;
     }
 
     public class L3 {
       public static final double elevatorPose = 9930;
       public static final double wristPose = 14530;
+      public static final double desiredXTagDistanceMeters = 0.39;
+      public static final double leftDesiredYTagDistanceMeters = -0.15;
     }
 
     public class L2 {
@@ -214,10 +216,10 @@ public class Constants {
     }
 
     public class HumanPickup {
-      public static final double elevatorPose = 800;
+      public static final double elevatorPose = 1100;
       public static final double wristPose = 5050;
-      public static final double desiredXTagDistanceMeters = 0.89;
-      public static final double desiredYTagDistanceMeters = -0.23;
+      public static final double desiredXTagDistanceMeters = 0.73;
+      public static final double desiredYTagDistanceMeters = -0.24;
     }
   }
 }

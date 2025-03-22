@@ -9,12 +9,6 @@
           "data": {
             "pathName": "Score"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Pickup From Reef"
-          }
         }
       ]
     }

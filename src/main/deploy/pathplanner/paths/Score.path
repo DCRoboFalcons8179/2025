@@ -8,34 +8,61 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.090785179776919,
-        "y": 1.0256255151218685
+        "x": 5.333543520644332,
+        "y": 1.311223563201175
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.077,
-        "y": 2.025
+        "x": 3.477156208128828,
+        "y": 2.5821348771540986
       },
       "prevControl": {
-        "x": 2.562923513457245,
-        "y": 2.2534784384634463
+        "x": 4.391069961982615,
+        "y": 2.9105726324453043
+      },
+      "nextControl": {
+        "x": 2.992375740112479,
+        "y": 2.4079168964607227
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7635679196529772,
+        "y": 1.4968622944527272
+      },
+      "prevControl": {
+        "x": 1.9749587832039217,
+        "y": 1.630331027896879
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 56.309932474020286
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
       "name": "AlignToReef",
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 1.0047600581037073,
       "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "AlignToHumanPickup",
+      "waypointRelativePos": 1.6698557820490805,
+      "endWaypointRelativePos": 2.0,
       "command": null
     }
   ],
@@ -49,7 +76,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 52.12501634890182
+    "rotation": -126.1193408494798
   },
   "reversed": false,
   "folder": null,

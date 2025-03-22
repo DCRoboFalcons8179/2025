@@ -64,6 +64,7 @@ public class ControllerButtons {
 
     // Vision
     // Reef
+    // L4
     commandXboxController
         .povUp()
         .whileTrue(
@@ -72,9 +73,19 @@ public class ControllerButtons {
                 frontCamera,
                 commandXboxController,
                 Constants.SetPoints.L4.desiredXTagDistanceMeters,
-                Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
-            // .andThen(new L4(elevatorSub, coralSub))
-            );
+                Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
+
+    // L3
+    commandXboxController
+        .povLeft()
+        .whileTrue(
+            new AlignToTag(
+                drive,
+                frontCamera,
+                commandXboxController,
+                Constants.SetPoints.L3.desiredXTagDistanceMeters,
+                Constants.SetPoints.L3.leftDesiredYTagDistanceMeters));
+
     // Human Pickups
     commandXboxController
         .povDown()
