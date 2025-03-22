@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
 import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.vision.Vision;
@@ -26,19 +28,35 @@ public class Aprilign {
 
     double angle = transform3d.getRotation().getAngle();
 
-    double targetX = offsetX * Math.cos(angle) - offsetY * Math.sin(angle);
-    double targetY = offsetX * Math.sin(angle) + offsetY * Math.cos(angle);
+    // double targetX = offsetX * Math.cos(angle) - offsetY * Math.sin(angle);
+    // double targetY = offsetX * Math.sin(angle) + offsetY * Math.cos(angle);
 
-    // targetRobotPoseBeforeAprilTag =
-    // new Pose2d(
-    //     poseX + transform3d.getX() + rotatedOffsetX,
-    //     poseY + transform3d.getY() + rotatedOffsetY,
-    // transform3d.getRotation().toRotation2d());
+    double theta = drive.getRotation().getRadians();
+    double phi = transform3d.getZ();
+    double ct = Math.cos(theta);
+    double st = Math.sin(theta);
+    double cp = Math.cos(phi);
+    double sp = Math.sin(phi);
+
+    double distX = newVision.getDistanceX();
+    double distY = newVision.getDistanceY();
+
+    double deltaX = -distX * st + distY * ct + (offsetX * cp + offsetY * sp) * ct + (offsetX * cp - offsetY * sp) * st;
+    double deltaY = +distX * ct + distY * st + (offsetX * cp + offsetY * sp) * st + (offsetX * sp - offsetY * cp) * ct;
+
+    double targetX = poseX + deltaX;
+    double targetY = poseY + deltaY;
+
+    targetRobotPoseBeforeAprilTag = new Pose2d(targetX, targetY, new Rotation2d(theta + phi));
 
     waypoints = PathPlannerPath.waypointsFromPoses(drive.getPose(), targetRobotPoseBeforeAprilTag);
 
-    constraints =
-        new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+    constraints = null;
+        // new PathConstraints(
+        //   3.0, 
+        //   .0,
+          
+        // ); // The constraints for this path.
     // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also use
     // unlimited constraints, only limited by motor torque and nominal battery voltage
 
@@ -46,8 +64,8 @@ public class Aprilign {
     path =
         new PathPlannerPath(
             waypoints,
-            constraints,
-            null, // The ideal starting state, this is only relevant for pre-planned paths, so can
+            constraints, // null
+            new IdealStartingState(drive.getAverageSpeed(), null), // The ideal starting state, this is only relevant for pre-planned paths, so can
             // be null for on-the-fly paths.
             new GoalEndState(
                 0.0,
