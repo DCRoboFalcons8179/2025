@@ -30,9 +30,7 @@ public class CoralSub extends SubsystemBase {
   /** Encoder for the wrist motor */
   RelativeEncoder wristEncoder = wristMotor.getEncoder();
 
-  private final ElevatorSub elevatorSub;
-
-  public CoralSub(ElevatorSub elevatorSub) {
+  public CoralSub() {
     SparkMaxConfig wristConfig = new SparkMaxConfig();
 
     wristConfig.inverted(false).idleMode(IdleMode.kBrake);
@@ -55,8 +53,6 @@ public class CoralSub extends SubsystemBase {
 
     // Set the coral motor to brake mode
     coralMotor.setNeutralMode(NeutralMode.Brake);
-
-    this.elevatorSub = elevatorSub;
   }
 
   /**
@@ -79,7 +75,7 @@ public class CoralSub extends SubsystemBase {
   }
 
   // Move the wrist motor to a specific position
-  double desiredPos = 0;
+  double desiredPos = 1000;
 
   public void moveWrist(double position) {
     desiredPos = position;
@@ -101,9 +97,7 @@ public class CoralSub extends SubsystemBase {
         Filter.cutoffFilter(
             desiredPos,
             Constants.CoralConstants.Wrist.maxPose,
-            elevatorSub.getPose() > Constants.ElevatorConstants.avoidanceHeight
-                ? 1000
-                : Constants.CoralConstants.Wrist.minPose);
+            Constants.CoralConstants.Wrist.minPose);
 
     SmartDashboard.putNumber("Wrist Desired Position", limitedPose);
 
@@ -118,6 +112,7 @@ public class CoralSub extends SubsystemBase {
    * @param position The position to move the wrist motor to go to
    */
   public void goToPose(double position) {
+    System.out.println(position);
     desiredPos = position;
   }
 

@@ -78,7 +78,8 @@ public class ControllerButtons {
     // Human Pickups
     commandXboxController
         .povDown()
-        .whileTrue(new HumanPickup(topCamera, drive, commandXboxController));
+        .whileTrue(new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController))
+        .onFalse(new MoveCoral(() -> 0, coralSub));
 
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));

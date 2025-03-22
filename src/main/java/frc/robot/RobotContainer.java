@@ -38,7 +38,6 @@ import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
-import frc.robot.subsystems.Music;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -58,7 +57,6 @@ public class RobotContainer {
 
   // Subsystems
   public final Drive drive;
-  private Music music;
   public final HookSub hookSub;
   private final ElevatorSub elevatorSub;
   private final CoralSub coralSub;
@@ -81,7 +79,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Set up auto routines
     elevatorSub = new ElevatorSub();
-    coralSub = new CoralSub(elevatorSub);
+    coralSub = new CoralSub();
     algaeSub = new AlgaeSub();
     hookSub = new HookSub();
 
@@ -93,7 +91,6 @@ public class RobotContainer {
         ModuleIOTalonFX backLeft = new ModuleIOTalonFX(TunerConstants.BackLeft);
         ModuleIOTalonFX backRight = new ModuleIOTalonFX(TunerConstants.BackRight);
 
-        music = new Music(frontLeft, frontRight, backLeft, backRight);
         configMusicButtonBindings();
 
         // Real robot, instantiate hardware IO implementations
@@ -156,10 +153,11 @@ public class RobotContainer {
         .onTrue(
             new SequentialCommandGroup(
                 // new MaintainAll(drive, visionSub),
-                new MoveCoral(() -> 1, coralSub),
-                new AutoElevator(() -> 17000, elevatorSub),
-                new AutoWrist(() -> 950, coralSub).withTimeout(1.5),
-                new AutoCoral(() -> -1, coralSub).withTimeout(0.5),
+                new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
+                new AutoElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub),
+                new AutoWrist(() -> Constants.SetPoints.L4.wristPose, coralSub).withTimeout(1.5),
+                new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
+                    .withTimeout(0.5),
                 new AutoElevator(() -> 0, elevatorSub).withTimeout(1.2),
                 new InstantCommand(() -> elevatorSub.resetPose()),
                 new AutoCoral(() -> 0, coralSub),
@@ -175,7 +173,7 @@ public class RobotContainer {
                 Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
 
     new EventTrigger("AlignToHumanPickup")
-        .onTrue(new HumanPickup(topCamera, drive, commandXboxController));
+        .onTrue(new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController));
   }
 
   public void periodic() {

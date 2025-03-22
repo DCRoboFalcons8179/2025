@@ -7,6 +7,11 @@ package frc.robot.commands.vision;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
+import frc.robot.commands.coral.MoveCoral;
+import frc.robot.commands.elevator.MoveElevator;
+import frc.robot.commands.wrist.MoveWrist;
+import frc.robot.subsystems.CoralSub;
+import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.vision.TopCamera;
 
@@ -16,10 +21,17 @@ import frc.robot.subsystems.vision.TopCamera;
 public class HumanPickup extends SequentialCommandGroup {
   /** Creates a new Human. */
   public HumanPickup(
-      TopCamera frontCamera, Drive drive, CommandXboxController commandXboxController) {
+      TopCamera frontCamera,
+      Drive drive,
+      ElevatorSub elevatorSub,
+      CoralSub coralSub,
+      CommandXboxController commandXboxController) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+        new MoveElevator(() -> Constants.SetPoints.HumanPickup.elevatorPose, elevatorSub),
+        new MoveWrist(() -> Constants.SetPoints.HumanPickup.wristPose, coralSub),
+        new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
         new AlignToTag(
             drive,
             frontCamera,

@@ -25,7 +25,11 @@ public class BoxButtons {
       CommandJoystick boxLeft,
       CommandJoystick boxRight) {
     // Human Player
-    boxRight.button(8).onTrue(new MoveElevator(() -> 2300, elevatorSub));
+    boxRight
+        .button(8)
+        .onTrue(
+            new MoveElevator(() -> Constants.SetPoints.HumanPickup.elevatorPose, elevatorSub)
+                .andThen(new MoveWrist(() -> Constants.SetPoints.HumanPickup.wristPose, coralSub)));
 
     // Reef Setpoints
     // L1
@@ -71,9 +75,9 @@ public class BoxButtons {
     // SetPoints
 
     // Raw Wrist Control
-    // Up
-    boxLeft.button(7).onTrue(new RawWrist(() -> -200, coralSub));
     // Down
+    boxLeft.button(7).onTrue(new RawWrist(() -> -200, coralSub));
+    // Up
     boxLeft.button(5).onTrue(new RawWrist(() -> 200, coralSub));
 
     // Raw Elevator Control

@@ -73,11 +73,10 @@ public class Constants {
   public static double maxSpeed = 0.6;
 
   public class VisionConstants {
-    public static final double errorThreshHoldMeters = 0.05;
-    public static final double errorThreshHoldStrafeMeters = 0.05;
+    public static final double errorThreshHoldMeters = 0.025;
+    public static final double errorThreshHoldStrafeMeters = 0.025;
     public static final double errorThreshHoldRadians = 0.0349065850399 / 1.5;
     public static final int tagFindingTries = 15;
-    public static final double desiredXTagDistanceMeters = 0.65;
 
     public class FrontCameraValues {
       /** Name of the Camera */
@@ -115,7 +114,7 @@ public class Constants {
       // public static final double kD = kP / 10000 * 2;
       public static final double kF = 0;
 
-      public static final double minPose = 500;
+      public static final double minPose = 1000;
       public static final double maxPose = 18530;
     }
 
@@ -127,7 +126,7 @@ public class Constants {
       public static final double kV = 0;
 
       public static final double outputSpeed = 0.5;
-      public static final double inputSpeed = -0.2;
+      public static final double inputSpeed = -0.5;
     }
   }
 
@@ -211,12 +210,14 @@ public class Constants {
 
     public class Home {
       public static final double elevatorPose = 0;
-      public static final double wristPose = 250;
+      public static final double wristPose = 1000;
     }
 
     public class HumanPickup {
-      public static final double desiredXTagDistanceMeters = 0.73;
-      public static final double desiredYTagDistanceMeters = 0;
+      public static final double elevatorPose = 800;
+      public static final double wristPose = 5050;
+      public static final double desiredXTagDistanceMeters = 0.89;
+      public static final double desiredYTagDistanceMeters = -0.23;
     }
   }
 }
