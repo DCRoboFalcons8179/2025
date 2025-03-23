@@ -21,25 +21,6 @@
           "data": {
             "name": "ScoreL4Left"
           }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Pickup From Human"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignToHumanPickup"
-                }
-              }
-            ]
-          }
         }
       ]
     }
