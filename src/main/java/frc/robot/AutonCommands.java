@@ -1,10 +1,8 @@
 package frc.robot;
 
-import com.fasterxml.jackson.databind.ext.SqlBlobSerializer;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -16,7 +14,6 @@ import frc.robot.commands.elevator.MoveElevator;
 import frc.robot.commands.setpoints.Home;
 import frc.robot.commands.setpoints.L4;
 import frc.robot.commands.vision.AlignToTag;
-import frc.robot.commands.vision.Aprilign;
 import frc.robot.commands.vision.HumanPickup;
 import frc.robot.commands.wrist.AutoWrist;
 import frc.robot.commands.wrist.MoveWrist;
@@ -69,7 +66,7 @@ public class AutonCommands {
                     drive,
                     frontCamera,
                     commandXboxController,
-                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.rightDesiredXTagDistanceMeters,
                     Constants.SetPoints.L4.rightDesiredYTagDistanceMeters),
                 new Home(elevatorSub, coralSub)));
 
@@ -91,7 +88,7 @@ public class AutonCommands {
                     drive,
                     frontCamera,
                     commandXboxController,
-                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
                     Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
                 DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                     .withTimeout(0.001)));
@@ -112,12 +109,4 @@ public class AutonCommands {
                 DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                     .withTimeout(0.001)));
   }
-        NamedCommands.registerCommand(
-            "AlignToHumanPickup",
-            new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController));
-
-        NamedCommands.registerCommand(
-            "Aprilign",
-            new Aprilign(drive, frontCamera, 0, 20));
-    }
 }
