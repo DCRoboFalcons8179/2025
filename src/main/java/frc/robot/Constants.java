@@ -73,9 +73,9 @@ public class Constants {
   public static double maxSpeed = 0.6;
 
   public class VisionConstants {
-    public static final double errorThreshHoldMeters = 0.0075;
-    public static final double errorThreshHoldStrafeMeters = 0.0075;
-    public static final double errorThreshHoldRadians = 0.0349065850399 * 1.375;
+    public static final double errorThreshHoldMeters = 0.005;
+    public static final double errorThreshHoldStrafeMeters = 0.005;
+    public static final double errorThreshHoldRadians = 0.0349065850399 * 0.75;
     public static final int tagFindingTries = 15;
 
     public class FrontCameraValues {
@@ -188,11 +188,12 @@ public class Constants {
 
   public class SetPoints {
     public class L4 {
-      public static final double elevatorPose = 17900;
+      public static final double elevatorPose = 17800;
       public static final double wristPose = 13200;
-      public static final double desiredXTagDistanceMeters = 0.55;
+      public static final double leftDesiredXTagDistanceMeters = 0.58;
       public static final double leftDesiredYTagDistanceMeters = -0.20;
-      public static final double rightDesiredYTagDistanceMeters = 0.20;
+      public static final double rightDesiredXTagDistanceMeters = 0.56;
+      public static final double rightDesiredYTagDistanceMeters = 0.21;
     }
 
     public class L3 {
@@ -219,8 +220,8 @@ public class Constants {
     public class HumanPickup {
       public static final double elevatorPose = 1100;
       public static final double wristPose = 5050;
-      public static final double desiredXTagDistanceMeters = 0.73;
-      public static final double desiredYTagDistanceMeters = -0.24;
+      public static final double desiredXTagDistanceMeters = 0.67;
+      public static final double desiredYTagDistanceMeters = -0.20;
     }
   }
 }

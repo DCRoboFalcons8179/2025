@@ -5,60 +5,51 @@
     "data": {
       "commands": [
         {
-          "type": "sequential",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Score From Barge"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ScoreL4Left"
-                }
-              }
-            ]
+            "pathName": "Score From Barge"
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Pickup From Human"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignToHumanPickup"
-                }
-              }
-            ]
+            "name": "AlignToReef"
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Score From Human"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ScoreL4Right"
-                }
-              }
-            ]
+            "name": "ScoreL4Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Pickup From Human"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToHumanPickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score From Human"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReefRight"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Right"
           }
         }
       ]

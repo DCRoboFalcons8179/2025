@@ -72,7 +72,7 @@ public class ControllerButtons {
                 drive,
                 frontCamera,
                 commandXboxController,
-                Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
                 Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
 
     // L3
@@ -91,6 +91,16 @@ public class ControllerButtons {
         .povDown()
         .whileTrue(new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController))
         .onFalse(new MoveCoral(() -> 0, coralSub));
+
+    commandXboxController
+        .povLeft()
+        .whileTrue(
+            new AlignToTag(
+                drive,
+                frontCamera,
+                commandXboxController,
+                Constants.SetPoints.L4.rightDesiredXTagDistanceMeters,
+                Constants.SetPoints.L4.rightDesiredYTagDistanceMeters));
 
     // // Coral Tilting
     // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
