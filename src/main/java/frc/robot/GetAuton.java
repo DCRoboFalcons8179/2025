@@ -59,7 +59,8 @@ public class GetAuton {
               "CenterStartToL4Basic",
               "Belleville Playoffs Auto",
               "1 Piece L4",
-              "2 Piece L4"));
+              "2 Piece L4",
+              "Aprilign Test"));
 
   public static String getAutonName(int index) {
     return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);
