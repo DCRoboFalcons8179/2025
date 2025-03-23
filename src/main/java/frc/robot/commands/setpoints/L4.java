@@ -6,7 +6,7 @@ package frc.robot.commands.setpoints;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.elevator.MoveElevator;
+import frc.robot.commands.elevator.AutoElevator;
 import frc.robot.commands.wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
@@ -20,7 +20,7 @@ public class L4 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new MoveElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub),
+        new AutoElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub),
         new MoveWrist(() -> Constants.SetPoints.L4.wristPose, coralSub));
   }
 }

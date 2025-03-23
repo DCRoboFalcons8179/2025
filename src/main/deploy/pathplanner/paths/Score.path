@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.333543520644332,
-        "y": 1.311223563201175
+        "x": 6.665437935494087,
+        "y": 2.8866100414379217
       },
       "isLocked": false,
       "linkedName": null
@@ -20,24 +20,8 @@
         "y": 2.5821348771540986
       },
       "prevControl": {
-        "x": 4.448189571598476,
-        "y": 2.525015267538238
-      },
-      "nextControl": {
-        "x": 2.9629101982589,
-        "y": 2.6123846424405643
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.7635679196529772,
-        "y": 1.4968622944527272
-      },
-      "prevControl": {
-        "x": 1.9749587832039217,
-        "y": 1.630331027896879
+        "x": 3.8896100018475503,
+        "y": 2.0110323519320095
       },
       "nextControl": null,
       "isLocked": false,
@@ -52,20 +36,7 @@
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "AlignToReef",
-      "waypointRelativePos": 1.0047600581037073,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "AlignToHumanPickup",
-      "waypointRelativePos": 1.6698557820490805,
-      "endWaypointRelativePos": 2.0,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
@@ -76,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -126.1193408494798
+    "rotation": 56.45933835105859
   },
   "reversed": false,
   "folder": null,

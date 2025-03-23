@@ -192,6 +192,7 @@ public class Constants {
       public static final double wristPose = 13200;
       public static final double desiredXTagDistanceMeters = 0.55;
       public static final double leftDesiredYTagDistanceMeters = -0.20;
+      public static final double rightDesiredYTagDistanceMeters = 0.20;
     }
 
     public class L3 {

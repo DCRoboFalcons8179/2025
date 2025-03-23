@@ -3,10 +3,12 @@
   "robotLength": 0.965,
   "holonomicMode": true,
   "pathFolders": [
+    "Field Paths",
     "New Folder",
-    "Field Paths"
+    "Scoring"
   ],
   "autoFolders": [
+    "Scoring",
     "Testing"
   ],
   "defaultMaxVel": 5.0,

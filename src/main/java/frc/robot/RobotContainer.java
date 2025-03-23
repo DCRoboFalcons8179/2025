@@ -14,25 +14,13 @@
 package frc.robot;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.events.EventTrigger;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.DriveCommands;
-import frc.robot.commands.coral.AutoCoral;
-import frc.robot.commands.coral.MoveCoral;
-import frc.robot.commands.elevator.AutoElevator;
-import frc.robot.commands.elevator.MoveElevator;
 import frc.robot.commands.elevator.UpdateElevatorPose;
-import frc.robot.commands.vision.AlignToTag;
-import frc.robot.commands.vision.HumanPickup;
-import frc.robot.commands.wrist.AutoWrist;
-import frc.robot.commands.wrist.MoveWrist;
 import frc.robot.commands.wrist.UpdateWristPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeSub;
@@ -49,9 +37,12 @@ import frc.robot.subsystems.vision.FrontCamera;
 import frc.robot.subsystems.vision.TopCamera;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -76,7 +67,9 @@ public class RobotContainer {
   // Dashboard inputs
   // private final LoggedDashboardChooser<Command> autoChooser;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Set up auto routines
     elevatorSub = new ElevatorSub();
@@ -95,91 +88,44 @@ public class RobotContainer {
         configMusicButtonBindings();
 
         // Real robot, instantiate hardware IO implementations
-        drive =
-            new Drive(new GyroIOPigeon2(), frontLeft, frontRight, backLeft, backRight, elevatorSub);
+        drive = new Drive(new GyroIOPigeon2(), frontLeft, frontRight, backLeft, backRight, elevatorSub);
 
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(TunerConstants.FrontLeft),
-                new ModuleIOSim(TunerConstants.FrontRight),
-                new ModuleIOSim(TunerConstants.BackLeft),
-                new ModuleIOSim(TunerConstants.BackRight),
-                elevatorSub);
+        drive = new Drive(
+            new GyroIO() {
+            },
+            new ModuleIOSim(TunerConstants.FrontLeft),
+            new ModuleIOSim(TunerConstants.FrontRight),
+            new ModuleIOSim(TunerConstants.BackLeft),
+            new ModuleIOSim(TunerConstants.BackRight),
+            elevatorSub);
 
         break;
 
       default:
         // Replayed robot, disable IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                elevatorSub);
+        drive = new Drive(
+            new GyroIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            elevatorSub);
         break;
     }
 
-    // Add the autoChooser dropdown to Shuffleboard
-    // ShuffleboardTab tab = Shuffleboard.getTab("Autonomous");
-    // tab.add("Auto Path",
-    // autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
-
     // Configure the button bindings
     configureButtonBindings();
-    // autoChooser = new LoggedDashboardChooser<>("Auto Choices",
-    // AutoBuilder.buildAutoChooser());
 
-    new EventTrigger("ResetAll")
-        .onTrue(
-            new MoveElevator(() -> 0, elevatorSub)
-                .andThen(new MoveWrist(() -> 0, coralSub))
-                .andThen(new MoveCoral(() -> 0, coralSub)));
-
-    new EventTrigger("ScoreTroph").onTrue(new MoveElevator(() -> 0, elevatorSub));
-    // .andThen(new MoveWrist(() -> 900, coralSub))
-    // .andThen(new MoveCoral(() -> -1, coralSub)));
-
-    new EventTrigger("HumanCoral")
-        .onTrue(
-            new MoveElevator(() -> 2300, elevatorSub)
-                .andThen(new MoveWrist(() -> 0, coralSub))
-                .andThen(new MoveCoral(() -> 1, coralSub)));
-    new EventTrigger("ScoreL4")
-        .onTrue(
-            new SequentialCommandGroup(
-                // new MaintainAll(drive, visionSub),
-                ));
-
-    new EventTrigger("AlignToReef")
-        .whileTrue(
-            new SequentialCommandGroup(
-                new AlignToTag(
-                    drive,
-                    frontCamera,
-                    commandXboxController,
-                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
-                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
-                DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
-                    .withTimeout(0.0001),
-                new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
-                new AutoElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
-                    .withTimeout(0.5),
-                new AutoWrist(() -> Constants.SetPoints.L4.wristPose, coralSub).withTimeout(1.5),
-                new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
-                    .withTimeout(0.5),
-                new MoveElevator(() -> 0, elevatorSub),
-                new InstantCommand(() -> elevatorSub.resetPose()),
-                new MoveCoral(() -> 0, coralSub),
-                new AutoWrist(() -> 0, coralSub)));
-    new EventTrigger("AlignToHumanPickup")
-        .onTrue(new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController));
+    AutonCommands.GenCommands(drive, elevatorSub, coralSub, commandXboxController, topCamera, frontCamera);
   }
 
   public void periodic() {
@@ -192,9 +138,11 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {

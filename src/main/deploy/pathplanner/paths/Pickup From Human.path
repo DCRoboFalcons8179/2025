@@ -31,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "AlignToHumanPickup",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
@@ -52,7 +45,7 @@
     "rotation": -126.86989764584412
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Scoring",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 57.80426606528683

@@ -96,6 +96,7 @@ public class ElevatorSub extends SubsystemBase {
     SmartDashboard.putNumber("Elevator Follower Position", followerEncoder.getPosition());
     SmartDashboard.putNumber("Limited Desired Position", limitedDesiredPos);
     SmartDashboard.putNumber("Desired Elevator Position", desiredPose);
+    SmartDashboard.putBoolean("Elevator At Pose", atPose());
   }
 
   public double getPose() {
@@ -151,7 +152,7 @@ public class ElevatorSub extends SubsystemBase {
     }
   }
 
-  public boolean atHeight() {
+  public boolean atPose() {
     return Math.abs(desiredPose - getPose()) < 500;
   }
 }
