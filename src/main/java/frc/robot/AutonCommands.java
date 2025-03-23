@@ -1,7 +1,10 @@
 package frc.robot;
 
+import com.fasterxml.jackson.databind.ext.SqlBlobSerializer;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -13,6 +16,7 @@ import frc.robot.commands.elevator.MoveElevator;
 import frc.robot.commands.setpoints.Home;
 import frc.robot.commands.setpoints.L4;
 import frc.robot.commands.vision.AlignToTag;
+import frc.robot.commands.vision.Aprilign;
 import frc.robot.commands.vision.HumanPickup;
 import frc.robot.commands.wrist.AutoWrist;
 import frc.robot.commands.wrist.MoveWrist;
@@ -30,40 +34,44 @@ public class AutonCommands {
       CommandXboxController commandXboxController,
       TopCamera topCamera,
       FrontCamera frontCamera) {
-    new EventTrigger("ResetAll")
-        .onTrue(
-            new MoveElevator(() -> 0, elevatorSub)
+        new EventTrigger("ResetAll")
+            .onTrue(
+                new MoveElevator(() -> 0, elevatorSub)
+                    .andThen(new MoveWrist(() -> 0, coralSub))
+                    .andThen(new MoveCoral(() -> 0, coralSub)));
+
+        NamedCommands.registerCommand("ScoreTroph", new MoveElevator(() -> 0, elevatorSub));
+
+        NamedCommands.registerCommand(
+            "HumanCoral",
+            new MoveElevator(() -> 2300, elevatorSub)
                 .andThen(new MoveWrist(() -> 0, coralSub))
-                .andThen(new MoveCoral(() -> 0, coralSub)));
+                .andThen(new MoveCoral(() -> 1, coralSub)));
+        NamedCommands.registerCommand(
+            "ScoreL4Left",
+            new SequentialCommandGroup(
+                new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
+                new AutoElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
+                    .withTimeout(0.5),
+                new AutoWrist(() -> Constants.SetPoints.L4.wristPose, coralSub).withTimeout(1.5),
+                new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
+                    .withTimeout(0.5),
+                new MoveElevator(() -> 0, elevatorSub),
+                new InstantCommand(() -> elevatorSub.resetPose()),
+                new MoveCoral(() -> 0, coralSub),
+                new AutoWrist(() -> 0, coralSub)));
 
-    NamedCommands.registerCommand("ScoreTroph", new MoveElevator(() -> 0, elevatorSub));
-
-    NamedCommands.registerCommand(
-        "HumanCoral",
-        new MoveElevator(() -> 2300, elevatorSub)
-            .andThen(new MoveWrist(() -> 0, coralSub))
-            .andThen(new MoveCoral(() -> 1, coralSub)));
-    NamedCommands.registerCommand(
-        "ScoreL4Left",
-        new SequentialCommandGroup(
-            new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
-            new AutoElevator(() -> Constants.SetPoints.L4.elevatorPose, elevatorSub)
-                .withTimeout(0.5),
-            new AutoWrist(() -> Constants.SetPoints.L4.wristPose, coralSub).withTimeout(1.5),
-            new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
-                .withTimeout(0.5),
-            new MoveElevator(() -> 0, elevatorSub),
-            new InstantCommand(() -> elevatorSub.resetPose()),
-            new MoveCoral(() -> 0, coralSub),
-            new MoveWrist(() -> 0, coralSub)));
-
-    NamedCommands.registerCommand(
-        "ScoreL4Right",
-        new SequentialCommandGroup(
-            new L4(elevatorSub, coralSub).withTimeout(2),
-            new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
-                .withTimeout(1),
-            new Home(elevatorSub, coralSub)));
+        NamedCommands.registerCommand(
+            "ScoreL4Right",
+            new SequentialCommandGroup(
+                new L4(elevatorSub, coralSub),
+                new AlignToTag(
+                    drive,
+                    frontCamera,
+                    commandXboxController,
+                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.rightDesiredYTagDistanceMeters),
+                new Home(elevatorSub, coralSub)));
 
     NamedCommands.registerCommand(
         "AlignToReef",
@@ -76,6 +84,17 @@ public class AutonCommands {
                 Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
             DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                 .withTimeout(0.001)));
+        NamedCommands.registerCommand(
+            "AlignToReef",
+            new SequentialCommandGroup(
+                new AlignToTag(
+                    drive,
+                    frontCamera,
+                    commandXboxController,
+                    Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
+                DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
+                    .withTimeout(0.001)));
 
     NamedCommands.registerCommand(
         "AlignToReefRight",
@@ -93,4 +112,12 @@ public class AutonCommands {
                 DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                     .withTimeout(0.001)));
   }
+        NamedCommands.registerCommand(
+            "AlignToHumanPickup",
+            new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController));
+
+        NamedCommands.registerCommand(
+            "Aprilign",
+            new Aprilign(drive, frontCamera, 0, 20));
+    }
 }
