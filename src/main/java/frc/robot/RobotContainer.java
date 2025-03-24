@@ -116,9 +116,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-
-    AutonCommands.GenCommands(
-        drive, elevatorSub, coralSub, commandXboxController, topCamera, frontCamera);
   }
 
   public void periodic() {
