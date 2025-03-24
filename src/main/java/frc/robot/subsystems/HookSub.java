@@ -20,7 +20,7 @@ public class HookSub extends SubsystemBase {
   private final PositionVoltage positionControl = new PositionVoltage(0);
 
   /** Desired position for the hook */
-  private double desiredPosition = 0;
+  // private double desiredPosition = 0;
 
   /** State to track if the hook is in hanging mode */
   private boolean hung = false;

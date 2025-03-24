@@ -1,7 +1,6 @@
 package frc.robot.commands.vision;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
@@ -10,22 +9,12 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.vision.FrontCamera;
 import frc.robot.subsystems.vision.Vision;
 import java.util.List;
 
 public class Aprilign extends Command {
-
-  private Vision visionSub;
-  private Drive drive;
-
   private static Pose2d targetRobotPoseBeforeAprilTag;
   private static List<Waypoint> waypoints;
   private static PathConstraints constraints;
@@ -42,9 +31,6 @@ public class Aprilign extends Command {
   }
 
   public Aprilign(Drive drive, Vision visionSub, double offsetX, double offsetY) {
-    this.drive = drive;
-    this.visionSub = visionSub;
-
     if (visionSub.getTargetID() != -1) {
       Transform3d transform3d = visionSub.getTransform3To3dTarget();
 
