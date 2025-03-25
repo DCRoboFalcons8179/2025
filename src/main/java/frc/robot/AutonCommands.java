@@ -101,6 +101,6 @@ public class AutonCommands {
 
         NamedCommands.registerCommand(
                 "Aprilign",
-                new Aprilign(drive, frontCamera, 0, 20));
+                new Aprilign(drive, frontCamera, 0, 0.6));
     }
 }

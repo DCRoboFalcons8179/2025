@@ -15,12 +15,16 @@ import frc.robot.subsystems.vision.Vision;
 import java.util.List;
 
 public class Aprilign extends Command {
+  private final Drive drive;
+  private final Vision visionSub;
+  private final double offsetX;
+  private final double offsetY;
+  private Command followPathCommand;
+  private PathPlannerPath path;
+
   private static Pose2d targetRobotPoseBeforeAprilTag;
   private static List<Waypoint> waypoints;
   private static PathConstraints constraints;
-  private static PathPlannerPath path;
-
-  private static Command followPathCommand;
 
   public PathPlannerPath getPath() {
     return path;
@@ -31,11 +35,23 @@ public class Aprilign extends Command {
   }
 
   public Aprilign(Drive drive, Vision visionSub, double offsetX, double offsetY) {
-    if (visionSub.getTargetID() != -1) {
+    this.drive drive;
+    this.visionSub = visionSub;
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
+    
+    addRequirements(drive, visionSub);
+  }
+
+  @Override
+  public void initialize() {
+    Pose2d currentPose = drive.getPose();
+    if (visionSub.getTargetID() != -1 && !Double.isNan(visionSub.getFrontCameraYaw())) {
+
       Transform3d transform3d = visionSub.getTransform3To3dTarget();
 
-      double poseX = drive.getPose().getX();
-      double poseY = drive.getPose().getY();
+      double poseX = currentPose.getX();
+      double poseY = currentPose.getY();
 
       double angle = transform3d.getRotation().getAngle();
 
@@ -116,25 +132,30 @@ public class Aprilign extends Command {
   }
 
   @Override
-    public void initialize() {
-        // Set up and start the path-following process
-        followPathCommand = AutoBuilder.followPath(path);
-    }
+  public void initialize() {
+      // Set up and start the path-following process
+      followPathCommand = AutoBuilder.followPath(path);
+  }
 
-    @Override
-    public void execute() {
-        // Continuously update the path-following
-        followPathCommand.execute();
+  @Override
+  public void execute() {
+    // Continuously update the path-following
+    if (followPathCommand != null) {
+      followPathCommand.execute();
     }
+  }
 
-    @Override
-    public boolean isFinished() {
-        return followPathCommand.isFinished();
-    }
+  @Override
+  public boolean isFinished() {
+    return followPathCommand != null && followPathCommand.isFinished();
+  }
 
-    @Override
-    public void end(boolean interrupted) {
-        // Optionally stop or clean up any path-following behavior if the command is interrupted
-        followPathCommand.end(interrupted);
+  @Override
+  public void end(boolean interrupted) {
+    // Optionally stop or clean up any path-following behavior if the command is interrupted
+    if (followPathCommand != null) {
+      followPathCommand.end(interrupted);
     }
+    drive.drive(0, 0, 0, true);
+  }
 }
