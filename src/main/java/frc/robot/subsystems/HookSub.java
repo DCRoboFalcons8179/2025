@@ -80,7 +80,6 @@ public class HookSub extends SubsystemBase {
   public void hang(double power) {
     // applies the commanded power to the hook motor for hanging
     hook.set(power);
-    hung = true;
   }
 
   /**

@@ -33,7 +33,7 @@ public class ReefScore extends SequentialCommandGroup {
             drive,
             frontCamera,
             commandXboxController,
-            Constants.SetPoints.L4.desiredXTagDistanceMeters,
+            Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
             Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
 
     switch (level) {

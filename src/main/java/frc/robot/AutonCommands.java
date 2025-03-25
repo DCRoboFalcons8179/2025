@@ -55,18 +55,14 @@ public class AutonCommands {
             new MoveElevator(() -> 0, elevatorSub),
             new InstantCommand(() -> elevatorSub.resetPose()),
             new MoveCoral(() -> 0, coralSub),
-            new AutoWrist(() -> 0, coralSub)));
+            new MoveWrist(() -> 0, coralSub)));
 
     NamedCommands.registerCommand(
         "ScoreL4Right",
         new SequentialCommandGroup(
-            new L4(elevatorSub, coralSub),
-            new AlignToTag(
-                drive,
-                frontCamera,
-                commandXboxController,
-                Constants.SetPoints.L4.desiredXTagDistanceMeters,
-                Constants.SetPoints.L4.rightDesiredYTagDistanceMeters),
+            new L4(elevatorSub, coralSub).withTimeout(2),
+            new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
+                .withTimeout(1),
             new Home(elevatorSub, coralSub)));
 
     NamedCommands.registerCommand(
@@ -76,13 +72,25 @@ public class AutonCommands {
                 drive,
                 frontCamera,
                 commandXboxController,
-                Constants.SetPoints.L4.desiredXTagDistanceMeters,
+                Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
                 Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
             DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                 .withTimeout(0.001)));
 
     NamedCommands.registerCommand(
+        "AlignToReefRight",
+        new AlignToTag(
+            drive,
+            frontCamera,
+            commandXboxController,
+            Constants.SetPoints.L4.rightDesiredXTagDistanceMeters,
+            Constants.SetPoints.L4.rightDesiredYTagDistanceMeters));
+
+    NamedCommands.registerCommand(
         "AlignToHumanPickup",
-        new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController));
+        new HumanPickup(topCamera, drive, elevatorSub, coralSub, commandXboxController)
+            .andThen(
+                DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
+                    .withTimeout(0.001)));
   }
 }

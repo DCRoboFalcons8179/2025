@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score From Barge Blue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Pickup From Human Blue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToHumanPickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score From Human Blue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Right"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Scoring",
+  "choreoAuto": false
+}

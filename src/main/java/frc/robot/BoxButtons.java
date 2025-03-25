@@ -29,7 +29,9 @@ public class BoxButtons {
         .button(8)
         .onTrue(
             new MoveElevator(() -> Constants.SetPoints.HumanPickup.elevatorPose, elevatorSub)
-                .andThen(new MoveWrist(() -> Constants.SetPoints.HumanPickup.wristPose, coralSub)));
+                .andThen(new MoveWrist(() -> Constants.SetPoints.HumanPickup.wristPose, coralSub))
+                .andThen(
+                    new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub)));
 
     // Reef Setpoints
     // L1
