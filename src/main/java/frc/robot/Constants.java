@@ -169,6 +169,9 @@ public class Constants {
     /** ID for the Hook Motor */
     public static final int HookID = 17;
 
+    /** Percent Out for the Hook */
+    public static final double hookPercentOut = 0.3;
+
     /** PID Values for the Hook Motor */
     public class HookPID {
       /** kP for the Hook Motor */
