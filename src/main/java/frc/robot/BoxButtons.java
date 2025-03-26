@@ -15,6 +15,8 @@ import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
+import frc.robot.commands.hang.Hang;
+
 
 public class BoxButtons {
   public static void configureButtonBindings(
@@ -89,15 +91,16 @@ public class BoxButtons {
     boxLeft.button(8).onTrue(new RawElevator(() -> 100, elevatorSub));
 
     // Hook Control
-    // Up
+    // Slow
     boxLeft
         .button(11)
-        .onTrue(new MoveHook(() -> 1.5, hookSub))
-        .onFalse(new MoveHook(() -> 0, hookSub));
-    // Down
+        .onTrue(new Hang(() -> 0.25, hookSub))
+        .onFalse(new Hang(() -> 0, hookSub));
+    // Normal Speed
     boxLeft
         .button(12)
-        .onTrue(new MoveHook(() -> -1.5, hookSub))
-        .onFalse(new MoveHook(() -> 0, hookSub));
+        .onTrue(new Hang(() -> 0.5, hookSub))
+        .onFalse(new Hang(() -> 0, hookSub));
+    
   }
 }
