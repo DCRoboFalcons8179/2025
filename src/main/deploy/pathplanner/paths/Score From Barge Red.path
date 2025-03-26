@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.275599315068493,
-        "y": 2.7327910958904114
+        "x": 3.577725968436154,
+        "y": 2.3560975609756087
       },
       "prevControl": {
-        "x": 3.3898385343002166,
-        "y": 1.890276854056451
+        "x": 3.2543400286944038,
+        "y": 1.4783357245337139
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefProcessorHuman"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 58.17255342332693
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Scoring",

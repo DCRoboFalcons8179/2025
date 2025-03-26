@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5342758177446894,
-        "y": 2.4536157555184106
+        "x": 3.577725968436154,
+        "y": 2.3560975609756087
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0487591360098643,
-        "y": 2.2536971218628956
+        "x": 3.092209286701329,
+        "y": 2.1561789273200938
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefProcessorHuman"
     },
     {
       "anchor": {
-        "x": 1.096875,
-        "y": 1.2452482876712327
+        "x": 1.35,
+        "y": 1.05
       },
       "prevControl": {
-        "x": 1.9232876712328775,
-        "y": 1.019863013698631
+        "x": 1.754232424677188,
+        "y": 1.546628407460546
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HumanProcessor"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -126.57303097851944
+    "rotation": -125.00000000000001
   },
   "reversed": false,
   "folder": "Scoring",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 57.80426606528683
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

@@ -11,112 +11,116 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.Vision;
 import java.util.List;
 
 public class Aprilign extends Command {
+  private final Drive drive;
+  private final Vision visionSub;
+  private final double offsetX;
+  private final double offsetY;
+  private Command followPathCommand;
+  private PathPlannerPath path;
+
   private static Pose2d targetRobotPoseBeforeAprilTag;
-  private static List<Waypoint> waypoints;
-  private static PathConstraints constraints;
-  private static PathPlannerPath path;
-
-  private static Command followPathCommand;
-
-  public PathPlannerPath getPath() {
-    return path;
-  }
-
-  public Command getFollowPathCommand() {
-    return followPathCommand;
-  }
-
-  public Aprilign(Drive drive, Vision visionSub, double offsetX, double offsetY) {
-    if (visionSub.getTargetID() != -1) {
-      Transform3d transform3d = visionSub.getTransform3To3dTarget();
-
-      double poseX = drive.getPose().getX();
-      double poseY = drive.getPose().getY();
-
-      double angle = transform3d.getRotation().getAngle();
-
-      double theta = drive.getRotation().getRadians();
-      double phi = visionSub.getCameraYaw();
-      double ct = Math.cos(theta);
-      double st = Math.sin(theta);
-      double cp = Math.cos(phi);
-      double sp = Math.sin(phi);
-
-      double distX = visionSub.getDistanceX();
-      double distY = visionSub.getDistanceY();
-
-      double deltaX =
-          -distX * st
-              + distY * ct
-              + (offsetX * cp + offsetY * sp) * ct
-              + (offsetX * cp - offsetY * sp) * st;
-      double deltaY =
-          +distX * ct
-              + distY * st
-              + (offsetX * cp + offsetY * sp) * st
-              + (offsetX * sp - offsetY * cp) * ct;
-
-      double targetX = poseX + deltaX;
-      double targetY = poseY + deltaY;
-
-      targetRobotPoseBeforeAprilTag = new Pose2d(targetX, targetY, new Rotation2d(theta + phi));
-
-      waypoints =
-          PathPlannerPath.waypointsFromPoses(drive.getPose(), targetRobotPoseBeforeAprilTag);
-
-      constraints = new PathConstraints(3.0, 2.0, 0.5, 0.5, 12); // The constraints for this path.
-      // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
-      // use
-      // unlimited constraints, only limited by motor torque and nominal battery voltage
-
-      // Create the path using the waypoints created above
-
-      path =
-          new PathPlannerPath(
-              waypoints,
-              constraints, // null
-              new IdealStartingState(
-                  drive.getAverageSpeed(),
-                  null), // The ideal starting state, this is only relevant for pre-planned paths,
-              // so
-              // can
-              // be null for on-the-fly paths.
-              new GoalEndState(
-                  0.0,
-                  targetRobotPoseBeforeAprilTag
-                      .getRotation()) // Goal end state. You can set a holonomic rotation here. If
-              // using a differential drivetrain, the rotation will have no
-              // effect.
-              );
-    } else {
-      waypoints = PathPlannerPath.waypointsFromPoses(drive.getPose(), drive.getPose());
-
-      constraints = new PathConstraints(0.1, 0.1, 0.5, 0.5, 12);
-
-      path = new PathPlannerPath(waypoints, constraints, null, null);
+    private List<Waypoint> waypoints;
+    private PathConstraints constraints;
+  
+    public Aprilign(Drive drive, Vision visionSub, double offsetX, double offsetY) {
+      this.drive = drive;
+      this.visionSub = visionSub;
+      this.offsetX = offsetX;
+      this.offsetY = offsetY;
+      addRequirements(drive, visionSub);
     }
-
-    // Prevent the path from being flipped if the coordinates are already correct
-    path.preventFlipping = true;
-  }
-
-  public static void setTargetRobotPose(Pose2d pose) {
-    targetRobotPoseBeforeAprilTag = pose;
+  
+    @Override
+    public void initialize() {
+      Pose2d currentPose = drive.getPose();
+  
+      if (visionSub.getFrontHasTarget())
+  
+      if (visionSub.getFrontTargetID() != -1) {
+        Transform3d transform3d = visionSub.getFrontTransform3To3dTarget();
+  
+        double poseX = drive.getPose().getX();
+        double poseY = drive.getPose().getY();
+  
+        double angle = transform3d.getRotation().getAngle();
+  
+        double theta = drive.getRotation().getRadians();
+        double phi = visionSub.getFrontCameraYaw();
+        double ct = Math.cos(theta);
+        double st = Math.sin(theta);
+        double cp = Math.cos(phi);
+        double sp = Math.sin(phi);
+  
+        double distX = visionSub.getFrontDistanceX();
+        double distY = visionSub.getFrontDistanceY();
+  
+        double deltaX =
+            -distX * st
+                + distY * ct
+                + (offsetX * cp + offsetY * sp) * ct
+                + (offsetX * cp - offsetY * sp) * st;
+        double deltaY =
+            +distX * ct
+                + distY * st
+                + (offsetX * cp + offsetY * sp) * st
+                + (offsetX * sp - offsetY * cp) * ct;
+  
+        double targetX = poseX + deltaX;
+        double targetY = poseY + deltaY;
+  
+        targetRobotPoseBeforeAprilTag = new Pose2d(targetX, targetY, new Rotation2d(theta + phi));
+  
+        waypoints =
+            PathPlannerPath.waypointsFromPoses(drive.getPose(), targetRobotPoseBeforeAprilTag);
+  
+        constraints = new PathConstraints(3.0, 2.0, 0.5, 0.5, 12); // The constraints for this path.
+        // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
+        // use
+        // unlimited constraints, only limited by motor torque and nominal battery voltage
+  
+        // Create the path using the waypoints created above
+  
+        path =
+            new PathPlannerPath(
+                waypoints,
+                constraints, // null
+                new IdealStartingState(
+                    drive.getAverageSpeed(),
+                    null), // The ideal starting state, this is only relevant for pre-planned paths,
+                // so
+                // can
+                // be null for on-the-fly paths.
+                new GoalEndState(
+                    0.0,
+                    targetRobotPoseBeforeAprilTag
+                        .getRotation()) // Goal end state. You can set a holonomic rotation here. If
+                // using a differential drivetrain, the rotation will have no
+                // effect.
+                );
+      } else {
+        waypoints = PathPlannerPath.waypointsFromPoses(drive.getPose(), drive.getPose());
+  
+        constraints = new PathConstraints(0.1, 0.1, 0.5, 0.5, 12);
+  
+        path = new PathPlannerPath(waypoints, constraints, null, null);
+      }
+  
+      // Prevent the path from being flipped if the coordinates are already correct
+      path.preventFlipping = true;
+    }
+  
+    public static void setTargetRobotPose(Pose2d pose) {
+      targetRobotPoseBeforeAprilTag = pose;
   }
 
   public static Pose2d getTargetRobotPoseBeforeAprilTag() {
     return targetRobotPoseBeforeAprilTag;
   }
 
-  @Override
-  public void initialize() {
-    // Set up and start the path-following process
-    followPathCommand = AutoBuilder.followPath(path);
-  }
 
   @Override
   public void execute() {
@@ -133,5 +137,13 @@ public class Aprilign extends Command {
   public void end(boolean interrupted) {
     // Optionally stop or clean up any path-following behavior if the command is interrupted
     followPathCommand.end(interrupted);
+  }
+
+  public PathPlannerPath getPath() {
+    return path;
+  }
+
+  public Command getFollowPathCommand() {
+    return followPathCommand;
   }
 }

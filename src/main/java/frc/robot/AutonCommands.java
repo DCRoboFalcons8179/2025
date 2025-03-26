@@ -43,6 +43,7 @@ public class AutonCommands {
         new MoveElevator(() -> 2300, elevatorSub)
             .andThen(new MoveWrist(() -> 0, coralSub))
             .andThen(new MoveCoral(() -> 1, coralSub)));
+            
     NamedCommands.registerCommand(
         "ScoreL4Left",
         new SequentialCommandGroup(

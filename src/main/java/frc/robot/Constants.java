@@ -128,6 +128,10 @@ public class Constants {
       public static final double outputSpeed = 0.5;
       public static final double inputSpeed = -0.5;
     }
+
+    // public class Sensor {
+    // public static final int sensorButtonID = ;
+    // }
   }
 
   /** Values for configuring the Elevator */
@@ -188,8 +192,8 @@ public class Constants {
 
   public class SetPoints {
     public class L4 {
-      public static final double elevatorPose = 17800;
-      public static final double wristPose = 13200;
+      public static final double elevatorPose = 18000;
+      public static final double wristPose = 13800;
       public static final double leftDesiredXTagDistanceMeters = 0.53;
       public static final double leftDesiredYTagDistanceMeters = -0.20;
       public static final double rightDesiredXTagDistanceMeters = 0.56;
@@ -219,7 +223,7 @@ public class Constants {
 
     public class HumanPickup {
       public static final double elevatorPose = 1100;
-      public static final double wristPose = 5050;
+      public static final double wristPose = 5850;
       public static final double desiredXTagDistanceMeters = 0.67;
       public static final double desiredYTagDistanceMeters = -0.20;
     }
