@@ -13,6 +13,8 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.math.Filter;
@@ -21,16 +23,21 @@ import frc.robot.Constants;
 public class CoralSub extends SubsystemBase {
   // Motors
   /** Motor for manipulating the c0oral */
-  TalonSRX coralMotor = new TalonSRX(Constants.CoralConstants.Intake.coralMotorID);
+  private final TalonSRX coralMotor = new TalonSRX(Constants.CoralConstants.Intake.coralMotorID);
 
   /** Motor for manipulating the wrist */
-  SparkMax wristMotor = new SparkMax(Constants.CoralConstants.Wrist.wristID, MotorType.kBrushless);
+  private final SparkMax wristMotor = new SparkMax(Constants.CoralConstants.Wrist.wristID, MotorType.kBrushless);
   /** Closed loop controller for the wrist motor */
-  SparkClosedLoopController wristSparkClosedLoopController;
+  private final SparkClosedLoopController wristSparkClosedLoopController;
   /** Encoder for the wrist motor */
-  RelativeEncoder wristEncoder = wristMotor.getEncoder();
+  private final RelativeEncoder wristEncoder = wristMotor.getEncoder();
+
+  /**DIO Button for detecting if there is a piece of coral */
+  private final DigitalInput pieceButton;
 
   public CoralSub() {
+    pieceButton = new DigitalInput(0);
+
     SparkMaxConfig wristConfig = new SparkMaxConfig();
 
     wristConfig.inverted(false).idleMode(IdleMode.kBrake);
@@ -127,5 +134,10 @@ public class CoralSub extends SubsystemBase {
   /** Moves the wrist to break the velcro */
   public void freeWrist() {
     wristMotor.set(0.2);
+  }
+
+  /**Gets the button's state, inverts it for the pull-up resistors */
+  public boolean getButton() {
+    return !pieceButton.get();
   }
 }
