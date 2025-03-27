@@ -13,6 +13,7 @@ import frc.robot.commands.elevator.MoveElevator;
 import frc.robot.commands.setpoints.Home;
 import frc.robot.commands.setpoints.L4;
 import frc.robot.commands.vision.AlignToTag;
+import frc.robot.commands.vision.Aprilign;
 import frc.robot.commands.vision.HumanPickup;
 import frc.robot.commands.wrist.AutoWrist;
 import frc.robot.commands.wrist.MoveWrist;
@@ -43,7 +44,7 @@ public class AutonCommands {
         new MoveElevator(() -> 2300, elevatorSub)
             .andThen(new MoveWrist(() -> 0, coralSub))
             .andThen(new MoveCoral(() -> 1, coralSub)));
-            
+
     NamedCommands.registerCommand(
         "ScoreL4Left",
         new SequentialCommandGroup(
@@ -93,5 +94,7 @@ public class AutonCommands {
             .andThen(
                 DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                     .withTimeout(0.001)));
+
+    NamedCommands.registerCommand("Aprilign", new Aprilign(drive, frontCamera, 0, 20));
   }
 }

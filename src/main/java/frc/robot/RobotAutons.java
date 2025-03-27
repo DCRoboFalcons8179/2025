@@ -11,7 +11,7 @@ import frc.robot.commands.wrist.AutoWrist;
 import frc.robot.commands.wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
-import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.vision.Vision;
 
 public class RobotAutons {
 
