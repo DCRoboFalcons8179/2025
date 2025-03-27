@@ -7,6 +7,8 @@ import frc.robot.commands.coral.MoveCoral;
 import frc.robot.commands.elevator.ResetElevator;
 import frc.robot.commands.hang.Hang;
 import frc.robot.commands.setpoints.Home;
+import frc.robot.commands.setpoints.L3;
+import frc.robot.commands.setpoints.L4;
 import frc.robot.commands.vision.AlignToTag;
 import frc.robot.commands.vision.HumanPickup;
 import frc.robot.subsystems.CoralSub;
@@ -40,7 +42,7 @@ public class ControllerButtons {
     // Hang
     commandXboxController
         .b()
-        .onTrue(new Hang(() -> 0.50, hookSub))
+        .onTrue(new Hang(() -> Constants.HookConstants.hookPercentOut, hookSub))
         .onFalse(new Hang(() -> 0, hookSub));
 
     // Elevator
@@ -69,22 +71,24 @@ public class ControllerButtons {
         .povUp()
         .whileTrue(
             new AlignToTag(
-                drive,
-                frontCamera,
-                commandXboxController,
-                Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
-                Constants.SetPoints.L4.leftDesiredYTagDistanceMeters));
+                    drive,
+                    frontCamera,
+                    commandXboxController,
+                    Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
+                .andThen(new L4(elevatorSub, coralSub)));
 
     // L3
     commandXboxController
         .povLeft()
         .whileTrue(
             new AlignToTag(
-                drive,
-                frontCamera,
-                commandXboxController,
-                Constants.SetPoints.L3.desiredXTagDistanceMeters,
-                Constants.SetPoints.L3.leftDesiredYTagDistanceMeters));
+                    drive,
+                    frontCamera,
+                    commandXboxController,
+                    Constants.SetPoints.L3.desiredXTagDistanceMeters,
+                    Constants.SetPoints.L3.leftDesiredYTagDistanceMeters)
+                .andThen(new L3(elevatorSub, coralSub)));
 
     // Human Pickups
     commandXboxController
@@ -101,19 +105,5 @@ public class ControllerButtons {
                 commandXboxController,
                 Constants.SetPoints.L4.rightDesiredXTagDistanceMeters,
                 Constants.SetPoints.L4.rightDesiredYTagDistanceMeters));
-
-    // // Coral Tilting
-    // commandXboxController.povUp().whileTrue(new MoveHook(() -> 0.5, hookSub));
-    // commandXboxController
-    // .povUp()
-    // .onFalse(new Hang(() -> 0, hookSub))
-    // .and(() -> !commandXboxController.povDown().getAsBoolean())
-    // .and(() -> !commandXboxController.rightTrigger().getAsBoolean());
-
-    // commandXboxController.povDown().whileTrue(new MoveHook(() -> -0.5, hookSub));
-
-    // Hang
-    // commandXboxController.rightTrigger().whileTrue(new Hang(() -> -0.6,
-    // hookSub));
   }
 }

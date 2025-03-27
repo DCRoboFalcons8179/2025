@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,7 +21,7 @@ public class HookSub extends SubsystemBase {
   private final PositionVoltage positionControl = new PositionVoltage(0);
 
   /** Desired position for the hook */
-  private double desiredPosition = 0;
+  // private double desiredPosition = 0;
 
   /** State to track if the hook is in hanging mode */
   private boolean hung = false;
@@ -35,7 +36,7 @@ public class HookSub extends SubsystemBase {
     hookConfiguration.Slot0.kD = Constants.HookConstants.HookPID.kD;
 
     // Apply the configuration
-    hook.getConfigurator().apply(hookConfiguration);
+    // hook.getConfigurator().apply(hookConfiguration);
 
     // Set the motor to brake mode
     hook.setNeutralMode(NeutralModeValue.Brake);
@@ -59,17 +60,7 @@ public class HookSub extends SubsystemBase {
    * @param position The desired position in encoder units.
    */
   public void setPosition(double position) {
-    if (!hung) {
-      // desiredPosition += position;
-    }
-    hung = false;
-    // Use PositionVoltage control to move to the desired position
-    if (hook.getPosition().getValueAsDouble() + position < 0) {
-      hook.setControl(
-          positionControl.withPosition(hook.getPosition().getValueAsDouble() + position));
-    } else {
-      hook.setControl(positionControl.withPosition(0));
-    }
+    hook.setControl(positionControl.withPosition(hook.getPosition().getValueAsDouble() + position));
   }
 
   /**
@@ -80,6 +71,7 @@ public class HookSub extends SubsystemBase {
   public void hang(double power) {
     // applies the commanded power to the hook motor for hanging
     hook.set(power);
+    hung = true;
   }
 
   /**

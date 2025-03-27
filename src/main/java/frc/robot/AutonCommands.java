@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -44,7 +45,6 @@ public class AutonCommands {
         new MoveElevator(() -> 2300, elevatorSub)
             .andThen(new MoveWrist(() -> 0, coralSub))
             .andThen(new MoveCoral(() -> 1, coralSub)));
-
     NamedCommands.registerCommand(
         "ScoreL4Left",
         new SequentialCommandGroup(
@@ -57,14 +57,18 @@ public class AutonCommands {
             new MoveElevator(() -> 0, elevatorSub),
             new InstantCommand(() -> elevatorSub.resetPose()),
             new MoveCoral(() -> 0, coralSub),
-            new MoveWrist(() -> 0, coralSub)));
+            new AutoWrist(() -> 0, coralSub)));
 
     NamedCommands.registerCommand(
         "ScoreL4Right",
         new SequentialCommandGroup(
-            new L4(elevatorSub, coralSub).withTimeout(2),
-            new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
-                .withTimeout(1),
+            new L4(elevatorSub, coralSub),
+            new AlignToTag(
+                drive,
+                frontCamera,
+                commandXboxController,
+                Constants.SetPoints.L4.rightDesiredXTagDistanceMeters,
+                Constants.SetPoints.L4.rightDesiredYTagDistanceMeters),
             new Home(elevatorSub, coralSub)));
 
     NamedCommands.registerCommand(
@@ -95,6 +99,6 @@ public class AutonCommands {
                 DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                     .withTimeout(0.001)));
 
-    NamedCommands.registerCommand("Aprilign", new Aprilign(drive, frontCamera, 0, 20));
+    NamedCommands.registerCommand("Aprilign", new Aprilign(drive, frontCamera, 0, 0.6));
   }
 }
