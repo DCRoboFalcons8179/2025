@@ -35,7 +35,7 @@ public class HookSub extends SubsystemBase {
     hookConfiguration.Slot0.kD = Constants.HookConstants.HookPID.kD;
 
     // Apply the configuration
-    hook.getConfigurator().apply(hookConfiguration);
+    // hook.getConfigurator().apply(hookConfiguration);
 
     // Set the motor to brake mode
     hook.setNeutralMode(NeutralModeValue.Brake);
@@ -59,17 +59,7 @@ public class HookSub extends SubsystemBase {
    * @param position The desired position in encoder units.
    */
   public void setPosition(double position) {
-    if (!hung) {
-      // desiredPosition += position;
-    }
-    hung = false;
-    // Use PositionVoltage control to move to the desired position
-    if (hook.getPosition().getValueAsDouble() + position < 0) {
-      hook.setControl(
-          positionControl.withPosition(hook.getPosition().getValueAsDouble() + position));
-    } else {
-      hook.setControl(positionControl.withPosition(0));
-    }
+    hook.setControl(positionControl.withPosition(hook.getPosition().getValueAsDouble() + position));
   }
 
   /**
