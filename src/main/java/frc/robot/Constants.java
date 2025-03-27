@@ -170,7 +170,7 @@ public class Constants {
     public static final int HookID = 17;
 
     /** Percent Out for the Hook */
-    public static final double hookPercentOut = 0.3;
+    public static final double hookPercentOut = 0.75;
 
     /** PID Values for the Hook Motor */
     public class HookPID {

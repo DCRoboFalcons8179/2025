@@ -1,6 +1,5 @@
 package frc.robot.commands.vision;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
@@ -35,18 +34,18 @@ public class Aprilign extends Command {
   }
 
   public Aprilign(Drive drive, Vision visionSub, double offsetX, double offsetY) {
-    this.drive drive;
+    this.drive = drive;
     this.visionSub = visionSub;
     this.offsetX = offsetX;
     this.offsetY = offsetY;
-    
+
     addRequirements(drive, visionSub);
   }
 
   @Override
   public void initialize() {
     Pose2d currentPose = drive.getPose();
-    if (visionSub.getTargetID() != -1 && !Double.isNan(visionSub.getFrontCameraYaw())) {
+    if (visionSub.getTargetID() != -1 && !Double.isNaN(visionSub.getCameraYaw())) {
 
       Transform3d transform3d = visionSub.getTransform3To3dTarget();
 
@@ -79,44 +78,41 @@ public class Aprilign extends Command {
       double targetX = poseX + deltaX;
       double targetY = poseY + deltaY;
 
-    
       targetRobotPoseBeforeAprilTag = new Pose2d(targetX, targetY, new Rotation2d(theta + phi));
 
-      waypoints = PathPlannerPath.waypointsFromPoses(drive.getPose(), targetRobotPoseBeforeAprilTag);
+      waypoints =
+          PathPlannerPath.waypointsFromPoses(drive.getPose(), targetRobotPoseBeforeAprilTag);
 
       constraints = new PathConstraints(3.0, 2.0, 0.5, 0.5, 12); // The constraints for this path.
-      // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also use
+      // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
+      // use
       // unlimited constraints, only limited by motor torque and nominal battery voltage
 
       // Create the path using the waypoints created above
-    
+
       path =
-        new PathPlannerPath(
-          waypoints,
-          constraints, // null
-            new IdealStartingState(
-              drive.getAverageSpeed(),
-              null), // The ideal starting state, this is only relevant for pre-planned paths, so
-          // can
-          // be null for on-the-fly paths.
-          new GoalEndState(
-            0.0,
-            targetRobotPoseBeforeAprilTag
-              .getRotation()) // Goal end state. You can set a holonomic rotation here. If
-          // using a differential drivetrain, the rotation will have no
-          // effect.
-        );
+          new PathPlannerPath(
+              waypoints,
+              constraints, // null
+              new IdealStartingState(
+                  drive.getAverageSpeed(),
+                  null), // The ideal starting state, this is only relevant for pre-planned paths,
+              // so
+              // can
+              // be null for on-the-fly paths.
+              new GoalEndState(
+                  0.0,
+                  targetRobotPoseBeforeAprilTag
+                      .getRotation()) // Goal end state. You can set a holonomic rotation here. If
+              // using a differential drivetrain, the rotation will have no
+              // effect.
+              );
     } else {
       waypoints = PathPlannerPath.waypointsFromPoses(drive.getPose(), drive.getPose());
 
       constraints = new PathConstraints(0.1, 0.1, 0.5, 0.5, 12);
 
-      path = new PathPlannerPath(
-        waypoints,
-        constraints,
-        null,
-        null
-      );
+      path = new PathPlannerPath(waypoints, constraints, null, null);
     }
 
     // Prevent the path from being flipped if the coordinates are already correct
@@ -129,12 +125,6 @@ public class Aprilign extends Command {
 
   public static Pose2d getTargetRobotPoseBeforeAprilTag() {
     return targetRobotPoseBeforeAprilTag;
-  }
-
-  @Override
-  public void initialize() {
-      // Set up and start the path-following process
-      followPathCommand = AutoBuilder.followPath(path);
   }
 
   @Override
@@ -156,6 +146,5 @@ public class Aprilign extends Command {
     if (followPathCommand != null) {
       followPathCommand.end(interrupted);
     }
-    drive.drive(0, 0, 0, true);
   }
 }

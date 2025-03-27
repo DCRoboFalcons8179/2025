@@ -13,7 +13,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,13 +25,14 @@ public class CoralSub extends SubsystemBase {
   private final TalonSRX coralMotor = new TalonSRX(Constants.CoralConstants.Intake.coralMotorID);
 
   /** Motor for manipulating the wrist */
-  private final SparkMax wristMotor = new SparkMax(Constants.CoralConstants.Wrist.wristID, MotorType.kBrushless);
+  private final SparkMax wristMotor =
+      new SparkMax(Constants.CoralConstants.Wrist.wristID, MotorType.kBrushless);
   /** Closed loop controller for the wrist motor */
   private final SparkClosedLoopController wristSparkClosedLoopController;
   /** Encoder for the wrist motor */
   private final RelativeEncoder wristEncoder = wristMotor.getEncoder();
 
-  /**DIO Button for detecting if there is a piece of coral */
+  /** DIO Button for detecting if there is a piece of coral */
   private final DigitalInput pieceButton;
 
   public CoralSub() {
@@ -79,6 +79,7 @@ public class CoralSub extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Wrist Temperature Celsius", wristMotor.getMotorTemperature());
     SmartDashboard.putNumber("Wrist Position", wristEncoder.getPosition());
+    SmartDashboard.putBoolean("Has Piece", getButton());
   }
 
   // Move the wrist motor to a specific position
@@ -136,7 +137,7 @@ public class CoralSub extends SubsystemBase {
     wristMotor.set(0.2);
   }
 
-  /**Gets the button's state, inverts it for the pull-up resistors */
+  /** Gets the button's state, inverts it for the pull-up resistors */
   public boolean getButton() {
     return !pieceButton.get();
   }
