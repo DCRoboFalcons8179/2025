@@ -21,7 +21,7 @@ import frc.robot.subsystems.vision.TopCamera;
 public class HumanPickup extends SequentialCommandGroup {
   /** Creates a new Human. */
   public HumanPickup(
-      TopCamera frontCamera,
+      TopCamera topCamera,
       Drive drive,
       ElevatorSub elevatorSub,
       CoralSub coralSub,
@@ -34,7 +34,7 @@ public class HumanPickup extends SequentialCommandGroup {
         new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
         new AlignToTag(
             drive,
-            frontCamera,
+            topCamera,
             commandXboxController,
             Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
             Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters));

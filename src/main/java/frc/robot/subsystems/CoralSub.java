@@ -63,9 +63,7 @@ public class CoralSub extends SubsystemBase {
   }
 
   /**
-   *
-   *
-   * <h3>Move the coral motor
+   * Move the coral motor
    *
    * <p>Uses PercentOutput to move the coral motor
    *
@@ -90,9 +88,7 @@ public class CoralSub extends SubsystemBase {
   }
 
   /**
-   *
-   *
-   * <h3>Update the position of the wrist motor
+   * Update the position of the wrist motor
    *
    * <p>Called every cycle
    *

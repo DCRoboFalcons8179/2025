@@ -70,7 +70,7 @@ import java.util.Arrays;
  *   <tr><td>13</td><td>01101</td><td>Center Cage Side Score L4 Triple</td></tr>
  *   <tr><td>14</td><td>01110</td><td>Processor Side Score L4 Triple</td></tr>
  *   <tr><td>15</td><td>01111</td><td>Cage Side Score L4 Triple</td></tr>
- *   <tr><td>16</td><td>10000</td><td>---</td></tr>
+ *   <tr><td>16</td><td>10000</td><td>Bush From Barge</td></tr>
  *   <tr><td>17</td><td>10001</td><td>---</td></tr>
  *   <tr><td>18</td><td>10010</td><td>---</td></tr>
  *   <tr><td>19</td><td>10011</td><td>---</td></tr>
@@ -107,9 +107,8 @@ public class GetAuton {
               /*12*/ "Center Processor Side Score L4 Triple",
               /*13*/ "Center Cage Side Score L4 Triple",
               /*14*/ "Processor Side Score L4 Triple",
-              /*15*/ "Cage Side Score L4 Triple"
-              /*16*/
-              ));
+              /*15*/ "Cage Side Score L4 Triple",
+              /*16*/ "Push From Barge"));
 
   public static String getAutonName(int index) {
     return index > autonList.size() - 1 ? "Do Nothing" : autonList.get(index);
