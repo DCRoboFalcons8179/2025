@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.349671052631578,
-        "y": 5.5259868421052625
+        "x": 5.484375,
+        "y": 5.632748287671233
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.849671052631578,
-        "y": 6.392012245889701
+        "x": 5.984375,
+        "y": 6.498773691455671
       },
       "isLocked": false,
       "linkedName": "ReefCageBarge"
     },
     {
       "anchor": {
-        "x": 1.5298519736842104,
-        "y": 6.853782894736842
+        "x": 1.2771832191780823,
+        "y": 6.91
       },
       "prevControl": {
-        "x": 2.1034284100352565,
-        "y": 6.03463085044785
+        "x": 1.8507596555291286,
+        "y": 6.090847955711008
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -118.1785901099592
   },
   "useDefaultConstraints": true
 }

@@ -11,20 +11,20 @@
         "x": 7.33823174716852,
         "y": 3.998785119873194
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "StartCenter"
     },
     {
       "anchor": {
-        "x": 6.2,
+        "x": 6.29,
         "y": 4.0
       },
       "prevControl": {
-        "x": 6.759964431691044,
+        "x": 6.849964431691044,
         "y": 3.9997727275302055
       },
       "nextControl": null,
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "ReefCenterBarge"
     }
   ],

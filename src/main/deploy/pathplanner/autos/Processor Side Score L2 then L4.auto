@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartProcessorToReefProcessor"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL2Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefProcessorBargeToHumanProcessor"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToHumanPickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanProcessorToReefProcessorHuman"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Left"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "GAME DAY",
+  "choreoAuto": false
+}

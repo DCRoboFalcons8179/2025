@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6370065789473682,
-        "y": 5.554851973684211
+        "x": 3.5909999999999997,
+        "y": 5.65
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1370065789473687,
-        "y": 6.420877377468649
+        "x": 3.091,
+        "y": 6.516025403784439
       },
       "isLocked": false,
       "linkedName": "ReefCageHuman"
     },
     {
       "anchor": {
-        "x": 1.5298519736842104,
-        "y": 6.853782894736842
+        "x": 1.2771832191780823,
+        "y": 6.91
       },
       "prevControl": {
-        "x": 2.1034284100352565,
-        "y": 6.03463085044785
+        "x": 1.8507596555291281,
+        "y": 6.090847955711008
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": -62.135159373385044
   },
   "useDefaultConstraints": true
 }

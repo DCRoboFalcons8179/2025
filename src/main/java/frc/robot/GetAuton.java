@@ -108,7 +108,13 @@ public class GetAuton {
               /*13*/ "Center Cage Side Score L4 Triple",
               /*14*/ "Processor Side Score L4 Triple",
               /*15*/ "Cage Side Score L4 Triple",
-              /*16*/ "Push From Barge"));
+              /*16*/ "Processor Side Score L2 then L4",
+              /*17*/ "Cage Side Score L2 then L4",
+              /*18*/ "Center Processor Side Score L2 then L4",
+              /*19*/ "Center Cage Side Score L2 then L4"
+              /*20*/
+              /*21*/
+              ));
 
   public static String getAutonName(int index) {
     return index > autonList.size() - 1 ? "Do Nothing" : autonList.get(index);

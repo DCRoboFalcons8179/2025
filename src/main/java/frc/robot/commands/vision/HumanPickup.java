@@ -33,10 +33,11 @@ public class HumanPickup extends SequentialCommandGroup {
         new MoveWrist(() -> Constants.SetPoints.HumanPickup.wristPose, coralSub),
         new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
         new AlignToTag(
-            drive,
-            topCamera,
-            commandXboxController,
-            Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
-            Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters));
+                drive,
+                topCamera,
+                commandXboxController,
+                Constants.SetPoints.HumanPickup.desiredXTagDistanceMeters,
+                Constants.SetPoints.HumanPickup.desiredYTagDistanceMeters)
+            .withTimeout(4));
   }
 }

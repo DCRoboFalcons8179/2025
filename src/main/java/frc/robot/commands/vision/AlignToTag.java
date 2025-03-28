@@ -105,9 +105,9 @@ public class AlignToTag extends Command {
             if (yaw != 181) {
               omegaRadiansPerSecond =
                   yaw > Constants.VisionConstants.errorThreshHoldRadians + desiredYaw
-                      ? -0.2
+                      ? -0.15
                       : yaw < Constants.VisionConstants.errorThreshHoldRadians - desiredYaw
-                          ? 0.20
+                          ? 0.15
                           : 0;
             } else {
               omegaRadiansPerSecond = 0;

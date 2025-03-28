@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6273848684210526,
-        "y": 2.543
+        "x": 3.6362157534246573,
+        "y": 2.4172517123287673
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.127384868421053,
-        "y": 1.6769745962155618
+        "x": 3.1362157534246577,
+        "y": 1.551226308544329
       },
       "isLocked": false,
       "linkedName": "ReefProcessorHuman"
     },
     {
       "anchor": {
-        "x": 1.5202302631578946,
-        "y": 1.1481085526315793
+        "x": 1.1720034246575342,
+        "y": 1.140068493150685
       },
       "prevControl": {
-        "x": 2.0938066995089404,
-        "y": 1.9672605969205712
+        "x": 1.74557986100858,
+        "y": 1.9592205374396756
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": -130.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 64.98310652190007
   },
   "useDefaultConstraints": true
 }

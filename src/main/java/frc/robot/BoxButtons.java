@@ -48,6 +48,13 @@ public class BoxButtons {
     // L4
     boxRight.button(12).onTrue(new L4(elevatorSub, coralSub));
 
+    // Coral Setpoints
+    // L2
+    boxRight.button(6).onTrue(new MoveElevator(() -> Constants.SetPoints.L2.elevatorPose, elevatorSub).andThen(new MoveWrist(() -> 10000, coralSub)));
+
+    // L3
+    boxRight.button(5).onTrue(new MoveElevator(() -> Constants.SetPoints.L3.elevatorPose, elevatorSub).andThen(new MoveWrist(() -> 10000, coralSub)));
+
     // Coral
     // Movement
     // In

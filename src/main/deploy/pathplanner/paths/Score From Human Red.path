@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5202302631578946,
-        "y": 1.1481085526315793
+        "x": 1.1720034246575342,
+        "y": 1.140068493150685
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.270947623272672,
-        "y": 2.164464363248509
+        "x": 1.922720784772314,
+        "y": 2.1564243037676127
       },
       "isLocked": false,
       "linkedName": "HumanProcessor"
     },
     {
       "anchor": {
-        "x": 3.6273848684210526,
-        "y": 2.5432565789473687
+        "x": 3.6362157534246573,
+        "y": 2.4172517123287673
       },
       "prevControl": {
-        "x": 3.1538554566563466,
-        "y": 2.0119796779430645
+        "x": 3.1626863416599513,
+        "y": 1.8859748113244632
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 64.98310652190007
   },
   "reversed": false,
   "folder": "Scoring",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": -130.0
   },
   "useDefaultConstraints": true
 }

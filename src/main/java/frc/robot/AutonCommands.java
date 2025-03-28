@@ -44,6 +44,7 @@ public class AutonCommands {
         new MoveElevator(() -> 2300, elevatorSub)
             .andThen(new MoveWrist(() -> 0, coralSub))
             .andThen(new MoveCoral(() -> 1, coralSub)));
+
     NamedCommands.registerCommand(
         "ScoreL4Left",
         new SequentialCommandGroup(
@@ -57,6 +58,18 @@ public class AutonCommands {
             new InstantCommand(() -> elevatorSub.resetPose()),
             new MoveCoral(() -> 0, coralSub),
             new MoveWrist(() -> 0, coralSub)));
+
+    NamedCommands.registerCommand(
+        "ScoreL2Left",
+        new SequentialCommandGroup(
+            new MoveCoral(() -> Constants.CoralConstants.Intake.inputSpeed, coralSub),
+            new AutoElevator(() -> Constants.SetPoints.L2.elevatorPose, elevatorSub)
+                .withTimeout(0.5),
+            new AutoWrist(() -> Constants.SetPoints.L2.wristPose, coralSub).withTimeout(1.5),
+            new AutoCoral(() -> Constants.CoralConstants.Intake.outputSpeed, coralSub)
+                .withTimeout(0.5),
+            new MoveCoral(() -> 0, coralSub),
+            new Home(elevatorSub, coralSub)));
 
     NamedCommands.registerCommand(
         "ScoreL4Right",
@@ -74,22 +87,24 @@ public class AutonCommands {
         "AlignToReef",
         new SequentialCommandGroup(
             new AlignToTag(
-                drive,
-                frontCamera,
-                commandXboxController,
-                Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
-                Constants.SetPoints.L4.leftDesiredYTagDistanceMeters),
+                    drive,
+                    frontCamera,
+                    commandXboxController,
+                    Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
+                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
+                .withTimeout(4),
             DriveCommands.joystickDrive(drive, elevatorSub, () -> 0, () -> 0, () -> 0)
                 .withTimeout(0.001)));
 
     NamedCommands.registerCommand(
         "AlignToReefRight",
         new AlignToTag(
-            drive,
-            frontCamera,
-            commandXboxController,
-            Constants.SetPoints.L4.rightDesiredXTagDistanceMeters,
-            Constants.SetPoints.L4.rightDesiredYTagDistanceMeters));
+                drive,
+                frontCamera,
+                commandXboxController,
+                Constants.SetPoints.L4.rightDesiredXTagDistanceMeters,
+                Constants.SetPoints.L4.rightDesiredYTagDistanceMeters)
+            .withTimeout(4));
 
     NamedCommands.registerCommand(
         "AlignToHumanPickup",
