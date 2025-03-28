@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartCenterToReefCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Left"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Game Day",
+  "choreoAuto": false
+}

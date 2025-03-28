@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ProcessorStartToReefProcessorHuman"
+            "pathName": "StartProcessorToReefProcessor"
           }
         },
         {
@@ -25,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ReefProcessorHumanToHumanProcessor"
+            "pathName": "ReefProcessorBargeToHumanProcessor"
           }
         },
         {

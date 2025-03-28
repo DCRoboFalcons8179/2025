@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartCageToReefCage"
+            "pathName": "StartCenterToReefCenter"
           }
         },
         {
@@ -25,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ReefCageBargeToHumanCage"
+            "pathName": "ReefCenterBargeToHumanCage"
           }
         },
         {
@@ -50,6 +50,36 @@
           "type": "named",
           "data": {
             "name": "ScoreL4Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefCageHumanToHumanCage"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToHumanPickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanCageToReefCageHuman"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReefRight"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Right"
           }
         }
       ]

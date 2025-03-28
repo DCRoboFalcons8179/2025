@@ -7,7 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartCageToReefCage"
+            "pathName": "StartCenterToReefCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefCenterBargeToHumanProcessor"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToHumanPickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanProcessorToReefProcessorHuman"
           }
         },
         {
@@ -25,7 +55,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ReefCageBargeToHumanCage"
+            "pathName": "ReefProcessorHumanToHumanProcessor"
           }
         },
         {
@@ -37,7 +67,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HumanCageToReefCageHuman"
+            "pathName": "HumanProcessorToReefProcessorHuman"
           }
         },
         {

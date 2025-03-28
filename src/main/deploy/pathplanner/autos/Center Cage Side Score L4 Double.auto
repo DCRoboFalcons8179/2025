@@ -13,13 +13,13 @@
         {
           "type": "named",
           "data": {
-            "name": "AlignToReef"
+            "name": "AlignToReefRight"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ScoreL4Left"
+            "name": "ScoreL4Right"
           }
         },
         {
@@ -43,13 +43,13 @@
         {
           "type": "named",
           "data": {
-            "name": "AlignToReefRight"
+            "name": "AlignToReef"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ScoreL4Right"
+            "name": "ScoreL4Left"
           }
         }
       ]
