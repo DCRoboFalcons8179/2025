@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 // BINARY SWITCH LAYOUT
-// Bit0:    If 0 then Processor Side (and first score left on reef),  else if 1 then Cage Side (and first score right on reef)
+// Bit0:    If 0 then Processor Side (and first score left on reef),  else if 1 then Cage Side (and
+// first score right on reef)
 // Bit1:    If 0 then start at Center,  else if 1 then start at Processor Side OR Cage Side (Bit0)
 // Bits2-3: Number of coral to score (00 = No Score, 01 = Single, 10 = Double, 11 = Triple)
 // Bit4:    Fidgbit (Unused)
@@ -28,28 +29,29 @@ import java.util.Arrays;
 13: 01101 Center Cage Side Score L4 Triple
 14: 01110 Processor Side Score L4 Triple
 15: 01111 Cage Side Score L4 Triple
-16: 10000 
-17: 10001 
-18: 10010 
-19: 10011 
-20: 10100 
-21: 10101 
-22: 10110 
-23: 10111 
-24: 11000 
-25: 11001 
-26: 11010 
-27: 11011 
-28: 11100 
-29: 11101 
-30: 11110 
-31: 11111 
+16: 10000
+17: 10001
+18: 10010
+19: 10011
+20: 10100
+21: 10101
+22: 10110
+23: 10111
+24: 11000
+25: 11001
+26: 11010
+27: 11011
+28: 11100
+29: 11101
+30: 11110
+31: 11111
 */
 
 /**
  * Table for Autons to Run
- * <p>
- * <b>Bit Encoding:</b> (Bit 43210)
+ *
+ * <p><b>Bit Encoding:</b> (Bit 43210)
+ *
  * <table border="1">
  *   <tr><th>Value</th><th>Bit Encoding</th><th>Auton Name</th></tr>
  *   <tr><td>0</td><td>00000</td><td>Do Nothing</td></tr>
@@ -85,10 +87,7 @@ import java.util.Arrays;
  *   <tr><td>30</td><td>11110</td><td>---</td></tr>
  *   <tr><td>31</td><td>11111</td><td>---</td></tr>
  * </table>
- * </p>
  */
-
-
 public class GetAuton {
   public static ArrayList<String> autonList =
       new ArrayList<>(
@@ -109,7 +108,7 @@ public class GetAuton {
               /*13*/ "Center Cage Side Score L4 Triple",
               /*14*/ "Processor Side Score L4 Triple",
               /*15*/ "Cage Side Score L4 Triple"
-              /*16*/ 
+              /*16*/
               ));
 
   public static String getAutonName(int index) {

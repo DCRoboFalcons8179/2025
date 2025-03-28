@@ -35,15 +35,19 @@ public class AlignToTag extends Command {
   double desiredXTagDistanceMeters;
   double desiredYTagDistanceMeters;
 
+  double desiredYaw;
+
   /** Creates a new MaintainAll. */
   public AlignToTag(
       Drive drive,
       Vision visionSub,
       CommandXboxController commandXboxController,
       double desiredXTagDistanceMeters,
-      double desiredYTagDistanceMeters) {
+      double desiredYTagDistanceMeters,
+      double desiredYaw) {
     this.drive = drive;
     this.visionSub = visionSub;
+    this.desiredYaw = desiredYaw;
     this.commandXboxController = commandXboxController;
     this.desiredXTagDistanceMeters = desiredXTagDistanceMeters;
     this.desiredYTagDistanceMeters = desiredYTagDistanceMeters;
@@ -53,6 +57,21 @@ public class AlignToTag extends Command {
     distanceY = new DistanceY(visionSub, desiredYTagDistanceMeters);
 
     addRequirements(drive, visionSub);
+  }
+
+  public AlignToTag(
+      Drive drive,
+      Vision visionSub,
+      CommandXboxController commandXboxController,
+      double desiredXTagDistanceMeters,
+      double desiredYTagDistanceMeters) {
+    this(
+        drive,
+        visionSub,
+        commandXboxController,
+        desiredXTagDistanceMeters,
+        desiredYTagDistanceMeters,
+        0);
   }
 
   // Called when the command is initially scheduled.
@@ -85,9 +104,11 @@ public class AlignToTag extends Command {
             vyMetersPerSecond = -strafeVelocity;
             if (yaw != 181) {
               omegaRadiansPerSecond =
-                  yaw > Constants.VisionConstants.errorThreshHoldRadians
-                      ? -0.3
-                      : yaw < Constants.VisionConstants.errorThreshHoldRadians ? 0.3 : 0;
+                  yaw > Constants.VisionConstants.errorThreshHoldRadians + desiredYaw
+                      ? -0.2
+                      : yaw < Constants.VisionConstants.errorThreshHoldRadians - desiredYaw
+                          ? 0.20
+                          : 0;
             } else {
               omegaRadiansPerSecond = 0;
             }

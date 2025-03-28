@@ -84,7 +84,14 @@ public class RobotContainer {
 
         // Real robot, instantiate hardware IO implementations
         drive =
-            new Drive(new GyroIOPigeon2(), frontLeft, frontRight, backLeft, backRight, elevatorSub);
+            new Drive(
+                new GyroIOPigeon2(),
+                frontLeft,
+                frontRight,
+                backLeft,
+                backRight,
+                elevatorSub,
+                commandXboxController);
 
         break;
 
@@ -97,7 +104,8 @@ public class RobotContainer {
                 new ModuleIOSim(TunerConstants.FrontRight),
                 new ModuleIOSim(TunerConstants.BackLeft),
                 new ModuleIOSim(TunerConstants.BackRight),
-                elevatorSub);
+                elevatorSub,
+                commandXboxController);
 
         break;
 
@@ -110,7 +118,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {},
-                elevatorSub);
+                elevatorSub,
+                commandXboxController);
         break;
     }
 

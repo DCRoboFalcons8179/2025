@@ -58,19 +58,13 @@ public class Constants {
     public static final int rightFollowerID = 5;
     public static final boolean rightFollowerInvert = false;
 
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    /** kV is the same as kP */
-    public static final double kV = 0;
-
     public static final int maxRPS = 10000;
   }
 
   /** Is the robot at a comp? */
   public static boolean comp = true;
 
-  public static double maxSpeed = 0.6;
+  public static double maxSpeed = 0.7;
 
   public class VisionConstants {
     public static final double errorThreshHoldMeters = 0.005;
@@ -153,7 +147,7 @@ public class Constants {
 
     public static final double encoderLimit = 3;
 
-    public static final double maxElevatorSpeedPercentOut = 0.3;
+    public static final double maxElevatorSpeedPercentOut = 0.5;
     public static final double minElevatorSpeedPercentOut = -0.20;
 
     // PID Values
@@ -195,10 +189,11 @@ public class Constants {
 
   public class SetPoints {
     public class L4 {
-      public static final double elevatorPose = 18000;
-      public static final double wristPose = 13200;
-      public static final double leftDesiredXTagDistanceMeters = 0.46;
-      public static final double leftDesiredYTagDistanceMeters = 0.13;
+      public static final double elevatorPose = 18200;
+      public static final double wristPose = 13800;
+      public static final double leftDesiredXTagDistanceMeters = 0.45;
+      public static final double leftDesiredYTagDistanceMeters = -0.21;
+      public static final double leftYawRads = Units.degreesToRadians(-170);
       public static final double rightDesiredXTagDistanceMeters = 0.46;
       public static final double rightDesiredYTagDistanceMeters = -0.13;
     }
@@ -225,8 +220,8 @@ public class Constants {
     }
 
     public class HumanPickup {
-      public static final double elevatorPose = 2350;
-      public static final double wristPose = 6950;
+      public static final double elevatorPose = 1950;
+      public static final double wristPose = 7350;
       public static final double desiredXTagDistanceMeters = 0.59;
       public static final double desiredYTagDistanceMeters = -0.15;
     }

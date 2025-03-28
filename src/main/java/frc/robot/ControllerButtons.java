@@ -78,7 +78,8 @@ public class ControllerButtons {
                     frontCamera,
                     commandXboxController,
                     Constants.SetPoints.L4.leftDesiredXTagDistanceMeters,
-                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters)
+                    Constants.SetPoints.L4.leftDesiredYTagDistanceMeters,
+                    Constants.SetPoints.L4.leftYawRads)
                 .andThen(new L4(elevatorSub, coralSub)));
 
     // L3

@@ -46,6 +46,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
@@ -110,15 +111,19 @@ public class Drive extends SubsystemBase {
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
+  private final CommandXboxController commandXboxController;
+
   public Drive(
       GyroIO gyroIO,
       ModuleIO flModuleIO,
       ModuleIO frModuleIO,
       ModuleIO blModuleIO,
       ModuleIO brModuleIO,
-      ElevatorSub elevatorSub) {
+      ElevatorSub elevatorSub,
+      CommandXboxController commandXboxController) {
     this.gyroIO = gyroIO;
     this.elevatorSub = elevatorSub;
+    this.commandXboxController = commandXboxController;
     modules[0] = new Module(flModuleIO, 0, TunerConstants.FrontLeft);
     modules[1] = new Module(frModuleIO, 1, TunerConstants.FrontRight);
     modules[2] = new Module(blModuleIO, 2, TunerConstants.BackLeft);
@@ -230,13 +235,21 @@ public class Drive extends SubsystemBase {
    * @param speeds Speeds in meters/sec
    */
   public void runVelocity(ChassisSpeeds speeds) {
+
     // Calculate module setpoints
     ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
     SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, TunerConstants.kSpeedAt12Volts);
 
-    discreteSpeeds.vxMetersPerSecond *= elevatorSub.getPose() > 10000 ? 0.25 : Constants.maxSpeed;
-    discreteSpeeds.vyMetersPerSecond *= Constants.maxSpeed;
+    if (elevatorSub.getPose() > 10000) {
+      discreteSpeeds.vxMetersPerSecond *= 0.25;
+      discreteSpeeds.vyMetersPerSecond *= 0.25;
+    } else if (!commandXboxController.x().getAsBoolean()) {
+      discreteSpeeds.vxMetersPerSecond *= Constants.maxSpeed;
+      discreteSpeeds.vyMetersPerSecond *= Constants.maxSpeed;
+    }
+
+    SmartDashboard.putBoolean("BULLY", commandXboxController.x().getAsBoolean());
 
     // Log unoptimized setpoints and setpoint speeds
     Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
@@ -280,7 +293,7 @@ public class Drive extends SubsystemBase {
     double averageSpeed =
         Math.sqrt(Math.pow(totalVelocity[0], 2) + Math.pow(totalVelocity[1], 2)) / 4;
     // average speed -Andrew Celani, March 21, 2025
-    SmartDashboard.putNumber("Average Speed/", averageSpeed);
+    SmartDashboard.putNumber("Average Speed", averageSpeed);
 
     return averageSpeed;
   }
