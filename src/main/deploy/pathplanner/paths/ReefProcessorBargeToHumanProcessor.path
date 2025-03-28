@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.3,
-        "y": 2.7
+        "x": 5.36,
+        "y": 2.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.8,
-        "y": 1.8339745962155614
+        "x": 5.86,
+        "y": 1.6939745962155612
       },
       "isLocked": false,
       "linkedName": "ReefProcessorBarge"
     },
     {
       "anchor": {
-        "x": 1.35,
-        "y": 1.05
+        "x": 1.2219572368421052,
+        "y": 0.994161184210526
       },
       "prevControl": {
-        "x": 1.923576436351046,
-        "y": 1.8691520442889917
+        "x": 1.795533673193151,
+        "y": 1.8133132284995177
       },
       "nextControl": null,
       "isLocked": true,

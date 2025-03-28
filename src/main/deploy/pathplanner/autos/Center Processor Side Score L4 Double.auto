@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score From Barge Red"
+            "pathName": "StartCenterToReefCenter"
           }
         },
         {
@@ -25,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Pickup From Human Red"
+            "pathName": "ReefCenterBargeToHumanProcessor"
           }
         },
         {
@@ -37,7 +37,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score From Human Red"
+            "pathName": "HumanProcessorToReefProcessorHuman"
           }
         },
         {
@@ -56,6 +56,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Scoring",
+  "folder": "Game Day",
   "choreoAuto": false
 }

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.commands.coral.MoveCoral;
 import frc.robot.commands.elevator.MoveElevator;
 import frc.robot.commands.elevator.RawElevator;
-import frc.robot.commands.hang.MoveHook;
+import frc.robot.commands.hang.Hang;
 import frc.robot.commands.setpoints.L1;
 import frc.robot.commands.setpoints.L2;
 import frc.robot.commands.setpoints.L3;
@@ -15,8 +15,6 @@ import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
-import frc.robot.commands.hang.Hang;
-
 
 public class BoxButtons {
   public static void configureButtonBindings(
@@ -91,16 +89,9 @@ public class BoxButtons {
     boxLeft.button(8).onTrue(new RawElevator(() -> 100, elevatorSub));
 
     // Hook Control
-    // Slow
-    boxLeft
-        .button(11)
-        .onTrue(new Hang(() -> 0.25, hookSub))
-        .onFalse(new Hang(() -> 0, hookSub));
+    // Wrist Position
+    boxLeft.button(11).onTrue(new MoveWrist(() -> 17500, coralSub));
     // Normal Speed
-    boxLeft
-        .button(12)
-        .onTrue(new Hang(() -> 0.5, hookSub))
-        .onFalse(new Hang(() -> 0, hookSub));
-    
+    boxLeft.button(12).onTrue(new Hang(() -> 0.5, hookSub)).onFalse(new Hang(() -> 0, hookSub));
   }
 }

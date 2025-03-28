@@ -4,27 +4,27 @@
     {
       "anchor": {
         "x": 7.6,
-        "y": 2.7
+        "y": 0.63
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.6151922469877915,
-        "y": 2.8736481776669303
+        "y": 0.8036481776669335
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "StartProcessor"
     },
     {
       "anchor": {
-        "x": 5.3,
-        "y": 2.7
+        "x": 5.36,
+        "y": 2.56
       },
       "prevControl": {
-        "x": 5.55,
-        "y": 2.2669872981077805
+        "x": 5.61,
+        "y": 2.1269872981077804
       },
       "nextControl": null,
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "ReefProcessorBarge"
     }
   ],

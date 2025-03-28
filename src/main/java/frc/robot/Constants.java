@@ -145,7 +145,7 @@ public class Constants {
 
     // Soft Limits
     /** Maximum height of the elevator */
-    public static final int maxHeight = 17700;
+    public static final int maxHeight = 18500;
     /** Height of the elevator when the wrist's minimum position is changed */
     public static final int avoidanceHeight = 3000;
     /** Max current for the motors */
@@ -172,11 +172,11 @@ public class Constants {
   public class HookConstants {
     /** ID for the Hook Motor */
     public static final int HookID = 17;
-    
+
     /** Percent Out for the Hook */
     public static final double hookPercentOut = 1;
- 
-   /** PID Values for the Hook Motor */
+
+    /** PID Values for the Hook Motor */
     public class HookPID {
       /** kP for the Hook Motor */
       public static final double kP = 1;
@@ -196,11 +196,11 @@ public class Constants {
   public class SetPoints {
     public class L4 {
       public static final double elevatorPose = 18000;
-      public static final double wristPose = 13800;
-      public static final double leftDesiredXTagDistanceMeters = 0.53;
-      public static final double leftDesiredYTagDistanceMeters = -0.20;
-      public static final double rightDesiredXTagDistanceMeters = 0.56;
-      public static final double rightDesiredYTagDistanceMeters = 0.21;
+      public static final double wristPose = 13200;
+      public static final double leftDesiredXTagDistanceMeters = 0.46;
+      public static final double leftDesiredYTagDistanceMeters = 0.13;
+      public static final double rightDesiredXTagDistanceMeters = 0.46;
+      public static final double rightDesiredYTagDistanceMeters = -0.13;
     }
 
     public class L3 {
@@ -211,7 +211,7 @@ public class Constants {
     }
 
     public class L2 {
-      public static final double elevatorPose = 4300;
+      public static final double elevatorPose = 4500;
       public static final double wristPose = 14200;
     }
 
@@ -225,10 +225,10 @@ public class Constants {
     }
 
     public class HumanPickup {
-      public static final double elevatorPose = 1100;
-      public static final double wristPose = 5850;
-      public static final double desiredXTagDistanceMeters = 0.67;
-      public static final double desiredYTagDistanceMeters = -0.20;
+      public static final double elevatorPose = 2350;
+      public static final double wristPose = 6950;
+      public static final double desiredXTagDistanceMeters = 0.59;
+      public static final double desiredYTagDistanceMeters = -0.15;
     }
   }
 }

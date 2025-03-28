@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.33823174716852,
-        "y": 3.998785119873194
+        "x": 7.1,
+        "y": 4.0
       },
       "isLocked": true,
       "linkedName": "StartCenter"
     },
     {
       "anchor": {
-        "x": 5.85,
+        "x": 6.3,
         "y": 4.0
       },
       "prevControl": {
-        "x": 6.409964431691043,
-        "y": 3.9997727275302055
+        "x": 6.8,
+        "y": 4.0
       },
       "nextControl": null,
       "isLocked": true,

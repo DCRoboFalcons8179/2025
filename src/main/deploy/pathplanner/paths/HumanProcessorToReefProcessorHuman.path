@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.35,
-        "y": 1.05
+        "x": 1.2219572368421052,
+        "y": 0.994161184210526
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.923576436351045,
-        "y": 1.8691520442889902
+        "x": 1.7955336731931502,
+        "y": 1.8133132284995161
       },
       "isLocked": false,
       "linkedName": "HumanProcessor"
     },
     {
       "anchor": {
-        "x": 3.577725968436154,
-        "y": 2.3560975609756087
+        "x": 3.6273848684210526,
+        "y": 2.5432565789473687
       },
       "prevControl": {
-        "x": 3.077725968436154,
-        "y": 1.4900721571911704
+        "x": 3.1273848684210526,
+        "y": 1.6772311751629303
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "ScoreTroph",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,

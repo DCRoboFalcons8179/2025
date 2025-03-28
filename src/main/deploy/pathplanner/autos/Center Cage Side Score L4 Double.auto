@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartCenterToReefCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefCenterBargeToHumanCage"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToHumanPickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanCageToReefCageHuman"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignToReefRight"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4Right"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Game Day",
+  "choreoAuto": false
+}

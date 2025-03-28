@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.85,
+        "x": 6.3,
         "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.35,
+        "x": 6.8,
         "y": 4.0
       },
       "isLocked": true,
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 1.35,
-        "y": 1.05
+        "x": 1.2219572368421052,
+        "y": 0.994161184210526
       },
       "prevControl": {
-        "x": 1.923576436351046,
-        "y": 1.8691520442889917
+        "x": 1.795533673193151,
+        "y": 1.8133132284995177
       },
       "nextControl": null,
       "isLocked": true,
@@ -47,14 +47,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "HumanCoral",
-      "waypointRelativePos": 1.6271186440677976,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,

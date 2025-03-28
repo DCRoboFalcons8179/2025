@@ -11,6 +11,7 @@ import frc.robot.commands.setpoints.L3;
 import frc.robot.commands.setpoints.L4;
 import frc.robot.commands.vision.AlignToTag;
 import frc.robot.commands.vision.HumanPickup;
+import frc.robot.commands.wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.HookSub;
@@ -42,7 +43,9 @@ public class ControllerButtons {
     // Hang
     commandXboxController
         .b()
-        .onTrue(new Hang(() -> Constants.HookConstants.hookPercentOut, hookSub))
+        .onTrue(
+            new Hang(() -> Constants.HookConstants.hookPercentOut, hookSub)
+                .andThen(new MoveWrist(() -> 17500, coralSub)))
         .onFalse(new Hang(() -> 0, hookSub));
 
     // Elevator

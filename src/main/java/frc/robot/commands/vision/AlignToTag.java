@@ -29,6 +29,8 @@ public class AlignToTag extends Command {
   DistanceX distanceX;
   DistanceY distanceY;
 
+  DistanceX initialDistanceX;
+
   // Desired Positions
   double desiredXTagDistanceMeters;
   double desiredYTagDistanceMeters;

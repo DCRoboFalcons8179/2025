@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -57,7 +56,7 @@ public class AutonCommands {
             new MoveElevator(() -> 0, elevatorSub),
             new InstantCommand(() -> elevatorSub.resetPose()),
             new MoveCoral(() -> 0, coralSub),
-            new AutoWrist(() -> 0, coralSub)));
+            new MoveWrist(() -> 0, coralSub)));
 
     NamedCommands.registerCommand(
         "ScoreL4Right",

@@ -48,18 +48,24 @@ public class GetAuton {
   public static ArrayList<String> autonList =
       new ArrayList<>(
           Arrays.asList(
-              "DoNothing",
-              "StartProcessorToTrophBasic",
-              "CenterStartToTrophBasic",
-              "StartCageToTrophBasic",
-              "CenterStartToProcessorSideComplex",
-              "ProcessorStartToProcessorSideComplex",
-              "CenterStartToCageSideComplex",
-              "CageStartToCageSideComplex",
-              "CenterStartToL4Basic",
-              "Belleville Playoffs Auto",
-              "1 Piece L4 Red",
-              "2 Piece L4 Red"));
+              /* 0*/ "DoNothing",
+              /* 1*/ "StartProcessorToTrophBasic",
+              /* 2*/ "CenterStartToTrophBasic",
+              /* 3*/ "StartCageToTrophBasic",
+              /* 4*/ "CenterStartToProcessorSideComplex",
+              /* 5*/ "ProcessorStartToProcessorSideComplex",
+              /* 6*/ "CenterStartToCageSideComplex",
+              /* 7*/ "CageStartToCageSideComplex",
+              /* 8*/ "CenterStartToL4Basic",
+              /* 9*/ "Belleville Playoffs Auto",
+              /*10*/ "1 Piece L4 Red",
+              /*11*/ "2 Piece L4 Red",
+              /*12*/ "Cage Score L4 Double",
+              /*13*/ "Center Processor Side Score L4 Double",
+              /*14*/ "Center Cage Side Score L4 Double",
+              /*15*/ "Processor Score L4 Double"
+              /*16*/
+              ));
 
   public static String getAutonName(int index) {
     return index > autonList.size() - 1 ? "DoNothing" : autonList.get(index);
