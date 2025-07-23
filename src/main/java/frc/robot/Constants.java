@@ -220,7 +220,7 @@ public class Constants {
     }
 
     public class HumanPickup {
-      public static final double elevatorPose = 1950;
+      public static final double elevatorPose = 2750;
       public static final double wristPose = 7350;
       public static final double desiredXTagDistanceMeters = 0.59;
       public static final double desiredYTagDistanceMeters = -0.15;
