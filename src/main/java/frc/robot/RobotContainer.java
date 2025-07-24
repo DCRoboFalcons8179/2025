@@ -131,8 +131,6 @@ public class RobotContainer {
   }
 
   public void periodic() {
-    drive.getVelocity();
-
     int autonID = BinaryToInt.getInt(boxRight, boxLeft);
 
     SmartDashboard.putNumber("Binary To Int", autonID);
