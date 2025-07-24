@@ -23,7 +23,7 @@ public class HookSub extends SubsystemBase {
   // private double desiredPosition = 0;
 
   /** State to track if the hook is in hanging mode */
-  private boolean hung = false;
+  // private boolean hung = false;
 
   public HookSub() {
     // Configure the TalonFX motor controller
