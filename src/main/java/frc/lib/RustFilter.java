@@ -4,7 +4,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import java.io.File;
 
-public class RustBindings {
+public class RustFilter {
   static {
     String libPath =
         Constants.currentMode == Mode.REAL
@@ -16,4 +16,6 @@ public class RustBindings {
   }
 
   public static native double cutoffFilter(double value, double max, double min);
+
+  public static native double powerCurve(double value, double power);
 }

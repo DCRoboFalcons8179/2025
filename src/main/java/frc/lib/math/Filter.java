@@ -2,13 +2,13 @@ package frc.lib.math;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import frc.lib.RustBindings;
+import frc.lib.RustFilter;
 
 public class Filter {
 
   /** Return bound that a value passes if value is outside it, else returns value. */
   public static double cutoffFilter(double value, double max, double min) {
-    return RustBindings.cutoffFilter(value, max, min);
+    return RustFilter.cutoffFilter(value, max, min);
   }
 
   /** Cuts off |value| > 1. Useful for magnitude filtering, or powerCurve. */
@@ -34,21 +34,7 @@ public class Filter {
    * <p>Do not divide by zero.
    */
   public static double powerCurve(double value, double power) {
-    int negative_sign = 1;
-
-    if (value < 0) {
-      negative_sign *= -1;
-      value *= -1;
-    }
-
-    double ret = Math.pow(value, power);
-    if (!Double.isInfinite(ret)) {
-      return ret * negative_sign;
-    }
-
-    System.out.println("You divided by zero. \nSHAME!\nSHAME!\nSHAME!");
-
-    return 0;
+    return RustFilter.powerCurve(value, power);
   }
 
   /** Returns a unit {@link Translation2d} */
