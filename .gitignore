@@ -189,3 +189,7 @@ src/main/java/frc/robot/BuildConstants.java
 BuildConstants.java
 
 .vscode
+
+# Rust
+Cargo.lock
+target

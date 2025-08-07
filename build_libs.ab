@@ -1,0 +1,50 @@
+import { file_glob_all } from "std/fs"
+
+const RED = "\e[31m"
+const GREEN = "\e[32m"
+const BLUE = "\e[34m"
+const RESET = "\e[0m"
+
+fun echo_color(text: Text, color: Text): Null {
+    // I'm not sure why but I need to do the reset on a separate concatenation
+    let text = "{color}{text}"
+
+    trust $ echo -e "{text}{RESET}"$
+}
+
+// List of target names
+let architectures = ["x86_64-unknown-linux-gnu", "armv7-unknown-linux-gnueabihf"]
+
+// List of names for each target in the same order
+let arch_names = ["x86_64", "armv7"]
+
+// Builds each architecture
+for i, arch in architectures {
+    echo_color("Building Linux-{arch_names[i]}...", BLUE)
+
+    trust $ sleep 1 $
+
+    $ cross build --target {arch} --release --manifest-path rust-lib/Cargo.toml $ failed {
+        echo_color("{arch_names[i]} build failed", RED)
+    }
+}
+
+let path = "rust-lib/target/x86_64-unknown-linux-gnu/release/*.so"
+
+let files = trust file_glob_all([path])
+
+echo "{files}"
+
+for file in files {
+    trust $ cp {file} src/main/java/frc/lib/linux-x86_64/ $
+}
+
+let path = "rust-lib/target/armv7-unknown-linux-gnueabihf/release/*.so"
+
+let files = trust file_glob_all([path])
+
+echo "{files}"
+
+for file in files {
+    trust $ cp {file} src/main/java/frc/lib/armv7/ $
+}

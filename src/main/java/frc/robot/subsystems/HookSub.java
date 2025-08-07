@@ -22,9 +22,6 @@ public class HookSub extends SubsystemBase {
   /** Desired position for the hook */
   // private double desiredPosition = 0;
 
-  /** State to track if the hook is in hanging mode */
-  private boolean hung = false;
-
   public HookSub() {
     // Configure the TalonFX motor controller
     TalonFXConfiguration hookConfiguration = new TalonFXConfiguration();
@@ -70,7 +67,6 @@ public class HookSub extends SubsystemBase {
   public void hang(double power) {
     // applies the commanded power to the hook motor for hanging
     hook.set(power);
-    hung = true;
   }
 
   /**
@@ -80,10 +76,5 @@ public class HookSub extends SubsystemBase {
    */
   public double getCurrentPosition() {
     return hook.getPosition().getValueAsDouble();
-  }
-
-  /** Reset the hung state. */
-  public void resetHung() {
-    hung = false;
   }
 }

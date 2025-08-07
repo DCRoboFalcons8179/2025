@@ -2,21 +2,13 @@ package frc.lib.math;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import frc.lib.RustBindings;
 
 public class Filter {
 
   /** Return bound that a value passes if value is outside it, else returns value. */
   public static double cutoffFilter(double value, double max, double min) {
-
-    if (value > max) {
-      return max;
-    }
-
-    if (value < min) {
-      return min;
-    }
-
-    return value;
+    return RustBindings.cutoffFilter(value, max, min);
   }
 
   /** Cuts off |value| > 1. Useful for magnitude filtering, or powerCurve. */
