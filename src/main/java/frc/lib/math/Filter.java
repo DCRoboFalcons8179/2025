@@ -2,13 +2,13 @@ package frc.lib.math;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import frc.lib.RustFilter;
+import frc.lib.RustMath;
 
 public class Filter {
 
   /** Return bound that a value passes if value is outside it, else returns value. */
   public static double cutoffFilter(double value, double max, double min) {
-    return RustFilter.cutoffFilter(value, max, min);
+    return RustMath.cutoffFilter(value, max, min);
   }
 
   /** Cuts off |value| > 1. Useful for magnitude filtering, or powerCurve. */
@@ -34,7 +34,7 @@ public class Filter {
    * <p>Do not divide by zero.
    */
   public static double powerCurve(double value, double power) {
-    return RustFilter.powerCurve(value, power);
+    return RustMath.powerCurve(value, power);
   }
 
   /** Returns a unit {@link Translation2d} */

@@ -13,10 +13,10 @@ fun echo_color(text: Text, color: Text): Null {
 }
 
 // List of target names
-let architectures = ["x86_64-unknown-linux-gnu", "armv7-unknown-linux-gnueabihf"]
+let architectures = ["x86_64-unknown-linux-gnu", "armv7-unknown-linux-gnueabihf", "x86_64-pc-windows-gnu"]
 
 // List of names for each target in the same order
-let arch_names = ["x86_64", "armv7"]
+let arch_names = ["linux-x86_64", "armv7", "windows-x86_64"]
 
 // Builds each architecture
 for i, arch in architectures {
@@ -47,4 +47,14 @@ echo "{files}"
 
 for file in files {
     trust $ cp {file} src/main/java/frc/lib/armv7/ $
+}
+
+let path = "rust-lib/target/x86_64-pc-windows-gnu/release/*.dll"
+
+let files = trust file_glob_all([path])
+
+echo "{files}"
+
+for file in files {
+    trust $ cp {file} src/main/java/frc/lib/windows-x86_64/ $
 }
