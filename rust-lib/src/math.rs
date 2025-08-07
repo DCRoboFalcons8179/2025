@@ -1,9 +1,5 @@
-use std::ffi::c_void;
-
 #[unsafe(no_mangle)]
-pub extern "system" fn Java_frc_lib_RustMath_cutoffFilter(
-    _env: *mut c_void,
-    _class: *mut c_void,
+pub extern "C" fn Java_frc_lib_RustMath_cutoffFilter(
     value: f64,
     max: f64,
     min: f64,
@@ -18,9 +14,7 @@ pub extern "system" fn Java_frc_lib_RustMath_cutoffFilter(
 }
 
 #[unsafe(no_mangle)]
-pub extern "system" fn Java_frc_lib_RustMath_powerCurce(
-    _env: *mut c_void,
-    _class: *mut c_void,
+pub extern "C" fn Java_frc_lib_RustMath_powerCurce(
     value: f64,
     power: f64,
 ) -> f64 {
@@ -41,9 +35,7 @@ pub extern "system" fn Java_frc_lib_RustMath_powerCurce(
 
 
 #[unsafe(no_mangle)]
-pub extern "system" fn Java_frc_lib_RustMath_getAverageSpeed(
-    _env: *mut c_void,
-    _class: *mut c_void,
+pub extern "C" fn Java_frc_lib_RustMath_getAverageSpeed(
     speeds: *const f64,
     angles: *const f64,
     len: usize,
