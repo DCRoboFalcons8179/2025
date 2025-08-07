@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2025.3.1"
+    id "edu.wpi.first.GradleRIO" version "2025.3.2"
     id "com.peterabeles.gversion" version "1.10"
     id "com.diffplug.spotless" version "6.12.0"
 }
@@ -11,6 +11,15 @@ java {
 }
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
+
+task copyRustLib(type: Copy) {
+    from 'lib/armv7/*.so'
+    into "$buildDir/deploy/native"
+}
+
+tasks.named("deploy").configure {
+    dependsOn(copyRustLib)
+}
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.

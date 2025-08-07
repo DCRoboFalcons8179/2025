@@ -13,7 +13,8 @@
 
 package frc.robot.subsystems.drive;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -48,6 +49,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.lib.RustMath;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import frc.robot.generated.TunerConstants;
@@ -281,21 +283,17 @@ public class Drive extends SubsystemBase {
   }
 
   public double getAverageSpeed() {
-    double[] totalVelocity = new double[2];
+    double[] speeds = new double[4];
+    double[] angles = new double[4];
 
     for (int i = 0; i < 4; i++) {
-      double moduleSpeed = modules[i].getVelocityMetersPerSec();
-
-      totalVelocity[0] += moduleSpeed * modules[i].getAngle().getCos();
-      totalVelocity[1] += moduleSpeed * modules[i].getAngle().getSin();
+      speeds[i] = modules[i].getVelocityMetersPerSec();
+      angles[i] = modules[i].getAngle().getRadians();
     }
 
-    double averageSpeed =
-        Math.sqrt(Math.pow(totalVelocity[0], 2) + Math.pow(totalVelocity[1], 2)) / 4;
-    // average speed -Andrew Celani, March 21, 2025
-    SmartDashboard.putNumber("Average Speed", averageSpeed);
-
-    return averageSpeed;
+    double avgSpeed = RustMath.getAverageSpeed(speeds, angles, 4);
+    SmartDashboard.putNumber("Average Speed", avgSpeed);
+    return avgSpeed;
   }
 
   /** Stops the drive. */
