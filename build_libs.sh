@@ -110,7 +110,7 @@ echo_color__46_v0() {
     __AS=$?
 }
 # List of target names
-__AMBER_ARRAY_7=("x86_64-unknown-linux-gnu" "armv7-unknown-linux-gnueabihf" "x86_64-pc-windows-gnu");
+__AMBER_ARRAY_7=("x86_64-unknown-linux-gnu" "arm-unknown-linux-gnueabi" "x86_64-pc-windows-gnu");
 __4_architectures=("${__AMBER_ARRAY_7[@]}")
 # List of names for each target in the same order
 __AMBER_ARRAY_8=("linux-x86_64" "armv7" "windows-x86_64");
@@ -143,7 +143,7 @@ for file in "${__8_files[@]}"; do
      cp ${file} src/main/java/frc/lib/linux-x86_64/ ;
     __AS=$?
 done
-__9_path="rust-lib/target/armv7-unknown-linux-gnueabihf/release/*.so"
+__9_path="rust-lib/target/arm-unknown-linux-gnueabi/release/*.so"
 __AMBER_ARRAY_10=("${__9_path}");
 file_glob_all__42_v0 __AMBER_ARRAY_10[@];
 __AS=$?;
@@ -151,7 +151,9 @@ __AF_file_glob_all42_v0__44_19=("${__AF_file_glob_all42_v0[@]}");
 __10_files=("${__AF_file_glob_all42_v0__44_19[@]}")
 echo "${__10_files[@]}"
 for file in "${__10_files[@]}"; do
-     cp ${file} src/main/java/frc/lib/armv7/ ;
+     cp ${file} src/main/java/frc/lib/arm/ ;
+
+     cp ${file} src/main/deploy ;
     __AS=$?
 done
 __11_path="rust-lib/target/x86_64-pc-windows-gnu/release/*.dll"
