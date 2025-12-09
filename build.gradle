@@ -12,14 +12,14 @@ java {
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
-task copyRustLib(type: Copy) {
-    from 'lib/armv7/*.so'
-    into "$buildDir/deploy/native"
-}
+// task copyRustLib(type: Copy) {
+//     from 'lib/armv7/*.so'
+//     into "$buildDir/deploy/native"
+// }
 
-tasks.named("deploy").configure {
-    dependsOn(copyRustLib)
-}
+// tasks.named("deploy").configure {
+// dependsOn(copyRustLib)
+// }
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.

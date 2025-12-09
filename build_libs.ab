@@ -13,7 +13,7 @@ fun echo_color(text: Text, color: Text): Null {
 }
 
 // List of target names
-let architectures = ["x86_64-unknown-linux-gnu", "arm-unknown-linux-gnueabi", "x86_64-pc-windows-gnu"]
+let architectures = ["x86_64-unknown-linux-gnu", "armv7-unknown-linux-gnueabihf", "x86_64-pc-windows-gnu"]
 
 // List of names for each target in the same order
 let arch_names = ["linux-x86_64", "armv7", "windows-x86_64"]
@@ -39,7 +39,7 @@ for file in files {
     trust $ cp {file} src/main/java/frc/lib/linux-x86_64/ $
 }
 
-let path = "rust-lib/target/arm-unknown-linux-gnueabi/release/*.so"
+let path = "rust-lib/target/armv7-unknown-linux-gnueabihf/release/*.so"
 
 let files = trust file_glob_all([path])
 

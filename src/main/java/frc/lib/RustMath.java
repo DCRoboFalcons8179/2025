@@ -15,7 +15,7 @@ public class RustMath {
 
     String libPath =
         Constants.currentMode == Mode.REAL
-            ? "/home/lvuser/libmath.so"
+            ? "/home/lvuser/deploy/libmath.so"
             : new File(
                     Platform.isLinux()
                         ? simPath + "/linux-x86_64/libmath.so"
