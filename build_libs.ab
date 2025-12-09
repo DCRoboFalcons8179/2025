@@ -46,8 +46,11 @@ let files = trust file_glob_all([path])
 echo "{files}"
 
 for file in files {
-    trust $ cp {file} src/main/java/frc/lib/armv7/ $
+    trust $ cp {file} src/main/java/frc/lib/arm/ $
+
+    trust $ cp {file} src/main/deploy/ $
 }
+
 
 let path = "rust-lib/target/x86_64-pc-windows-gnu/release/*.dll"
 

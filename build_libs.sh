@@ -151,7 +151,9 @@ __AF_file_glob_all42_v0__44_19=("${__AF_file_glob_all42_v0[@]}");
 __10_files=("${__AF_file_glob_all42_v0__44_19[@]}")
 echo "${__10_files[@]}"
 for file in "${__10_files[@]}"; do
-     cp ${file} src/main/java/frc/lib/armv7/ ;
+     cp ${file} src/main/java/frc/lib/arm/ ;
+
+     cp ${file} src/main/deploy ;
     __AS=$?
 done
 __11_path="rust-lib/target/x86_64-pc-windows-gnu/release/*.dll"

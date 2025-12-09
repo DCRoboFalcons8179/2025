@@ -19,6 +19,7 @@
 *.so
 *.dylib
 *.dll
+!src/main/deploy/*
 
 # Fortran module files
 *.mod
