@@ -4,6 +4,7 @@
 
 package frc.robot.commands.vision;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -97,18 +98,21 @@ public class AlignToTag extends Command {
     SmartDashboard.putBoolean(
         "Has Yaw", Math.abs(yaw) < Constants.VisionConstants.errorThreshHoldRadians);
 
+    PIDController alignThreshold = new PIDController(0.75, 0.25, 0.2);
+
     ChassisSpeeds chassisSpeeds =
         new ChassisSpeeds() {
           {
             vxMetersPerSecond = -translationVelocity;
             vyMetersPerSecond = -strafeVelocity;
             if (yaw != 181) {
-              omegaRadiansPerSecond =
-                  yaw > Constants.VisionConstants.errorThreshHoldRadians + desiredYaw
-                      ? -0.15
-                      : yaw < Constants.VisionConstants.errorThreshHoldRadians - desiredYaw
-                          ? 0.15
-                          : 0;
+              omegaRadiansPerSecond = alignThreshold.calculate(yaw, desiredYaw);
+              // omegaRadiansPerSecond =
+              //     yaw > Constants.VisionConstants.errorThreshHoldRadians + desiredYaw
+              //         ? -0.15
+              //         : yaw < Constants.VisionConstants.errorThreshHoldRadians - desiredYaw
+              //             ? 0.15
+              //             : 0;
             } else {
               omegaRadiansPerSecond = 0;
             }

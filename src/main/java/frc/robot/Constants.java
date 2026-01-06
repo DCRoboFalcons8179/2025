@@ -68,8 +68,8 @@ public class Constants {
 
   public class VisionConstants {
     public static final double errorThreshHoldMeters = 0.005;
-    public static final double errorThreshHoldStrafeMeters = 0.005;
-    public static final double errorThreshHoldRadians = 0.0349065850399 * 0.75;
+    public static final double errorThreshHoldStrafeMeters = 0.05;
+    public static final double errorThreshHoldRadians = 0.05 * 0.75;
     public static final int tagFindingTries = 15;
 
     public class FrontCameraValues {
