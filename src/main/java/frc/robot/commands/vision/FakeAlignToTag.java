@@ -15,7 +15,7 @@ import frc.robot.calcVelocities.DistanceY;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.vision.Vision;
 
-public class AlignToTag extends Command {
+public class FakeAlignToTag extends Command {
   // Subsystems
   Drive drive;
   Vision visionSub;
@@ -30,6 +30,9 @@ public class AlignToTag extends Command {
   DistanceX distanceX;
   DistanceY distanceY;
 
+  double finalPoseX;
+  double finalPoseY;
+
   DistanceX initialDistanceX;
 
   // Desired Positions
@@ -41,7 +44,7 @@ public class AlignToTag extends Command {
   PIDController alignThreshold = new PIDController(0.75, 0.25, 0.2);
 
   /** Creates a new MaintainAll. */
-  public AlignToTag(
+  public FakeAlignToTag(
       Drive drive,
       Vision visionSub,
       CommandXboxController commandXboxController,
@@ -62,7 +65,7 @@ public class AlignToTag extends Command {
     addRequirements(drive, visionSub);
   }
 
-  public AlignToTag(
+  public FakeAlignToTag(
       Drive drive,
       Vision visionSub,
       CommandXboxController commandXboxController,
@@ -79,7 +82,11 @@ public class AlignToTag extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+    finalPoseX = drive.getPose().getX() + visionSub.getDistanceX() - this.desiredXTagDistanceMeters;
+    finalPoseY = drive.getPose().getY() + visionSub.getDistanceY() - this.desiredYTagDistanceMeters;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -92,11 +99,16 @@ public class AlignToTag extends Command {
         distanceY.getVelocity() == 0 ? commandXboxController.getLeftX() : distanceY.getVelocity();
     double yaw = visionSub.getCameraYaw();
 
-    SmartDashboard.putNumber("Distance Tag X", visionSub.getDistanceX());
-    SmartDashboard.putNumber("Distance Tag Y", visionSub.getDistanceY());
+    SmartDashboard.putNumber(
+        "Distance Fake Tag X", visionSub.getDistanceX() - this.desiredXTagDistanceMeters);
+    SmartDashboard.putNumber(
+        "Distance Fake Tag Y", visionSub.getDistanceY() - this.desiredYTagDistanceMeters);
 
-    SmartDashboard.putBoolean("Has X", distanceX.isDone());
-    SmartDashboard.putBoolean("Has Y", distanceY.isDone());
+    SmartDashboard.putNumber("Robot Final X", finalPoseX);
+    SmartDashboard.putNumber("Robot Final Y", finalPoseY);
+
+    SmartDashboard.putBoolean("Has Fake X", distanceX.isDone());
+    SmartDashboard.putBoolean("Has Fake Y", distanceY.isDone());
     SmartDashboard.putBoolean(
         "Has Yaw", Math.abs(yaw) < Constants.VisionConstants.errorThreshHoldRadians);
 
@@ -108,11 +120,11 @@ public class AlignToTag extends Command {
             if (yaw != 181) {
               omegaRadiansPerSecond = alignThreshold.calculate(yaw, desiredYaw);
               // omegaRadiansPerSecond =
-              //     yaw > Constants.VisionConstants.errorThreshHoldRadians + desiredYaw
-              //         ? -0.15
-              //         : yaw < Constants.VisionConstants.errorThreshHoldRadians - desiredYaw
-              //             ? 0.15
-              //             : 0;
+              // yaw > Constants.VisionConstants.errorThreshHoldRadians + desiredYaw
+              // ? -0.15
+              // : yaw < Constants.VisionConstants.errorThreshHoldRadians - desiredYaw
+              // ? 0.15
+              // : 0;
             } else {
               omegaRadiansPerSecond = 0;
             }

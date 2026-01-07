@@ -10,6 +10,7 @@ import frc.robot.commands.setpoints.Home;
 import frc.robot.commands.setpoints.L3;
 import frc.robot.commands.setpoints.L4;
 import frc.robot.commands.vision.AlignToTag;
+import frc.robot.commands.vision.FakeAlignToTag;
 import frc.robot.commands.vision.HumanPickup;
 import frc.robot.commands.wrist.MoveWrist;
 import frc.robot.subsystems.CoralSub;
@@ -73,7 +74,7 @@ public class ControllerButtons {
     commandXboxController
         .povUp()
         .whileTrue(
-            new AlignToTag(
+            new FakeAlignToTag(
                     drive,
                     frontCamera,
                     commandXboxController,
@@ -103,7 +104,7 @@ public class ControllerButtons {
     commandXboxController
         .povLeft()
         .whileTrue(
-            new AlignToTag(
+            new FakeAlignToTag(
                 drive,
                 frontCamera,
                 commandXboxController,

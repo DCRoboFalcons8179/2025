@@ -137,6 +137,8 @@ public class RobotContainer {
 
     SmartDashboard.putNumber("Binary To Int", autonID);
     SmartDashboard.putString("Auton Name", GetAuton.getAutonName(autonID));
+    SmartDashboard.putNumber("Robot X", drive.getPose().getX());
+    SmartDashboard.putNumber("Robot Y", drive.getPose().getY());
   }
 
   /**
